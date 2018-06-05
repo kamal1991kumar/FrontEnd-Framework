@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "animations/*": [
+                "src/js/animations/*"
+            ],
+            "components/*": [
+                "src/js/components/*"
+            ],
+            "controllers/*": [
+                "src/js/controllers/*"
+            ],
+            "models/*": [
+                "src/js/models/*"
+            ],
+            "modules/*": [
+                "src/js/modules/*"
+            ],
+            "router/*": [
+                "src/js/router/*"
+            ],
+            "services/*": [
+                "src/js/services/*"
+            ],
+            "store/*": [
+                "src/js/store/*"
+            ],
+            "vendors/*": [
+                "src/js/vendors/*"
+            ],
+            "views/*": [
+                "src/js/views/*"
+            ]
+        },
+        "experimentalDecorators": true
+    }
+}
