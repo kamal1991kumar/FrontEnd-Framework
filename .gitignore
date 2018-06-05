@@ -1,0 +1,8 @@
+node_modules
+.vscode
+.DS_Store
+.idea
+*.sublime-project
+*.sublime-workspace
+.grunt
+*.log*
