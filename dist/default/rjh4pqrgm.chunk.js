@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["rjh4pqrgm.chunk"],{20:function(e,n,o){"use strict";Object.defineProperty(n,"__esModule",{value:!0});n.LOG="BUUUSSSSYYYYY!!!"}}]);

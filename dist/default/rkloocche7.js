@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["rkloocche7"],{21:function(e,o,c){"use strict";Object.defineProperty(o,"__esModule",{value:!0});o.LOG="LAZZZZZYYYYY!!!"}}]);

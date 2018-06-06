@@ -5,6 +5,7 @@ const merge = require('webpack-merge');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 /**
  * ===X DO NOT TOUCH CODE BELOW X===
@@ -142,8 +143,15 @@ const coreConfig = {
         // `chunk.name` will be `null` if chunk is not a `cacheGroups` bundle
         // use only in `production` for faster development
         ( process.env.NODE_ENV != 'production' ) ? null : new webpack.NamedChunksPlugin( chunk => {
-            return chunk.name ? chunk.shortid : shortid.generate().toLocaleLowerCase() ;
-        } )
+            return chunk.name ? chunk.shortid : shortid.generate().toLocaleLowerCase() + '.chunk';
+        } ),
+
+        // remove chunk files from distribution before new build
+        // use only in `production` for faster development
+        ( process.env.NODE_ENV != 'production' ) ? null : new CleanWebpackPlugin([
+            path.resolve( __dirname, 'dist', PLATFORM, '*.chunk.js' ),
+            path.resolve( __dirname, 'dist', PLATFORM, '*.chunk.css' )
+        ])
     ].filter( Boolean ), // filter only non `null` plugins
 
     // webpack optimizations
