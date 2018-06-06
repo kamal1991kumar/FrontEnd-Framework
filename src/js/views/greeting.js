@@ -1,7 +1,19 @@
 import React from 'react';
 
-export function Greeting () {
+// async import
+import { GREET } from '../vendors/greet';
+
+// async import
+setTimeout( () => {
+    import( './lazy' ).then( window.console.warn );
+}, 3000 );
+
+setTimeout( () => {
+    import( './busy' ).then( window.console.warn );
+}, 5000 );
+
+export const Greeting = () => {
     return (
-        <h1>Hello World!</h1>
+        <h1>{ GREET }</h1>
     );
-}
+};

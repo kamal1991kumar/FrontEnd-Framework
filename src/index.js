@@ -3,4 +3,4 @@ import ReactDOM from 'react-dom';
 
 import { Greeting } from 'views/greeting';
 
-ReactDOM.render( <Greeting />, document.getElementById('app') );
+ReactDOM.render( <Greeting />, document.getElementById( 'app' ) );

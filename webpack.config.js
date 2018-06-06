@@ -1,19 +1,35 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 
-// set build platform
+/**
+ * ===X DO NOT TOUCH CODE BELOW X===
+ * set build platform based on environment variable
+ */
 const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
+
+
+/*=========== WEBPACK HELPER FUNCTIONS ===========*/
+
+// copy webpack plugin `src => dist` mapper
+const copyWebpackPluginMap = ( srcDir, destDir ) => {
+    return { from: path.resolve( __dirname, srcDir ), to: path.resolve( __dirname, 'dist', PLATFORM, destDir ) };
+};
+
+/*================================================*/
+
 
 /**
  * ===X DO NOT TOUCH CODE BELOW X===
  * 
- * Load platform dependent webpack configuration
+ * load platform dependent webpack configuration
  */
 const platformConfig = require(`./__platforms__/${ PLATFORM }.webpack.config.js`);
 
 /**
- * Core configurations of webpack,
+ * core configurations of webpack,
  * this will be eventually merged with `platformConfig`
  */
 const coreConfig = {
@@ -21,30 +37,52 @@ const coreConfig = {
     mode: ( process.env.NODE_ENV ? process.env.NODE_ENV : 'development' ),
     
     // entry file(s)
-    entry: './src/index.js',
+    entry: [
+        './src/index.js',
+        './src/scss/index.scss'
+    ],
     
     // output file(s) and chunks
     output: {
         path: path.resolve( __dirname, `dist/${ PLATFORM }` ),
-        filename: 'main.js',
-        publicPath: '/'
+        filename: '[name].js',
+
+        // it's the path of assets insertion in HTML page
+        // must be `/` in WDS but should be `./` on production server
+        publicPath: ( process.env.NODE_ENV === 'production' ? './' : '/' ),
     },
 
-    // loaders configuration
+    // module/loaders configuration
     module: {
         rules: [
+            // use eslint for linting `.js` or `.jsx` files
             {
-                test: /\.js$/,
+                enforce: 'pre', // ==> only original/non-transformed files
+                test: /\.jsx?$/,
+                loader: 'eslint-loader',
+                options: {
+                    emitWarning: true,
+                    formatter: require( 'eslint-friendly-formatter' )
+                }
+            },
+
+            // use babel-loader for `.js` or `.jsx` files
+            {
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: [ 'babel-loader' ]
             },
+
+            // extract CSS to file(s) only in production
+            // for performance improvement in development mode
             {
                 test: /\.scss$/,
-                use: [ 'style-loader', 'css-loader', 'sass-loader' ]
-            },
-            {
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: [ 
+                    ( process.env.NODE_ENV === 'production' ? MiniCSSExtractPlugin.loader : 'style-loader' ),
+                    'css-loader', 
+                    'postcss-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },
@@ -53,7 +91,7 @@ const coreConfig = {
     resolve: {
         /**
          * ===X WARNING X===
-         * Do not add `.js` extension below.  `.js` extensions will 
+         * do not add `.js` extension below.  `.js` extensions will 
          * be received & merged from `platformConfig`.
          */
         extensions: [
@@ -78,12 +116,51 @@ const coreConfig = {
     },
 
     // webpack plugins
+    // allow only non-empty plugin by using `filter`
     plugins: [
-        new HTMLWebpackPlugin({
+        // to preview/build HTML pages
+        new HTMLWebpackPlugin( {
             filename: 'index.html',
             template: path.resolve( __dirname, 'src/pages/index.html' )
-        })
-    ],
+        } ),
+
+        // to `as-is` copy files/folders
+        // use `copyWebpackPluginMap( dirPath, folderNameInDist )` to create destribution map
+        new CopyWebpackPlugin( [
+            copyWebpackPluginMap( 'src/assets', 'assets' )
+        ] ),
+
+        // extract CSS to a file
+        // use only in `production` for faster development
+        ( process.env.NODE_ENV != 'production' ) ? null : new MiniCSSExtractPlugin( {
+            chunkFilename: 'style.css'
+        } )
+    ].filter( Boolean ),
+
+    // webpack optimizations
+    optimization: {
+        splitChunks: {
+            maxAsyncRequests: 2, // max. 2 `.js` file lazy load in parallel
+            maxInitialRequests: 2, // max. 2 `.js` file lazy load at entry in parallel
+            
+            cacheGroups: {
+                vendor: {
+                    chunks: 'all', // both : sync + async imports
+                    name: 'vendor', // [name] of chunk file being generated
+                    test: /(node_modules|src\/js\/vendor)/, // test path [RegExp, function or string]
+                    priority: -10, // high priority chunk will have modules also matches other cache groups,
+                    enforce: true, // force this chunk to split despite of `splitChunks` conditions
+                },
+                main: {
+                    chunks: 'initial', // only sync imports
+                    name: 'main',
+                    priority: -20,
+                    reuseExistingChunk: true, // re-use chunks instead of creating new, use `vendor` chunks
+                    enforce: true
+                }
+            }
+        }
+      },
 
     // development server configuration
     devServer: {
@@ -96,7 +173,7 @@ const coreConfig = {
 };
 
 /**
- * Export final webpack configuration.
+ * export final webpack configuration.
  * Use `webpack-merge` to "smart merge" different configurations.
  * https://github.com/survivejs/webpack-merge#mergesmartconfiguration-configuration
  */
