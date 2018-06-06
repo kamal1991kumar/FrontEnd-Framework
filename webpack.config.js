@@ -1,4 +1,6 @@
 const path = require('path');
+const shortid = require('shortid');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -134,8 +136,15 @@ const coreConfig = {
         // use only in `production` for faster development
         ( process.env.NODE_ENV != 'production' ) ? null : new MiniCSSExtractPlugin( {
             chunkFilename: 'style.css'
+        } ),
+
+        // rename chunk file names using `NamedChunksPlugin`
+        // `chunk.name` will be `null` if chunk is not a `cacheGroups` bundle
+        // use only in `production` for faster development
+        ( process.env.NODE_ENV != 'production' ) ? null : new webpack.NamedChunksPlugin( chunk => {
+            return chunk.name ? chunk.shortid : shortid.generate().toLocaleLowerCase() ;
         } )
-    ].filter( Boolean ),
+    ].filter( Boolean ), // filter only non `null` plugins
 
     // webpack optimizations
     optimization: {
