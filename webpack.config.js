@@ -1,22 +1,23 @@
 const path = require('path');
 const shortid = require('shortid');
+const glob = require('glob');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 /**
- * ===X DO NOT TOUCH CODE BELOW X===
- * set build platform based on environment variable
+ * ===X DO NOT MODIFY CODE BELOW X===
+ * Set build platform based on environment variable
  */
 const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
 
 
 /*=========== WEBPACK HELPER FUNCTIONS ===========*/
 
-// copy webpack plugin `src => dist` mapper
+// Copy static assets, webpack plugin `src => dist` mapper
 const copyWebpackPluginMap = ( srcDir, destDir ) => {
     return { from: path.resolve( __dirname, srcDir ), to: path.resolve( __dirname, 'dist', PLATFORM, destDir ) };
 };
@@ -25,14 +26,14 @@ const copyWebpackPluginMap = ( srcDir, destDir ) => {
 
 
 /**
- * ===X DO NOT TOUCH CODE BELOW X===
+ * ===X DO NOT MODIFY CODE BELOW X===
  * 
- * load platform dependent webpack configuration
+ * Load platform dependent webpack configuration
  */
 const platformConfig = require(`./__platforms__/${ PLATFORM }.webpack.config.js`);
 
 /**
- * core configurations of webpack,
+ * Core configurations of webpack,
  * this will be eventually merged with `platformConfig`
  */
 const coreConfig = {
@@ -48,7 +49,7 @@ const coreConfig = {
     // output file(s) and chunks
     output: {
         path: path.resolve( __dirname, `dist/${ PLATFORM }` ),
-        filename: '[name].js',
+        filename: 'js/[name].js',
 
         // it's the path of assets insertion in HTML page
         // must be `/` in WDS but should be `./` on production server
@@ -60,7 +61,7 @@ const coreConfig = {
         rules: [
             // use eslint for linting `.js` or `.jsx` files
             {
-                enforce: 'pre', // ==> only original/non-transformed files
+                enforce: 'pre', // ==> allow only original/non-transformed files to pass
                 test: /\.jsx?$/,
                 loader: 'eslint-loader',
                 options: {
@@ -76,12 +77,12 @@ const coreConfig = {
                 use: [ 'babel-loader' ]
             },
 
-            // extract CSS to file(s) only in production
-            // for performance improvement in development mode
+            // extract CSS to file(s) using `MiniCSSExtractPlugin`,
+            // avoid plugin when `CSS_MODE` is `inline`
             {
                 test: /\.scss$/,
                 use: [ 
-                    ( process.env.NODE_ENV === 'production' ? MiniCSSExtractPlugin.loader : 'style-loader' ),
+                    ( process.env.CSS_MODE === 'inline' ? 'style-loader' : MiniCSSExtractPlugin.loader ),
                     'css-loader', 
                     'postcss-loader',
                     'sass-loader'
@@ -94,7 +95,7 @@ const coreConfig = {
     resolve: {
         /**
          * ===X WARNING X===
-         * do not add `.js` extension below.  `.js` extensions will 
+         * Do not add `.js` extension below.  `.js` extensions will 
          * be received & merged from `platformConfig`.
          */
         extensions: [
@@ -121,10 +122,19 @@ const coreConfig = {
     // webpack plugins
     // allow only non-empty plugin by using `filter`
     plugins: [
-        // to preview/build HTML pages
-        new HTMLWebpackPlugin( {
-            filename: 'index.html',
-            template: path.resolve( __dirname, 'src/pages/index.html' )
+        // generate HTML pages for preview/build
+        // except `test-*.html`, which won't be generated
+        // return array of `HTMLWebpackPlugin` instances and spread it
+        ...glob.sync( path.resolve( __dirname, 'src/pages/!(test-)*\.html') , { absolute: true } )
+        .map( filePath => {
+            // name of the HTML file
+            let basename = path.basename( filePath );
+
+            // return `HTMLWebpackPlugin` instance
+            return new HTMLWebpackPlugin( {
+                filename: basename,
+                template: path.resolve( __dirname, 'src/pages/', basename )
+            } );
         } ),
 
         // to `as-is` copy files/folders
@@ -134,23 +144,30 @@ const coreConfig = {
         ] ),
 
         // extract CSS to a file
-        // use only in `production` for faster development
-        ( process.env.NODE_ENV != 'production' ) ? null : new MiniCSSExtractPlugin( {
-            chunkFilename: 'style.css'
+        // avoid plugin when `CSS_MODE` is `inline
+        ( process.env.CSS_MODE === 'inline' ) ? null : new MiniCSSExtractPlugin( {
+            filename: 'css/style.css'
         } ),
+
+        // uglify JavaScript file
+        // use only in `production` for faster development
+        /*( process.env.NODE_ENV != 'production' ) ? null : new MinifyPlugin( {}, {
+            exclude: /(node_modules|src\/js\/vendor)/,
+            sourceMap: 'inline-source-map'
+        })*/
 
         // rename chunk file names using `NamedChunksPlugin`
         // `chunk.name` will be `null` if chunk is not a `cacheGroups` bundle
         // use only in `production` for faster development
         ( process.env.NODE_ENV != 'production' ) ? null : new webpack.NamedChunksPlugin( chunk => {
-            return chunk.name ? chunk.shortid : shortid.generate().toLocaleLowerCase() + '.chunk';
+            return chunk.name ? chunk.name : `chunks/${ shortid.generate().toLowerCase() }.chunk`;
         } ),
 
         // remove chunk files from distribution before new build
         // use only in `production` for faster development
         ( process.env.NODE_ENV != 'production' ) ? null : new CleanWebpackPlugin([
-            path.resolve( __dirname, 'dist', PLATFORM, '*.chunk.js' ),
-            path.resolve( __dirname, 'dist', PLATFORM, '*.chunk.css' )
+            path.resolve( __dirname, 'dist', PLATFORM, 'js/chunks/**/*' ),
+            path.resolve( __dirname, 'dist', PLATFORM, 'css/chunks/**/*' )
         ])
     ].filter( Boolean ), // filter only non `null` plugins
 
