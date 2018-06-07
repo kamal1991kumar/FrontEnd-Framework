@@ -1,2 +1,11 @@
-// import base css
+// import base files
 @import './base';
+
+// import modules files
+@import './modules';
+
+// import component files
+@import './components';
+
+// import theme files
+@import './theme';

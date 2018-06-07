@@ -203,7 +203,10 @@ const coreConfig = {
 
         // open browser on server start
         open: true
-    }
+    },
+
+    // generate source map
+    devtool: 'source-map',
 };
 
 /**

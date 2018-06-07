@@ -1,0 +1,23 @@
+.site-header{
+    display: block;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    background-color: #fafafa;
+
+    &__logo-section{
+        text-align: center;
+        margin-bottom: 1rem;
+
+        &__logo{
+            vertical-align: middle;
+            max-height: 1.5rem;
+            filter: grayscale(1);
+            transition: all 0.3s cubic-bezier(0.755, 0.05, 0.855, 0.06);
+
+            &:hover{
+                filter: grayscale(0);
+            }
+        }
+    }
+}

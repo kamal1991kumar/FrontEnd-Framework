@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Greeting } from 'views/greeting';
+import { App } from 'components/container/App.component';
 
-ReactDOM.render( <Greeting />, document.getElementById( 'app' ) );
+// render initial component
+ReactDOM.render( <App />, document.getElementById( 'app-root' ) );

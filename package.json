@@ -57,6 +57,7 @@
     "config": "^1.30.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-loadable": "^5.4.0",
     "react-router-dom": "^4.2.2",
     "react-router-server": "^4.2.3"
   }
