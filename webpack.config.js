@@ -1,18 +1,28 @@
-const path = require('path');
-const shortid = require('shortid');
-const glob = require('glob');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MinifyPlugin = require("babel-minify-webpack-plugin");
+const path = require( 'path' );
+const shortid = require( 'shortid' );
+const glob = require( 'glob' );
+const webpack = require( 'webpack' );
+const merge = require( 'webpack-merge' );
+const HTMLWebpackPlugin = require( 'html-webpack-plugin' );
+const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
+const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
+const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
+const ConfigWebpackPlugin = require( 'config-webpack' );
+
 /**
  * ===X DO NOT MODIFY CODE BELOW X===
  * Set build platform based on environment variable
  */
 const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
+
+
+/**
+ * Initialize process environment variables from env.js file
+ */
+const envVariables = require( './env.js' );
+Object.entries( envVariables ).map( ( [ name, value ] ) => {
+    process.env[ name ] = value;
+} );
 
 
 /*=========== WEBPACK HELPER FUNCTIONS ===========*/
@@ -27,16 +37,16 @@ const copyWebpackPluginMap = ( srcDir, destDir ) => {
 
 /**
  * ===X DO NOT MODIFY CODE BELOW X===
- * 
  * Load platform dependent webpack configuration
  */
-const platformConfig = require(`./__platforms__/${ PLATFORM }.webpack.config.js`);
+const platformConfig = require( `./.platforms/${ PLATFORM }.webpack.config.js` );
 
 /**
  * Core configurations of webpack,
  * this will be eventually merged with `platformConfig`
  */
 const coreConfig = {
+    
     // webpack optimization mode
     mode: ( process.env.NODE_ENV ? process.env.NODE_ENV : 'development' ),
     
@@ -53,12 +63,13 @@ const coreConfig = {
 
         // it's the path of assets insertion in HTML page
         // must be `/` in WDS but should be `./` on production server
-        publicPath: ( process.env.NODE_ENV === 'production' ? './' : '/' ),
+        publicPath: ( 'production' === process.env.NODE_ENV  ? '/' : '/' )
     },
 
     // module/loaders configuration
     module: {
         rules: [
+            
             // use eslint for linting `.js` or `.jsx` files
             {
                 enforce: 'pre', // ==> allow only original/non-transformed files to pass
@@ -81,9 +92,9 @@ const coreConfig = {
             // avoid plugin when `CSS_MODE` is `inline`
             {
                 test: /\.scss$/,
-                use: [ 
-                    ( process.env.CSS_MODE === 'inline' ? 'style-loader' : MiniCSSExtractPlugin.loader ),
-                    'css-loader', 
+                use: [
+                    ( 'inline' === process.env.CSS_MODE  ? 'style-loader' : MiniCSSExtractPlugin.loader ),
+                    'css-loader',
                     'postcss-loader',
                     'sass-loader'
                 ]
@@ -93,9 +104,10 @@ const coreConfig = {
 
     // resolve files configuration
     resolve: {
+        
         /**
          * ===X WARNING X===
-         * Do not add `.js` extension below.  `.js` extensions will 
+         * Do not add `.js` extension below.  `.js` extensions will
          * be received & merged from `platformConfig`.
          */
         extensions: [
@@ -106,29 +118,31 @@ const coreConfig = {
 
         // alias
         alias: {
-            'animations'    :  path.resolve( __dirname, 'src/js/animations' ),
-            'components'    :  path.resolve( __dirname, 'src/js/components' ),
-            'controllers'   :  path.resolve( __dirname, 'src/js/controllers' ),
-            'models'        :  path.resolve( __dirname, 'src/js/models' ),
-            'modules'       :  path.resolve( __dirname, 'src/js/modules' ),
-            'router'        :  path.resolve( __dirname, 'src/js/router' ),
-            'services'      :  path.resolve( __dirname, 'src/js/services' ),
-            'store'         :  path.resolve( __dirname, 'src/js/store' ),
-            'vendors'       :  path.resolve( __dirname, 'src/js/vendors' ),
-            'views'         :  path.resolve( __dirname, 'src/js/views' )
+            'animations': path.resolve( __dirname, 'src/js/animations' ),
+            'components': path.resolve( __dirname, 'src/js/components' ),
+            'controllers': path.resolve( __dirname, 'src/js/controllers' ),
+            'models': path.resolve( __dirname, 'src/js/models' ),
+            'modules': path.resolve( __dirname, 'src/js/modules' ),
+            'router': path.resolve( __dirname, 'src/js/router' ),
+            'services': path.resolve( __dirname, 'src/js/services' ),
+            'store': path.resolve( __dirname, 'src/js/store' ),
+            'vendors': path.resolve( __dirname, 'src/js/vendors' ),
+            'views': path.resolve( __dirname, 'src/js/views' )
         }
     },
 
     // webpack plugins
     // allow only non-empty plugin by using `filter`
     plugins: [
+        
         // generate HTML pages for preview/build
         // except `test-*.html`, which won't be generated
         // return array of `HTMLWebpackPlugin` instances and spread it
-        ...glob.sync( path.resolve( __dirname, 'src/pages/!(test-)*\.html') , { absolute: true } )
+        ...glob.sync( path.resolve( __dirname, 'src/pages/!(test.)*.html' ), { absolute: true } )
         .map( filePath => {
+            
             // name of the HTML file
-            let basename = path.basename( filePath );
+            const basename = path.basename( filePath );
 
             // return `HTMLWebpackPlugin` instance
             return new HTMLWebpackPlugin( {
@@ -145,30 +159,28 @@ const coreConfig = {
 
         // extract CSS to a file
         // avoid plugin when `CSS_MODE` is `inline
-        ( process.env.CSS_MODE === 'inline' ) ? null : new MiniCSSExtractPlugin( {
+        ( 'inline' === process.env.CSS_MODE ) ? null : new MiniCSSExtractPlugin( {
             filename: 'css/style.css'
         } ),
-
-        // uglify JavaScript file
-        // use only in `production` for faster development
-        /*( process.env.NODE_ENV != 'production' ) ? null : new MinifyPlugin( {}, {
-            exclude: /(node_modules|src\/js\/vendor)/,
-            sourceMap: 'inline-source-map'
-        })*/
 
         // rename chunk file names using `NamedChunksPlugin`
         // `chunk.name` will be `null` if chunk is not a `cacheGroups` bundle
         // use only in `production` for faster development
-        ( process.env.NODE_ENV != 'production' ) ? null : new webpack.NamedChunksPlugin( chunk => {
+        ( 'production' !== process.env.NODE_ENV ) ? null : new webpack.NamedChunksPlugin( chunk => {
             return chunk.name ? chunk.name : `chunks/${ shortid.generate().toLowerCase() }.chunk`;
         } ),
 
         // remove chunk files from distribution before new build
         // use only in `production` for faster development
-        ( process.env.NODE_ENV != 'production' ) ? null : new CleanWebpackPlugin([
+        ( 'production' !== process.env.NODE_ENV  ) ? null : new CleanWebpackPlugin( [
             path.resolve( __dirname, 'dist', PLATFORM, 'js/chunks/**/*' ),
             path.resolve( __dirname, 'dist', PLATFORM, 'css/chunks/**/*' )
-        ])
+        ] ),
+
+        // ConfigWebpackPlugin is used here to use `node-config`
+        // use `CONFIG` global variable to get environment
+        // written in './config' json file
+        new ConfigWebpackPlugin()
     ].filter( Boolean ), // filter only non `null` plugins
 
     // webpack optimizations
@@ -176,28 +188,44 @@ const coreConfig = {
         splitChunks: {
             maxAsyncRequests: 2, // max. 2 `.js` file lazy load in parallel
             maxInitialRequests: 2, // max. 2 `.js` file lazy load at entry in parallel
+            minSize: 1 * 1000 * 1000, // 1MB minimum size before splitting up in new chunk
             
             cacheGroups: {
                 vendor: {
-                    chunks: 'all', // both : sync + async imports
-                    name: 'vendor', // [name] of chunk file being generated
-                    test: /(node_modules|src\/js\/vendor)/, // test path [RegExp, function or string]
-                    priority: -10, // high priority chunk will have modules also matches other cache groups,
-                    enforce: true, // force this chunk to split despite of `splitChunks` conditions
+                    
+                    // both : sync + async imports
+                    chunks: 'all',
+                    
+                    // [name] of chunk file being generated
+                    name: 'vendor',
+                    
+                    // test path [RegExp, function or string]
+                    test: /(node_modules|src\/js\/vendor)/,
+
+                    // high priority chunk will have modules also matches other cache groups,
+                    priority: -10,
+                    
+                    // force this chunk to split despite of `splitChunks` conditions
+                    enforce: true
                 },
                 main: {
-                    chunks: 'initial', // only sync imports
                     name: 'main',
                     priority: -20,
-                    reuseExistingChunk: true, // re-use chunks instead of creating new, use `vendor` chunks
-                    enforce: true
+                    enforce: true,
+
+                    // only sync imports
+                    chunks: 'initial',
+
+                    // re-use chunks instead of creating new, use `vendor` chunks
+                    reuseExistingChunk: true
                 }
             }
         }
-      },
+    },
 
     // development server configuration
     devServer: {
+        
         // must be `true` for SPAs
         historyApiFallback: true,
 
@@ -207,6 +235,16 @@ const coreConfig = {
 
     // generate source map
     devtool: 'source-map',
+
+    // avoid `fs` package error
+    node: {
+        fs: 'empty'
+    },
+
+    // performance
+    performance: {
+        hints: false
+    }
 };
 
 /**

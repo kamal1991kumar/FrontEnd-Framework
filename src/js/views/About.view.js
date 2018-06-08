@@ -4,6 +4,7 @@ import { NavLink as Link, Route, Switch } from 'react-router-dom';
 import AboutDigital from 'views/AboutDigital.view';
 import AboutPortal from 'views/AboutPortal.view';
 import AboutPlatforms from 'views/AboutPlatforms.view';
+import Test from 'views/Test.view';
 
 const About = () => {
     return (
@@ -29,6 +30,8 @@ const About = () => {
                     <Route exact={ false } path='/about/portal' component={ AboutPortal } />
                     <Route exact={ false } path='/about/platforms' component={ AboutPlatforms } />
                 </Switch>
+
+                <Test />
             </div>
         </div>
     );

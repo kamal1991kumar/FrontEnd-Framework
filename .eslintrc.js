@@ -18,7 +18,13 @@ module.exports = {
         "react"
     ],
     "rules": {
+        // comma at object/array end
         "comma-dangle": [ "error", "never" ],
+
+        // fat arrow
+        "arrow-body-style": ["error", "always"],
+        "arrow-spacing": ["error", { "before": true, "after": true }],
+
         "linebreak-style": [
             "error",
             "unix"
@@ -95,7 +101,8 @@ module.exports = {
         ],
         "new-cap": [
             "error", {
-                "newIsCap": true
+                "newIsCap": true,
+                "capIsNewExceptions": ["Get", "Post", "Put", "Delete"]
             }
         ],
         "no-mixed-spaces-and-tabs": "error",
@@ -117,12 +124,13 @@ module.exports = {
             "error",
             "never"
         ],
+
         //"space-after-keywords": "error",
         "space-before-blocks": "error",
 
         /* Variables */
         "no-catch-shadow": 0,
-        "no-delete-var": 1,
+        "no-delete-var": 0,
         "no-label-var": 1,
         "no-shadow-restricted-names": 1,
         "no-shadow": 1,
@@ -178,6 +186,10 @@ module.exports = {
     "globals": {
         "IS_ENV_DEV": false,
         "IS_MOCK_SERVER": false,
-        "React": true
+        "React": true,
+        "CONFIG": true, // node-config
+        "__dirname": true,
+        "process": true,
+        "module": true,
     }
 };

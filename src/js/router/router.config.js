@@ -5,15 +5,25 @@
  */
 
 // for `index.html`
+import Home from 'views/Home.view';
+import About from 'views/About.view';
+import Contact from 'views/Contact.view';
+
+// router for `index.html` page
 export const index = [
     {
         path: '/',
         exact: true,
-        render: () => <h1>Hello, I am home.</h1>
+        component: Home
     },
     {
         path: '/about',
         exact: false,
-        render: () => <h1>Hello, I am about.</h1>
+        component: About
+    },
+    {
+        path: '/contact',
+        exact: false,
+        component: Contact
     }
 ];
