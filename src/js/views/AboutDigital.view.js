@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AboutDigital = () => {
+export const AboutDigital = () => {
     return (
         <div className='block'>
             <h1 className='block__title'>Avizva Digital Design</h1>
@@ -8,5 +8,3 @@ const AboutDigital = () => {
         </div>
     );
 };
-
-export default AboutDigital;

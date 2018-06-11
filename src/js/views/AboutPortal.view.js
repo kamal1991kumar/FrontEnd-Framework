@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AboutPortal = () => {
+export const AboutPortal = () => {
     return (
         <div className='block'>
             <h1 className='block__title'>Avizva Portal Solutions</h1>
@@ -8,5 +8,3 @@ const AboutPortal = () => {
         </div>
     );
 };
-
-export default AboutPortal;

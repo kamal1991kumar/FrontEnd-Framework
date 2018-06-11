@@ -1,7 +1,7 @@
 import React from 'react';
-import Test from 'views/Test.view';
+import { Test } from 'views/Test.view';
 
-const Contact = () => {
+export const Contact = () => {
     return (
         <div className='contact-component'>
             <h1 className='contact-component__title'>Contact US</h1>
@@ -13,5 +13,3 @@ const Contact = () => {
         </div>
     );
 };
-
-export default Contact;

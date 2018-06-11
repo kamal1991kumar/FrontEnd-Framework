@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 
-const Header = () => {
+export const Header = () => {
     return (
         <div className='site-header'>
             <div className='site-header__logo-section'>
@@ -16,5 +16,3 @@ const Header = () => {
         </div>
     );
 };
-
-export default Header;

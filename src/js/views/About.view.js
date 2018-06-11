@@ -2,9 +2,9 @@ import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 
 import { RenderRoutes } from 'router';
-import Test from 'views/Test.view';
+import { Test } from 'views/Test.view';
 
-const About = ( props )  => {
+export const About = ( props )  => {
     return (
         <div className='about-component'>
             <h1 className='about-component__title'>About</h1>
@@ -23,12 +23,10 @@ const About = ( props )  => {
                     </Link>
                 </div>
 
-                <RenderRoutes page="INDEX" currentRoute={ props.currentRoute } />
+                <RenderRoutes currentPage={ props.currentPage } currentRoute={ props.currentRoute } />
 
                 <Test />
             </div>
         </div>
     );
 };
-
-export default About;

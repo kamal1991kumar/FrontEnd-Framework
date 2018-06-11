@@ -1,8 +1,8 @@
 import React from 'react';
 import { RenderRoutes } from 'router';
 
-import Header from 'views/Header.view';
-import Footer from 'views/Footer.view';
+import { Header } from 'views/Header.view';
+import { Footer } from 'views/Footer.view';
 import { MessageBus } from 'modules/MessageBus';
 import { UserService } from 'services/user.service';
 
@@ -47,7 +47,7 @@ export class App extends React.Component {
             <div>
                 <Header />
 
-                <RenderRoutes page="INDEX" />
+                <RenderRoutes currentPage="INDEX" />
 
                 <Footer />
             </div>

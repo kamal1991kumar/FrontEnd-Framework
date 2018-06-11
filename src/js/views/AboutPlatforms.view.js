@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AboutPlatforms = () => {
+export const AboutPlatforms = () => {
     return (
         <div className='block'>
             <h1 className='block__title'>Avizva Integration Platforms</h1>
@@ -8,5 +8,3 @@ const AboutPlatforms = () => {
         </div>
     );
 };
-
-export default AboutPlatforms;

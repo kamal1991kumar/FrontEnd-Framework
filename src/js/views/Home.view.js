@@ -1,5 +1,5 @@
 import React from 'react';
-import Test from 'views/Test.view';
+import { Test } from 'views/Test.view';
 
 export const Home = () => {
     return (
@@ -13,5 +13,3 @@ export const Home = () => {
         </div>
     );
 };
- 
-export default Home;

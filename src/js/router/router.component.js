@@ -23,10 +23,10 @@ class RenderRoutes extends React.Component {
             // must be page level routes
             return (
                 <Switch>
-                    { Object.entries( _.get( routes, this.props.page, [] ) ).map( ( [ routeName, route ] ) => {
+                    { Object.entries( _.get( routes, this.props.currentPage, [] ) ).map( ( [ routeName, route ] ) => {
                         return (
                             <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                return <route.component { ...props } currentRoute={ routeName } />;
+                                return <route.component { ...props } currentPage={ this.props.currentPage } currentRoute={ routeName } />;
                             } } />
                         );
                     } ) }
@@ -35,13 +35,13 @@ class RenderRoutes extends React.Component {
         } else {
             
             // current route (`key` in router.config.js) is provided,
-            // loop on nested `routes` inside `page + current route` config object
+            // loop on nested `routes` inside `current page + current route` config object
             return (
                 <Switch>
-                    { Object.entries( _.get( routes, `${ this.props.page }.${ this.props.currentRoute }.routes`, [] ) ).map( ( [ routeName, route ] ) => {
+                    { Object.entries( _.get( routes, `${ this.props.currentPage }.${ this.props.currentRoute }.routes`, [] ) ).map( ( [ routeName, route ] ) => {
                         return (
                             <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                return <route.component { ...props } currentRoute={ routeName } />;
+                                return <route.component { ...props } currentPage={ this.props.currentPage } currentRoute={ routeName } />;
                             } } />
                         );
                     } ) }

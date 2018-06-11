@@ -7,12 +7,12 @@
  */
 
 
-import { withAsync } from 'modules/withAsync';
+import { withAsyncComponent } from 'modules/withAsyncComponent';
 
 // About sub components
-import AboutDigital from 'views/AboutDigital.view';
-import AboutPortal from 'views/AboutPortal.view';
-import AboutPlatforms from 'views/AboutPlatforms.view';
+import { AboutDigital } from 'views/AboutDigital.view';
+import { AboutPortal } from 'views/AboutPortal.view';
+import { AboutPlatforms } from 'views/AboutPlatforms.view';
 
 
 /*****************************************************/
@@ -26,15 +26,15 @@ export const routes = {
         HOME: {
             path: '/',
             exact: true,
-            component: withAsync( () => import( 'views/Home.view' ).then( components => components.Home ) )
+
+            // avoid default export and use named export e.g. export { Home }
+            component: withAsyncComponent( () => import( 'views/Home.view' ).then( components => components.Home ) )
         },
 
         ABOUT: {
             path: '/about',
             exact: false,
-            component: withAsync( () => {
-                return import( 'views/About.view' );
-            } ),
+            component: withAsyncComponent( () => import( 'views/About.view' ).then( components => components.About ) ),
             routes: {
                 ABOUT_DIGITAL: {
                     path: '/about',
@@ -57,9 +57,7 @@ export const routes = {
         CONTACT: {
             path: '/contact',
             exact: false,
-            component: withAsync( () => {
-                return import( 'views/Contact.view' );
-            } )
+            component: withAsyncComponent( () => import( 'views/Contact.view' ).then( components => components.Contact ) )
         }
     }
 };

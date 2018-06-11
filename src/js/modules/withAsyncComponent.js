@@ -1,5 +1,5 @@
 /**
- * withAsync( Component, LoadingView ) returns async component
+ * withAsyncComponent( Component, LoadingView ) returns async component
  * using `import()` function. First argument is function which returns
  * a import() promise and second is loading (spinner) view.
  */
@@ -13,11 +13,11 @@ const SimpleLoadingView = () => {
 };
 
 // return async component
-const withAsync = function( promiseFunction, LoadingComponent = SimpleLoadingView ) {
+const withAsyncComponent = function( promiseFunction, LoadingComponent = SimpleLoadingView ) {
     return loadable( {
         loader: promiseFunction,
         loading: LoadingComponent
     } );
 };
 
-export { withAsync };
+export { withAsyncComponent };
