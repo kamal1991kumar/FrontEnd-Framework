@@ -1,4 +1,5 @@
 import React from 'react';
+import Test from 'views/Test.view';
 
 const Home = () => {
     return (
@@ -7,6 +8,8 @@ const Home = () => {
             <p className='home-component__content'>
                 a team of enthusiasts and experts bringing together creativity and technology to provide right consulting, thoughtful design and customised solutions. We are sticklers for engaging and sensible design.
             </p>
+
+            <Test />
         </div>
     );
 };

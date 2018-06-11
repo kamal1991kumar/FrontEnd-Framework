@@ -123,7 +123,7 @@ const coreConfig = {
             'controllers': path.resolve( __dirname, 'src/js/controllers' ),
             'models': path.resolve( __dirname, 'src/js/models' ),
             'modules': path.resolve( __dirname, 'src/js/modules' ),
-            'router': path.resolve( __dirname, 'src/js/router' ),
+            'router': path.resolve( __dirname, 'src/js/router/router.component.js' ),
             'services': path.resolve( __dirname, 'src/js/services' ),
             'store': path.resolve( __dirname, 'src/js/store' ),
             'vendors': path.resolve( __dirname, 'src/js/vendors' ),
@@ -186,11 +186,12 @@ const coreConfig = {
     // webpack optimizations
     optimization: {
         splitChunks: {
-            maxAsyncRequests: 2, // max. 2 `.js` file lazy load in parallel
-            maxInitialRequests: 2, // max. 2 `.js` file lazy load at entry in parallel
-            minSize: 1 * 1000 * 1000, // 1MB minimum size before splitting up in new chunk
+            maxAsyncRequests: 4, // max. 4 `.js` file async load request
+            maxInitialRequests: 4, // max. 4 `.js` file sync load request
+            minSize: 30 * 1000, // min. 30KB chunk size before split
             
             cacheGroups: {
+                default: false,
                 vendor: {
                     
                     // both : sync + async imports
@@ -203,15 +204,12 @@ const coreConfig = {
                     test: /(node_modules|src\/js\/vendor)/,
 
                     // high priority chunk will have modules also matches other cache groups,
-                    priority: -10,
-                    
-                    // force this chunk to split despite of `splitChunks` conditions
-                    enforce: true
+                    priority: 20
                 },
-                main: {
-                    name: 'main',
-                    priority: -20,
-                    enforce: true,
+                common: {
+                    name: 'common',
+                    priority: 10,
+                    minChunks: 2,
 
                     // only sync imports
                     chunks: 'initial',
@@ -234,7 +232,7 @@ const coreConfig = {
     },
 
     // generate source map
-    devtool: 'source-map',
+    devtool: ( 'production' === process.env.NODE_ENV ? 'source-map' : 'cheap-module-eval-source-map' ),
 
     // avoid `fs` package error
     node: {

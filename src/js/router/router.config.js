@@ -4,26 +4,60 @@
  * identified by the page name
  */
 
-// for `index.html`
-import Home from 'views/Home.view';
-import About from 'views/About.view';
-import Contact from 'views/Contact.view';
+import { withAsync } from 'modules/withAsync';
 
-// router for `index.html` page
-export const index = [
-    {
-        path: '/',
-        exact: true,
-        component: Home
-    },
-    {
-        path: '/about',
-        exact: false,
-        component: About
-    },
-    {
-        path: '/contact',
-        exact: false,
-        component: Contact
+// About sub components
+import AboutDigital from 'views/AboutDigital.view';
+import AboutPortal from 'views/AboutPortal.view';
+import AboutPlatforms from 'views/AboutPlatforms.view';
+
+/*****************************************************/
+
+
+// route configuration and sub-routes
+export const routes = {
+
+    // router for `index.html` page
+    INDEX: {
+        HOME: {
+            path: '/',
+            exact: true,
+            component: withAsync( () => {
+                return import( 'views/Home.view' );
+            } )
+        },
+
+        ABOUT: {
+            path: '/about',
+            exact: false,
+            component: withAsync( () => {
+                return import( 'views/About.view' );
+            } ),
+            routes: {
+                ABOUT_DIGITAL: {
+                    path: '/about',
+                    exact: true,
+                    component: AboutDigital
+                },
+                ABOUT_PORTAL: {
+                    path: '/about/portal',
+                    exact: true,
+                    component: AboutPortal
+                },
+                ABOUT_PLATFORMS: {
+                    path: '/about/platforms',
+                    exact: true,
+                    component: AboutPlatforms
+                }
+            }
+        },
+
+        CONTACT: {
+            path: '/contact',
+            exact: false,
+            component: withAsync( () => {
+                return import( 'views/Contact.view' );
+            } )
+        }
     }
-];
+};

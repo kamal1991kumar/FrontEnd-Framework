@@ -1,12 +1,10 @@
 import React from 'react';
-import { NavLink as Link, Route, Switch } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 
-import AboutDigital from 'views/AboutDigital.view';
-import AboutPortal from 'views/AboutPortal.view';
-import AboutPlatforms from 'views/AboutPlatforms.view';
+import { RenderRoutes } from 'router';
 import Test from 'views/Test.view';
 
-const About = () => {
+const About = ( props )  => {
     return (
         <div className='about-component'>
             <h1 className='about-component__title'>About</h1>
@@ -24,12 +22,8 @@ const About = () => {
                         Integration Platforms
                     </Link>
                 </div>
-                
-                <Switch>
-                    <Route exact={ true } path='/about' component={ AboutDigital } />
-                    <Route exact={ false } path='/about/portal' component={ AboutPortal } />
-                    <Route exact={ false } path='/about/platforms' component={ AboutPlatforms } />
-                </Switch>
+
+                <RenderRoutes page="INDEX" currentRoute={ props.currentRoute } />
 
                 <Test />
             </div>

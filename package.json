@@ -60,6 +60,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "config": "^1.30.0",
+    "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-loadable": "^5.4.0",

@@ -1,30 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import loadable from 'react-loadable';
+import { RenderRoutes } from 'router';
 
 import Header from 'views/Header.view';
 import Footer from 'views/Footer.view';
-import Home from 'views/Home.view';
 import { MessageBus } from 'modules/MessageBus';
 import { UserService } from 'services/user.service';
-
-const Loading = () => {
-    return <h1>loading...</h1>;
-};
-
-const AboutAsync = loadable( {
-    loader: () => {
-        return import( 'views/About.view' );
-    },
-    loading: Loading
-} );
-
-const ContactAsync = loadable( {
-    loader: () => {
-        return import( 'views/Contact.view' );
-    },
-    loading: Loading
-} );
 
 export class App extends React.Component {
     constructor() {
@@ -34,7 +14,7 @@ export class App extends React.Component {
     componentWillMount() {
 
         // call a service
-        UserService.getAllUsers().subscribe( data => {
+        this.sub = UserService.getAllUsers().subscribe( data => {
             window.console.log( '[UserService getAllUsers]', data );
         } );
 
@@ -64,23 +44,18 @@ export class App extends React.Component {
 
     render() {
         return (
-            <Router>
-                <div>
-                    <Header />
-                    
-                    <Switch>
-                        <Route exact={ true } path='/' component={ Home } />
-                        <Route exact={ false } path='/about' component={ AboutAsync } />
-                        <Route exact={ false } path='/contact' component={ ContactAsync } />
-                    </Switch>
-    
-                    <Footer />
-                </div>
-            </Router>
+            <div>
+                <Header />
+
+                <RenderRoutes page="INDEX" />
+
+                <Footer />
+            </div>
         );
     }
 
     componentWillUnmount() {
         MessageBus.off( this.messageBusSubscription );
+        this.sub.subscribe();
     }
 }
