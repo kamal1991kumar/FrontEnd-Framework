@@ -1,7 +1,7 @@
 import React from 'react';
 import Test from 'views/Test.view';
 
-const Home = () => {
+export const Home = () => {
     return (
         <div className='home-component'>
             <h1 className='home-component__title'>We are</h1>
@@ -13,5 +13,5 @@ const Home = () => {
         </div>
     );
 };
-
+ 
 export default Home;

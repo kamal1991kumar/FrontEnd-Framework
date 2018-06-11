@@ -1,8 +1,11 @@
+/* eslint-disable arrow-body-style */
+
 /**
  * Routes tree configuration file
  * This file contains tree structure for entire application
  * identified by the page name
  */
+
 
 import { withAsync } from 'modules/withAsync';
 
@@ -10,6 +13,7 @@ import { withAsync } from 'modules/withAsync';
 import AboutDigital from 'views/AboutDigital.view';
 import AboutPortal from 'views/AboutPortal.view';
 import AboutPlatforms from 'views/AboutPlatforms.view';
+
 
 /*****************************************************/
 
@@ -22,9 +26,7 @@ export const routes = {
         HOME: {
             path: '/',
             exact: true,
-            component: withAsync( () => {
-                return import( 'views/Home.view' );
-            } )
+            component: withAsync( () => import( 'views/Home.view' ).then( components => components.Home ) )
         },
 
         ABOUT: {
