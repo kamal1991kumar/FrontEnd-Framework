@@ -7,7 +7,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 // export function which returns `WithRouter` class
-const withBrowserRouter = function( Component, props = {} ) {
+const withBrowserRouter = ( Component, props = {} ) => {
     return class WithRouter extends React.Component {
         constructor() {
             super();

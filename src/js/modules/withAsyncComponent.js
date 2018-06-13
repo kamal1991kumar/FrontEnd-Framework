@@ -13,7 +13,7 @@ const SimpleLoadingView = () => {
 };
 
 // return async component
-const withAsyncComponent = function( promiseFunction, LoadingComponent = SimpleLoadingView ) {
+const withAsyncComponent = ( promiseFunction, LoadingComponent = SimpleLoadingView ) => {
     return loadable( {
         loader: promiseFunction,
         loading: LoadingComponent
