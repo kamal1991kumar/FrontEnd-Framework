@@ -5,12 +5,10 @@ import { App } from 'components/container/App.component';
 import { withBrowserRouter } from 'modules/withBrowserRouter';
 import { withRedux } from 'modules/withRedux';
 
-// inject `App` componnent with router
-// pass a [component] and extra [props]
+// [Router] this wraps component with 'BrowserRouter`
 const AppWithRouter = withBrowserRouter( App, { currentPage: 'INDEX' } );
 
-// inject `AppWithRouter` componnent with redux
-// pass a [component], [state] and extra [props]
+// [Redux] this wraps component with 'Provider` and a `store`
 const AppWithRedux = withRedux( AppWithRouter, {}, {} );
 
 // render
