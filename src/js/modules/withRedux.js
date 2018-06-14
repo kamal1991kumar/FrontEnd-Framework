@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 import { getStore } from 'store';
 
 // export function which returns `WithRedux` class
-export const withRedux = function( Component, state = {}, props = {} ) {
+export const withRedux = ( Component, state = {}, props = {} ) => {
     return class WithRedux extends React.Component {
         constructor() {
             super();

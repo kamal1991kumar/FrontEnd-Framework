@@ -8,7 +8,7 @@
 import axios from 'axios';
 import axiosCancel from 'axios-cancel';
 import shortid from 'shortid';
-import _ from 'lodash';
+import { get } from 'lodash';
 
 // add `cancel` prototype method
 // to abort `XHR` requests and promise
@@ -37,10 +37,10 @@ const responseFormatter = {
     // when http request returns error
     error: ( httpError ) => {
         return {
-            type: _.get( httpError, 'response.status' ) ? 'HTTP_ERROR' : 'NETWORK_ERROR',
-            error: _.get( httpError, 'response.data', httpError.message ),
-            status: _.get( httpError, 'response.status', 0 ),
-            headers: _.get( httpError, 'response.headers', {} ),
+            type: get( httpError, 'response.status' ) ? 'HTTP_ERROR' : 'NETWORK_ERROR',
+            error: get( httpError, 'response.data', httpError.message ),
+            status: get( httpError, 'response.status', 0 ),
+            headers: get( httpError, 'response.headers', {} ),
             timestamp: Date.now()
         };
     }
