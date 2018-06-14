@@ -9,6 +9,9 @@ const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
 const ConfigWebpackPlugin = require( 'config-webpack' );
 
+// extra webpack configuration
+const { alias } = require( './webpack.config.extra' );
+
 /**
  * ===X DO NOT MODIFY CODE BELOW X===
  * Set build platform based on environment variable
@@ -116,19 +119,8 @@ const coreConfig = {
             '.json'
         ],
 
-        // alias
-        alias: {
-            'animations': path.resolve( __dirname, 'src/js/animations' ),
-            'components': path.resolve( __dirname, 'src/js/components' ),
-            'controllers': path.resolve( __dirname, 'src/js/controllers' ),
-            'models': path.resolve( __dirname, 'src/js/models' ),
-            'modules': path.resolve( __dirname, 'src/js/modules' ),
-            'router': path.resolve( __dirname, 'src/js/router/router.component.js' ),
-            'services': path.resolve( __dirname, 'src/js/services' ),
-            'store': path.resolve( __dirname, 'src/js/store' ),
-            'vendors': path.resolve( __dirname, 'src/js/vendors' ),
-            'views': path.resolve( __dirname, 'src/js/views' )
-        }
+        // module alias
+        alias: alias
     },
 
     // webpack plugins

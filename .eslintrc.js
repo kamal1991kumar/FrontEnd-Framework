@@ -191,5 +191,6 @@ module.exports = {
         "__dirname": true,
         "process": true,
         "module": true,
+        "exports": true
     }
 };

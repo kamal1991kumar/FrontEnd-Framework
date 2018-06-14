@@ -4,6 +4,7 @@ import { RenderRoutes } from 'router';
 import { Header } from 'views/Header.view';
 import { Footer } from 'views/Footer.view';
 import { MessageBus } from 'modules/MessageBus';
+import utils from 'utils';
 
 import { fromEvent } from 'rxjs';
 import { pluck, debounceTime } from 'rxjs/operators';
@@ -14,6 +15,10 @@ export class App extends React.Component {
         super();
 
         this.inputRef = React.createRef();
+
+        window.console.log(
+            'utils.stringify( {a: 1} )', utils.stringify( {a: 1} )
+        );
     }
 
     makeRequest() {

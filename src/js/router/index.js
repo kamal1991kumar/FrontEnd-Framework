@@ -11,7 +11,9 @@ import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 import { routes } from './router.config';
 
-class RenderRoutes extends React.Component {
+// export `RenderRoutes` class which renders different routes
+// based on `page` and `currentRoutePath`
+export class RenderRoutes extends React.Component {
     constructor() {
         super();
     }
@@ -50,5 +52,3 @@ class RenderRoutes extends React.Component {
         }
     }
 }
-
-export { RenderRoutes };
