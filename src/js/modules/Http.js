@@ -46,25 +46,38 @@ const responseFormatter = {
     }
 };
 
+// `makeRequestConfig` return a fully-fledged config object for axios
+// with some default config values
+const makeRequestConfig = ( config ) => {
+    const requestConfig = {
+        requestId: shortid.generate(),
+        method: 'GET',
+        host: 'http://localhost',
+        path: '/',
+        timeout: 10 * 1000 // 10s
+    };
+
+    if( 'string' === typeof config ) {
+        return Object.assign( {}, requestConfig, { url: config } );
+    } else{
+        const _config = Object.assign( {}, config, config );
+        return Object.assign( {}, requestConfig, { url: _config.host + _config.path } );
+    }
+};
+
 
 /*************************************************************/
 
 
 // HTTP GET method
 // Use: http.get( config, { success, error } ) => cancelFunction
-Http.get = ( { host = 'http://localhost', path = '/', timeout = 10000, headers = {} }, { success, error } ) => {
+Http.get = ( config, { success, error } ) => {
     
-    // create unique request id
-    const requestId = shortid.generate();
+    // create request configuration for axios
+    const reqConfig =  makeRequestConfig( config );
 
     // execute axios AJAX request
-    axios( {
-        method: 'get',
-        url: host +  path,
-        headers,
-        timeout,
-        requestId
-    } )
+    axios( reqConfig )
     .then( ( response ) => {
         success( responseFormatter.success( response ) );
      } )
@@ -74,92 +87,6 @@ Http.get = ( { host = 'http://localhost', path = '/', timeout = 10000, headers =
 
     // return cancel function
     return () => {
-        axios.cancel( requestId );
-    };
-};
-
-// HTTP POST method
-// Use: http.post( config, { success, error } ) => cancelFunction
-Http.post = ( { host = 'http://localhost', path = '/', timeout = 10000, headers = {}, data = {} }, { success, error } ) => {
-    
-    // create unique request id
-    const requestId = shortid.generate();
-
-    // execute axios AJAX request
-    axios( {
-        method: 'post',
-        url: host +  path,
-        data,
-        headers,
-        timeout,
-        requestId
-    } )
-    .then( ( response ) => {
-        success( responseFormatter.success( response ) );
-     } )
-    .catch( ( response ) => {
-        error( responseFormatter.error( response ) );
-    } );
-
-    // return cancel function
-    return () => {
-        axios.cancel( requestId );
-    };
-};
-
-// HTTP PUT method
-// Use: http.put( config, { success, error } ) => cancelFunction
-Http.put = ( { host = 'http://localhost', path = '/', timeout = 10000, headers = {}, data = {} }, { success, error } ) => {
-    
-    // create unique request id
-    const requestId = shortid.generate();
-
-    // execute axios AJAX request
-    axios( {
-        method: 'put',
-        url: host +  path,
-        data,
-        headers,
-        timeout,
-        requestId
-    } )
-    .then( ( response ) => {
-        success( responseFormatter.success( response ) );
-     } )
-    .catch( ( response ) => {
-        error( responseFormatter.error( response ) );
-    } );
-
-    // return cancel function
-    return () => {
-        axios.cancel( requestId );
-    };
-};
-
-// HTTP DELETE method
-// Use: http.delete( config, { success, error } ) => cancelFunction
-Http.delete = ( { host = 'http://localhost', path = '/', timeout = 10000, headers = {} }, { success, error } ) => {
-    
-    // create unique request id
-    const requestId = shortid.generate();
-
-    // execute axios AJAX request
-    axios( {
-        method: 'delete',
-        url: host +  path,
-        headers,
-        timeout,
-        requestId
-    } )
-    .then( ( response ) => {
-        success( responseFormatter.success( response ) );
-     } )
-    .catch( ( response ) => {
-        error( responseFormatter.error( response ) );
-    } );
-
-    // return cancel function
-    return () => {
-        axios.cancel( requestId );
+        axios.cancel( reqConfig.requestId );
     };
 };

@@ -7,7 +7,7 @@ import { MessageBus } from 'modules/MessageBus';
 import utils from 'utils';
 
 import { fromEvent } from 'rxjs';
-import { pluck, debounceTime } from 'rxjs/operators';
+import { switchMap} from 'rxjs/operators';
 import { getAllUsers } from 'services/user.service';
 
 export class App extends React.Component {
@@ -22,23 +22,13 @@ export class App extends React.Component {
     }
 
     makeRequest() {
-
-        // getAllUsers( hander, transformer )
-        this.serviceRef = getAllUsers( {
-            success: ( data ) => {
-                this.handleUsers( data );
-            },
-            error: ( err ) => {
-                window.console.log( '[ GetAllUsers Service Error ] ===> ', err );
-            },
-            complete: () => {
-                window.console.log( '[ GetAllUsers Service Complete ]' );
-            }
-        }, [ pluck( 'data' ) ] );
+        this.subscription = getAllUsers( { path: '/users' } ).subscribe( data => {
+            this.handleUsers( data );
+        } );
     }
 
     cancelRequest() {
-        this.serviceRef.abort();
+        this.subscription.unsubscribe();
     }
 
     handleUsers( data ) {
@@ -57,9 +47,12 @@ export class App extends React.Component {
 
         // RxJS from event
         fromEvent( this.inputRef.current, 'input' )
-        .pipe( debounceTime( 1000 ) )
-        .subscribe( this.makeRequest.bind( this ) );
-
+        .pipe(
+            switchMap( () => {
+                return getAllUsers( { path: '/users' } );
+            } )
+         )
+        .subscribe( this.handleUsers.bind( this ) );
         
         // emit message bus `CHAT_MESSAGE` event
         MessageBus.emit( 'CHAT_MESSAGE', {
