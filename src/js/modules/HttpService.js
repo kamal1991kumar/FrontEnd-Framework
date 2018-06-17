@@ -2,30 +2,32 @@ import { Observable, Subscriber } from 'rxjs';
 import { Http } from './Http';
 
 /**
- * new HttpSubscriber( subscriber, method, config )
+ * new HttpSubscriber( observer, method, config )
  * This class provides a tear-down logic to send Ajax request
  * on subscription and abort exisiting XHR requests on unsubscription
  */
 class HttpSubscriber extends Subscriber {
-    constructor( subscriber, method, config ) {
-        super( subscriber );
+    constructor( observer, method, config ) {
+        super( observer );
 
         // send network request
-        this.send( subscriber, method, config );
+        this.send( observer, method, config );
 
         // request already aborted
         this.aborted = false;
     }
 
     // send AJAX request
-    send( subscriber, method, config ) {
+    send( observer, method, config ) {
         this.abortRequest = Http[ method ]( config, {
             success: ( result ) => {
-                subscriber.next( result );
-                subscriber.complete();
+                this.aborted = true;
+                observer.next( result );
+                observer.complete();
             },
             error: ( error ) => {
-                subscriber.error( error );
+                this.aborted = true;
+                observer.error( error );
             }
         } );
     }
@@ -49,8 +51,8 @@ class HttpSubscriber extends Subscriber {
  */
 class HttpObservable extends Observable {
     constructor( method, config ) {
-        super( ( subscriber ) => {
-            return new HttpSubscriber( subscriber, method.toLowerCase(), config );
+        super( ( observer ) => {
+            return new HttpSubscriber( observer, method.toLowerCase(), config );
         } );
     }
 }
