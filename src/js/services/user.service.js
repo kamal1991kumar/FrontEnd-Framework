@@ -2,10 +2,10 @@ import { HttpService } from 'modules/HttpService';
 
 /**
  * ===X DO NOT MODIFY CODE BELOW X===
- * Create new HTTP service instance with global configuration.
+ * Get singleton HTTP service instance with global configuration.
  * API host endpoint received from env config.
  */
-const http = new HttpService( {
+const http = HttpService.create( {
     host: CONFIG.hosts.api.main
 } );
 

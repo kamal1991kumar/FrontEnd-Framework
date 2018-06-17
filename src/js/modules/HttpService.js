@@ -69,6 +69,15 @@ export class HttpService {
         this.config = config;
     }
 
+    // return singleton instance
+    static create( config ) {
+        if( ! this.instance ) {
+            this.instance = new HttpService( config );
+        }
+
+        return this.instance;
+    }
+
     get( config ) {
         return new HttpObservable( 'get', Object.assign( this.config, config ) );
     }
