@@ -72,7 +72,7 @@ export class HttpService {
     // return singleton instance
     static create( config ) {
         if( ! this.instance ) {
-            this.instance = new HttpService( config );
+            this.instance = new this( config );
         }
 
         return this.instance;
