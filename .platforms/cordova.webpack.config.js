@@ -8,7 +8,9 @@ module.exports = {
     resolve: {
         extensions: [
             '.cordova.js',
-            '.js'
+            '.cordova.jsx',
+            '.js',
+            '.jsx'
         ]
     }
 }

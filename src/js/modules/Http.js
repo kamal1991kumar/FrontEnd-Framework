@@ -49,19 +49,34 @@ const responseFormatter = {
 // `makeRequestConfig` return a fully-fledged config object for axios
 // with some default config values
 const makeRequestConfig = ( config ) => {
+    
+    // default request configuration
     const requestConfig = {
         requestId: shortid.generate(),
         method: 'GET',
         host: 'http://localhost',
         path: '/',
-        timeout: 10 * 1000 // 10s
+        timeout: 60 * 1000 // 1 min
     };
+
+    // add progress listener to config
+    if( config.onUploadProgress && ( 'function' === typeof config.onUploadProgress ) ) {
+        const currentCallback = config.onUploadProgress;
+        
+        config.onUploadProgress = ( event ) => {
+            currentCallback( {
+                sent: event.loaded,
+                total: event.total,
+                percentSent: Math.round( ( event.loaded / event.total ) * 100 )
+            } );
+        };
+    }
 
     if( 'string' === typeof config ) {
         return Object.assign( {}, requestConfig, { url: config } );
     } else{
-        const _config = Object.assign( {}, config, config );
-        return Object.assign( {}, requestConfig, { url: _config.host + _config.path } );
+        const _config = Object.assign( {}, requestConfig, config );
+        return Object.assign( {}, _config, { url: _config.host + _config.path } );
     }
 };
 
@@ -72,6 +87,29 @@ const makeRequestConfig = ( config ) => {
 // HTTP GET method
 // Use: http.get( config, { success, error } ) => cancelFunction
 Http.get = ( config, { success, error } ) => {
+    
+    // create request configuration for axios
+    const reqConfig =  makeRequestConfig( config );
+
+    // execute axios AJAX request
+    axios( reqConfig )
+    .then( ( response ) => {
+        success( responseFormatter.success( response ) );
+     } )
+    .catch( ( response ) => {
+        error( responseFormatter.error( response ) );
+    } );
+
+    // return cancel function
+    return () => {
+        axios.cancel( reqConfig.requestId );
+    };
+};
+
+
+// HTTP POST method
+// Use: http.post( config, { success, error } ) => cancelFunction
+Http.post = ( config, { success, error } ) => {
     
     // create request configuration for axios
     const reqConfig =  makeRequestConfig( config );

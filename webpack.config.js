@@ -66,7 +66,7 @@ const coreConfig = {
 
         // it's the path of assets insertion in HTML page
         // must be `/` in WDS but should be `./` on production server
-        publicPath: ( 'production' === process.env.NODE_ENV  ? '/' : '/' )
+        publicPath: ( 'production' === process.env.NODE_ENV  ? './' : '/' )
     },
 
     // module/loaders configuration
@@ -128,7 +128,7 @@ const coreConfig = {
     plugins: [
         
         // generate HTML pages for preview/build
-        // except `test-*.html`, which won't be generated
+        // except `test.*.html`, which won't be generated
         // return array of `HTMLWebpackPlugin` instances and spread it
         ...glob.sync( path.resolve( __dirname, 'src/pages/!(test.)*.html' ), { absolute: true } )
         .map( filePath => {
@@ -184,6 +184,8 @@ const coreConfig = {
             
             cacheGroups: {
                 default: false,
+                vendors: false,
+                
                 vendor: {
                     
                     // both : sync + async imports
