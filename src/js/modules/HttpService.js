@@ -7,50 +7,23 @@ import { Http } from './Http';
  * on subscription and abort exisiting XHR requests on unsubscription
  */
 class HttpSubscriber extends Subscriber {
-    constructor( observer, method, config, { progress } ) {
+    constructor( observer, method, config ) {
         super( observer );
 
-        // emit progress event
-        if( ( ( true === progress ) && [ 'post', 'put' ].includes( method ) ) && ( ! config.onUploadProgress ) ) {
-            
-            // add `onUploadProgress` callback to `config`
-            config.onUploadProgress = ( event ) => {
-                observer.next( {
-                    type: 'progress',
-                    data: event
-                } );
-            };
-
-            // send network request
-            this.send( observer, method, config, true );
-        } else {
-
-            // send network request
-            this.send( observer, method, config, false );
-        }
-
-        // request already aborted
+        // request aborted pointer
         this.aborted = false;
+
+        // send network request
+        this.send( observer, method, config );
     }
 
     // send AJAX request
-    send( observer, method, config, sendingProgress ) {
+    send( observer, method, config ) {
         this.abortRequest = Http[ method ]( { ...config, method }, {
             success: ( result ) => {
                 this.aborted = true;
 
-                // if observable is sending progress event,
-                // then wrap result with `type` and `data`
-                if ( true === sendingProgress ) {
-                    observer.next( {
-                        type: 'response',
-                        data: result
-                    } );
-                } else {
-                    observer.next( result );
-                }
-
-                // complete observable emission
+                observer.next( result );
                 observer.complete();
             },
             error: ( error ) => {
@@ -78,9 +51,9 @@ class HttpSubscriber extends Subscriber {
  * and abort current XHR requests on unsubscription
  */
 class HttpObservable extends Observable {
-    constructor( method, config, serviceConfig ) {
+    constructor( method, config ) {
         super( ( observer ) => {
-            return new HttpSubscriber( observer, method.toLowerCase(), config, serviceConfig );
+            return new HttpSubscriber( observer, method.toLowerCase(), config );
         } );
     }
 }
@@ -106,19 +79,19 @@ export class HttpService {
         return this.instance;
     }
 
-    get( config, serviceConfig = {} ) {
-        return new HttpObservable( 'get', Object.assign( this.config, config ), serviceConfig );
+    get( config ) {
+        return new HttpObservable( 'get', Object.assign( this.config, config ) );
     }
 
-    post( config, serviceConfig = {} ) {
-        return new HttpObservable( 'post', Object.assign( this.config, config ), serviceConfig );
+    post( config ) {
+        return new HttpObservable( 'post', Object.assign( this.config, config ) );
     }
 
-    put( config, serviceConfig = {} ) {
-        return new HttpObservable( 'put', Object.assign( this.config, config ), serviceConfig );
+    put( config ) {
+        return new HttpObservable( 'put', Object.assign( this.config, config ) );
     }
 
-    delete( config, serviceConfig = {} ) {
-        return new HttpObservable( 'delete', Object.assign( this.config, config ), serviceConfig );
+    delete( config ) {
+        return new HttpObservable( 'delete', Object.assign( this.config, config ) );
     }
 }

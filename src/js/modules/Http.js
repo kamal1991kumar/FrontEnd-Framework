@@ -59,7 +59,7 @@ const makeRequestConfig = ( config ) => {
         timeout: 60 * 1000 // 1 min
     };
 
-    // add progress listener to config
+    // add upload progress listener to config
     if( config.onUploadProgress && ( 'function' === typeof config.onUploadProgress ) ) {
         const currentCallback = config.onUploadProgress;
         
@@ -67,14 +67,27 @@ const makeRequestConfig = ( config ) => {
             currentCallback( {
                 sent: event.loaded,
                 total: event.total,
-                percentSent: Math.round( ( event.loaded / event.total ) * 100 )
+                percent: 0 !== event.total ? Math.round( ( event.loaded / event.total ) * 100 ) : null
+            } );
+        };
+    }
+
+    // add download progress listener to config
+    if( config.onDownloadProgress && ( 'function' === typeof config.onDownloadProgress ) ) {
+        const currentCallback = config.onDownloadProgress;
+        
+        config.onDownloadProgress = ( event ) => {
+            currentCallback( {
+                received: event.loaded,
+                total: event.total,
+                percent: 0 !== event.total ? Math.round( ( event.loaded / event.total ) * 100 ) : null
             } );
         };
     }
 
     if( 'string' === typeof config ) {
         return Object.assign( {}, requestConfig, { url: config } );
-    } else{
+    } else {
         const _config = Object.assign( {}, requestConfig, config );
         return Object.assign( {}, _config, { url: _config.host + _config.path } );
     }

@@ -13,10 +13,10 @@ const http = HttpService.create( {
 /*************************************************************/
 
 
-export const getAllUsers = ( requestConfig ) => {
-    return http.get( requestConfig );
+export const getAllUsers = ( config ) => {
+    return http.get( config );
 };
 
-export const addUser = ( requestConfig, serviceConfig ) => {
-    return http.post( requestConfig, serviceConfig );
+export const addUser = ( config ) => {
+    return http.post( config );
 };

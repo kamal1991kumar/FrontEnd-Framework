@@ -12,5 +12,6 @@ exports.alias = {
     'vendors': path.resolve( __dirname, 'src/js/vendors' ),
     'views': path.resolve( __dirname, 'src/js/views' ),
     'router': path.resolve( __dirname, 'src/js/router/index.js' ),
-    'utils': path.resolve( __dirname, 'src/js/utils/index.js' )
+    'utils': path.resolve( __dirname, 'src/js/utils/index.js' ),
+    'constants': path.resolve( __dirname, 'src/js/constants/index.js' )
 };
