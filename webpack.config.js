@@ -4,6 +4,7 @@ const glob = require( 'glob' );
 const webpack = require( 'webpack' );
 const merge = require( 'webpack-merge' );
 const _ = require( 'lodash' );
+const boolean = require( 'boolean' );
 const HTMLWebpackPlugin = require( 'html-webpack-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
@@ -96,11 +97,11 @@ const coreConfig = {
             },
 
             // extract CSS to file(s) using `MiniCSSExtractPlugin`,
-            // avoid plugin when `CSS_MODE` is `inline`
+            // avoid plugin when `WDS_EXTRACT_CSS` is `true`
             {
                 test: /\.scss$/,
                 use: [
-                    ( 'inline' === process.env.CSS_MODE  ? 'style-loader' : MiniCSSExtractPlugin.loader ),
+                    ( false === boolean( _.get( process, 'env.WDS_EXTRACT_CSS', false ) )  ? 'style-loader' : MiniCSSExtractPlugin.loader ),
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
@@ -154,8 +155,8 @@ const coreConfig = {
         ] ),
 
         // extract CSS to a file
-        // avoid plugin when `CSS_MODE` is `inline
-        ( 'inline' === process.env.CSS_MODE ) ? null : new MiniCSSExtractPlugin( {
+        // avoid plugin when `WDS_EXTRACT_CSS` is `true
+        ( false === boolean( _.get( process, 'env.WDS_EXTRACT_CSS', false ) ) ) ? null : new MiniCSSExtractPlugin( {
             filename: 'css/style.css'
         } ),
 
@@ -226,7 +227,7 @@ const coreConfig = {
         historyApiFallback: true,
 
         // open browser on server start
-        open: !! process.env.WDS_OPEN
+        open: true === boolean( _.get( process, 'env.WDS_OPEN', false ) )
     },
 
     // generate source map
