@@ -22,7 +22,7 @@ const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
 /**
  * Initialize process environment variables from env.js file
  */
-const envVariables = require( './env.js' );
+const envVariables = require( './env.json' );
 Object.entries( envVariables ).map( ( [ name, value ] ) => {
     process.env[ name ] = value;
 } );
@@ -222,7 +222,7 @@ const coreConfig = {
         historyApiFallback: true,
 
         // open browser on server start
-        open: true
+        open: !! process.env.OPEN_BROWSER
     },
 
     // generate source map
