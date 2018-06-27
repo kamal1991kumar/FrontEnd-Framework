@@ -226,7 +226,7 @@ const coreConfig = {
         historyApiFallback: true,
 
         // open browser on server start
-        open: !! process.env.OPEN_BROWSER
+        open: !! process.env.WDS_OPEN
     },
 
     // generate source map
