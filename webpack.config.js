@@ -3,6 +3,7 @@ const shortid = require( 'shortid' );
 const glob = require( 'glob' );
 const webpack = require( 'webpack' );
 const merge = require( 'webpack-merge' );
+const _ = require( 'lodash' );
 const HTMLWebpackPlugin = require( 'html-webpack-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
@@ -20,11 +21,13 @@ const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
 
 
 /**
- * Initialize process environment variables from env.js file
+ * Initialize process environment variables from `env.js` file
  */
-const envVariables = require( './env.json' );
-Object.entries( envVariables ).map( ( [ name, value ] ) => {
-    process.env[ name ] = value;
+const envVariables = require( './env.js' );
+Object.entries( envVariables ).forEach( ( [ name, value ] ) => {
+    if( _.isEmpty( process.env[ name ] ) ) {
+        process.env[ name ] = value;
+    }
 } );
 
 
@@ -34,6 +37,7 @@ Object.entries( envVariables ).map( ( [ name, value ] ) => {
 const copyWebpackPluginMap = ( srcDir, destDir ) => {
     return { from: path.resolve( __dirname, srcDir ), to: path.resolve( __dirname, 'dist', PLATFORM, destDir ) };
 };
+
 
 /*================================================*/
 
