@@ -206,6 +206,7 @@ const coreConfig = {
                     name: 'common',
                     priority: 10,
                     minChunks: 2,
+                    enforce: true,
 
                     // only sync imports
                     chunks: 'initial',

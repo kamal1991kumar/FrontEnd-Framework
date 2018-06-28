@@ -1,101 +1,85 @@
 /**
- * MessageBus, a simple pub-sub utility module.
- * Any publisher will be able to emit an event with a payload and
- * any consumer will be able to listen to that event.
+ * Custom MessageBus or EventBus implementation.
+ * Publisher Subscriber Implementation.
+ * Used to exchange data between different components of the application.
  */
 
-import { Subject, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+export const MessageBus = (
+    () => {
+        
+        const _events = {}; //To store all events.
 
-
-// A RxJS Subject observable as mediator / intersection
-// for all MessageBus event traffic
-const mediator$ = new Subject();
-
-
-/*************************************************************/
-
-
-/**
- * MessageBus.emit( 'my-event', payload ) emits `my-event` event with `payload`.
- * Calls `next` method on `mediator$` observable with `__MB_EVENT__` key in payload.
- */
-export const emit = ( eventName, payload, isError = false ) => {
-    
-    // eventName is mandatory, throw error if
-    // argument received is `null`, `undefined` or not a `string` type.
-    if( ! eventName || 'string' !== typeof eventName ) {
-        throw new Error( `[MessageBus] 'emit' method requires 'eventName' as argument, ${ eventName } was given.` );
-    }
-
-    // send data/error to `mediator$`
-    mediator$.next( {
-        payload: payload,
-        __MB_EVENT__: eventName,
-        __MB_ERROR__: true === isError
-    } );
-};
-
-/**
- * MessageBus.emitError( 'my-event', payload ) calls
- * `emit` method with `isError` argument set to `true`.
- */
-export const emitError = ( ...args ) => {
-    emit( ...args, true );
-};
-
-/**
- * MessageBus.on( 'my-event' ) returns a
- * piped / filtered copy of `mediator$` observable.
- */
-export const on = ( eventName, successCallback, errorCallback ) => {
-    
-    // event name is mandatory, throw error if
-    // argument received is `null`, `undefined` or not a `string` type.
-    if( ! eventName || 'string' !== typeof eventName ) {
-        throw new Error( `[MessageBus] 'on' method requires 'event' name as argument, ${ event } was given.` );
-    }
-    
-    // return observable which emits data when `__MB_EVENT__`
-    // key in payload matches to the event name received here.
-    return mediator$.pipe(
-        filter( data => {
-            return eventName === data.__MB_EVENT__;
-        } ),
-        map( data => {
-            const { __MB_ERROR__, payload } = data;
-
-            if( __MB_ERROR__ ) {
-                throw new class extends Error {
-                    constructor() {
-                        super( payload );
-                        this.payload = payload;
-                    }
-                };
-            } else {
-                return payload;
+        /**
+         * Adds handler to the subscriber list for a particular event.
+         * @param event
+         * @param callback
+         * @param callbackObj
+         * @private
+         */
+        const _on = function ( event, callback, callbackObj ) {
+            if ( false === _events.hasOwnProperty( event ) ) {
+                _events[ event ] = [];
             }
-        } )
-    ).subscribe( successCallback, errorCallback );
-};
+            _events[ event ].push( { callback: callback, callbackObj: callbackObj } );
+        };
 
-/**
- * MessageBus.off( subscription ) will unsubscribe
- * a subscription by calling `unsubscribe` method on it.
- */
-export const off = ( ...subscriptions ) => {
-    for( const subscription of subscriptions ) {
-        if( subscription instanceof Subscription ) {
-            subscription.unsubscribe();
-        } else{
-            throw new Error( '[MessageBus] `off` method requires `subscription` argument of type RxJS `Subscription`.' );
-        }
+        /**
+         * Removes handler from the subscriber list for a particular event.
+         * @param event
+         * @param callback
+         * @param callbackObj
+         * @private
+         */
+        const _off = function ( event, callback, callbackObj ) {
+            let eventCount,
+                currentEvent,
+                ctr;
+            if ( true === _events.hasOwnProperty( event ) ) {
+                currentEvent = _events[ event ];
+                eventCount = currentEvent.length;
+                for ( ctr = 0; ctr < eventCount; ctr = ctr + 1 ) {
+                    if ( callback === currentEvent[ ctr ].callback && callbackObj === currentEvent[ ctr ].callbackObj ) {
+                        currentEvent.splice( ctr, 1 );
+                        break;
+                    }
+                }
+            }
+        };
+
+        /**
+         * Publishes an event with given payload.
+         * @param event
+         * @param payload
+         * @private
+         */
+        const _trigger = function( event, payload ) {
+            let eventCount,
+                currentEvent,
+                ctr;
+            if ( true === _events.hasOwnProperty( event ) ) {
+                currentEvent = _events[ event ];
+                eventCount = currentEvent.length;
+                for ( ctr = 0; ctr < eventCount; ctr = ctr + 1 ) {
+                    if( 'undefined' === typeof currentEvent[ ctr ].callbackObj ) {
+                        if ( 'function' === typeof currentEvent[ ctr ].callback ) {
+                            currentEvent[ ctr ].callback( payload );
+                        }
+                    } else {
+                        if ( 'function' === typeof currentEvent[ ctr ].callback ) {
+                            currentEvent[ ctr ].callback.call( currentEvent[ ctr ].callbackObj, payload );
+                        }
+                    }
+                }
+            }
+        };
+
+        /**
+        * Exposes the following methods.
+        */
+        return {
+            on: _on,
+            off: _off,
+            trigger: _trigger
+        };
     }
-};
-
-
-/*************************************************************/
-
-
-// import { MessageBus } from 'MessageBus'
-export const MessageBus = { on, emit, emitError, off };
+)();

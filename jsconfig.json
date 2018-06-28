@@ -2,6 +2,9 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
+            "core/*": [
+                "src/js/core/*"
+            ],
             "animations/*": [
                 "src/js/animations/*"
             ],
@@ -36,10 +39,10 @@
                 "src/js/views/*"
             ],
             "utils": [
-                "src/js/views/utils/index.js"
+                "src/js/utils/index.js"
             ],
             "constants": [
-                "src/js/views/constants/index.js"
+                "src/js/constants/index.js"
             ]
         },
         "experimentalDecorators": true

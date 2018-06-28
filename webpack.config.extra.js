@@ -2,6 +2,7 @@ const path = require( 'path' );
 
 // module alias
 exports.alias = {
+    'core': path.resolve( __dirname, 'src/js/core' ),
     'animations': path.resolve( __dirname, 'src/js/animations' ),
     'container': path.resolve( __dirname, 'src/js/components/container' ),
     'hoc': path.resolve( __dirname, 'src/js/components/hoc' ),

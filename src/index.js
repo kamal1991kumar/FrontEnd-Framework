@@ -1,12 +1,6 @@
-import { initialize } from 'modules/Bootstrap';
 import * as constants from 'constants';
-
-// create event for bootstrap action
-const eventBootstrapCompleted = new CustomEvent( constants.EVENT_BOOTSTRAP_COMPLETED, {
-    detail: {
-        eventName: constants.EVENT_BOOTSTRAP_COMPLETED
-    }
-} );
+import { initialize } from 'core/bootstrap';
+import { MessageBus } from 'modules/MessageBus';
 
 // bootstrap application when DOM tree is rendered
 document.addEventListener( 'DOMContentLoaded', () => {
@@ -15,5 +9,5 @@ document.addEventListener( 'DOMContentLoaded', () => {
     initialize();
 
     // displatch bootstrap complete event
-    document.dispatchEvent( eventBootstrapCompleted );
+    MessageBus.trigger( constants.EVENT_BOOTSTRAP_COMPLETED );
 } );

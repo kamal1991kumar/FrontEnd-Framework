@@ -1,10 +1,10 @@
 import $ from 'jquery';
 
-import { createInstance } from 'modules/Controllers';
+import { createInstance } from 'modules/Controller';
 import { CONTROLLER_ELEM_ATTR } from 'constants';
 
 /*+++++++++++++++++++++++++++++++++++*/
-import 'controllers'; // import all controllers to bootstrap
+import 'controllers'; // load all controllers
 /*+++++++++++++++++++++++++++++++++++*/
 
 // state of bootstrap
