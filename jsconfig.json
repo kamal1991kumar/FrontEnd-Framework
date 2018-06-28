@@ -5,8 +5,11 @@
             "animations/*": [
                 "src/js/animations/*"
             ],
-            "components/*": [
-                "src/js/components/*"
+            "containers/*": [
+                "src/js/components/containers/*"
+            ],
+            "hoc/*": [
+                "src/js/components/hoc/*"
             ],
             "controllers/*": [
                 "src/js/controllers/*"
@@ -31,6 +34,12 @@
             ],
             "views/*": [
                 "src/js/views/*"
+            ],
+            "utils": [
+                "src/js/views/utils/index.js"
+            ],
+            "constants": [
+                "src/js/views/constants/index.js"
             ]
         },
         "experimentalDecorators": true

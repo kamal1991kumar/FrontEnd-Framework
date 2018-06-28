@@ -15,7 +15,6 @@ const ConfigWebpackPlugin = require( 'config-webpack' );
 const { alias } = require( './webpack.config.extra' );
 
 /**
- * ===X DO NOT MODIFY CODE BELOW X===
  * Set build platform based on environment variable
  */
 const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
@@ -44,7 +43,6 @@ const copyWebpackPluginMap = ( srcDir, destDir ) => {
 
 
 /**
- * ===X DO NOT MODIFY CODE BELOW X===
  * Load platform dependent webpack configuration
  */
 const platformConfig = require( `./.platforms/${ PLATFORM }.webpack.config.js` );
@@ -114,7 +112,6 @@ const coreConfig = {
     resolve: {
         
         /**
-         * ===X WARNING X===
          * Do not add `.js` extension below.  `.js` extensions will
          * be received & merged from `platformConfig`.
          */

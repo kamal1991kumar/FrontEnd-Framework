@@ -1,8 +1,0 @@
-===========X DO NOT DELETE THIS DIRECTORY X===========
-This directory is generated and used by avizva-cli tool
-to manage platform dependent code.
-
-This directory contains webpack configurations and env-
-environment variables to import platform dependent files
-automatically through webpack.
-==========================XX==========================

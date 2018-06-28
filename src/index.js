@@ -1,15 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { initialize } from 'modules/Bootstrap';
+import * as constants from 'constants';
 
-import { App } from 'components/container/App.component';
-import { withBrowserRouter } from 'modules/withBrowserRouter';
-import { withRedux } from 'modules/withRedux';
+// create event for bootstrap action
+const eventBootstrapCompleted = new CustomEvent( constants.EVENT_BOOTSTRAP_COMPLETED, {
+    detail: {
+        eventName: constants.EVENT_BOOTSTRAP_COMPLETED
+    }
+} );
 
-// [Router] this wraps component with 'BrowserRouter`
-const AppWithRouter = withBrowserRouter( App, { currentPage: 'INDEX' } );
+// bootstrap application when DOM tree is rendered
+document.addEventListener( 'DOMContentLoaded', () => {
+    
+    // start bootstrap
+    initialize();
 
-// [Redux] this wraps component with 'Provider` and a `store`
-const AppWithRedux = withRedux( AppWithRouter, {}, {} );
-
-// render
-ReactDOM.render( <AppWithRedux />, document.getElementById( 'app-root' ) );
+    // displatch bootstrap complete event
+    document.dispatchEvent( eventBootstrapCompleted );
+} );
