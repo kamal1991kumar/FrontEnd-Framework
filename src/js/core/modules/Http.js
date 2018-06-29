@@ -8,7 +8,7 @@
 import axios from 'axios';
 import axiosCancel from 'axios-cancel';
 import shortid from 'shortid';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 
 // add `cancel` prototype method
 // to abort `XHR` requests and promise
@@ -48,12 +48,11 @@ const responseFormatter = {
 
 // `makeRequestConfig` return a fully-fledged config object for axios
 // with some default config values
-const makeRequestConfig = ( config ) => {
+const makeRequestConfig = ( method, config ) => {
     
     // default request configuration
     const requestConfig = {
         requestId: shortid.generate(),
-        method: 'GET',
         host: 'http://localhost',
         path: '/',
         timeout: 60 * 1000 // 1 min
@@ -86,58 +85,82 @@ const makeRequestConfig = ( config ) => {
     }
 
     if( 'string' === typeof config ) {
-        return Object.assign( {}, requestConfig, { url: config } );
+        return Object.assign( {}, requestConfig, { method: method, url: config } );
     } else {
         const _config = Object.assign( {}, requestConfig, config );
-        return Object.assign( {}, _config, { url: _config.host + _config.path } );
+        return Object.assign( {}, _config, { method: method, url: _config.host + _config.path } );
     }
 };
 
+// execute request and take reponse action
+const executeRequest = ( method, config, handler ) => {
+    
+    // create request configuration for axios
+    const reqConfig =  makeRequestConfig( method, config );
+
+    // if handler is empty, return promise and cancel function
+    // in an `object`, else just return cancel function
+    if( isEmpty( handler ) ) {
+        const promise =  new Promise( ( resolve, reject ) => {
+            axios( reqConfig ).then( ( response ) => {
+                return resolve( responseFormatter.success( response ) );
+            } )
+            .catch( ( response ) => {
+                return reject( responseFormatter.error( response ) );
+            } );
+        } );
+
+        promise.cancel = () => {
+            axios.cancel( reqConfig.requestId );
+        };
+
+        return promise;
+    } else {
+
+        // resolve request and call handler callbacks
+        axios( reqConfig ).then( ( response ) => {
+            handler.success( responseFormatter.success( response ) );
+        } )
+        .catch( ( response ) => {
+            if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
+                handler.error( responseFormatter.error( response ) );
+            }
+        } );
+
+        // return cancel function
+        return () => {
+            axios.cancel( reqConfig.requestId );
+        };
+    }
+};
 
 /*************************************************************/
 
 
 // HTTP GET method
-// Use: http.get( config, { success, error } ) => cancelFunction
-Http.get = ( config, { success, error } ) => {
-    
-    // create request configuration for axios
-    const reqConfig =  makeRequestConfig( config );
-
-    // execute axios AJAX request
-    axios( reqConfig )
-    .then( ( response ) => {
-        success( responseFormatter.success( response ) );
-     } )
-    .catch( ( response ) => {
-        error( responseFormatter.error( response ) );
-    } );
-
-    // return cancel function
-    return () => {
-        axios.cancel( reqConfig.requestId );
-    };
+// Use: http.get( config, {success, error} ) => cancelFunction
+// Use: http.get( config ) => { promise, cancel }
+Http.get = ( config, handler ) => {
+    return executeRequest( 'GET', config, handler );
 };
 
-
 // HTTP POST method
-// Use: http.post( config, { success, error } ) => cancelFunction
-Http.post = ( config, { success, error } ) => {
-    
-    // create request configuration for axios
-    const reqConfig =  makeRequestConfig( config );
+// Use: http.post( config, {success, error} ) => cancelFunction
+// Use: http.post( config ) => { promise, cancel }
+Http.post = ( config, handler ) => {
+    return executeRequest( 'POST', config, handler );
+};
 
-    // execute axios AJAX request
-    axios( reqConfig )
-    .then( ( response ) => {
-        success( responseFormatter.success( response ) );
-     } )
-    .catch( ( response ) => {
-        error( responseFormatter.error( response ) );
-    } );
+// HTTP PUT method
+// Use: http.put( config, {success, error} ) => cancelFunction
+// Use: http.put( config ) => { promise, cancel }
+Http.put = ( config, handler ) => {
+    return executeRequest( 'PUT', config, handler );
+};
 
-    // return cancel function
-    return () => {
-        axios.cancel( reqConfig.requestId );
-    };
+// HTTP DELETE method
+// Use: http.delete( config, {success, error} ) => cancelFunction
+// Use: http.delete( config ) => { promise, cancel }
+Http.delete = ( config, handler ) => {
+    return executeRequest( 'DELETE', config, handler );
 };

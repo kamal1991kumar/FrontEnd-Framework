@@ -7,7 +7,7 @@
  */
 
 
-import { withAsyncComponent } from 'modules/withAsyncComponent';
+import { withAsyncComponent } from 'core/hoc/withAsyncComponent';
 
 // About sub components
 import { AboutDigital } from 'views/AboutDigital.view';

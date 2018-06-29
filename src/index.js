@@ -1,6 +1,6 @@
 import * as constants from 'constants';
 import { initialize } from 'core/bootstrap';
-import { MessageBus } from 'modules/MessageBus';
+import { MessageBus } from 'core/modules/MessageBus';
 
 // bootstrap application when DOM tree is rendered
 document.addEventListener( 'DOMContentLoaded', () => {

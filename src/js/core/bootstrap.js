@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
-import { createInstance } from 'modules/Controller';
-import { CONTROLLER_ELEM_ATTR } from 'constants';
+import { createInstance } from 'core/modules/Controller';
+import { CONTROLLER_ELEM_ATTR } from 'core/constants';
 
 /*+++++++++++++++++++++++++++++++++++*/
 import 'controllers'; // load all controllers

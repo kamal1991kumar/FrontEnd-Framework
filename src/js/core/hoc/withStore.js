@@ -1,5 +1,5 @@
 /**
- * withStore( Component, props ) returns a component
+ * withStore( Component, store, props ) returns a component
  * wrapped with `Provider` from react-redux.
  * Here, store is import from `getStore` function provided
  * by `store` directory module.

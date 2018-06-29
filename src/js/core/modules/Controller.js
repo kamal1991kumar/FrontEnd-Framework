@@ -1,8 +1,8 @@
 import { clone, isEmpty, has } from 'lodash';
 import $ from 'jquery';
 
-import * as constants from 'constants';
-import { MessageBus } from 'modules/MessageBus';
+import * as constants from 'core/constants';
+import { MessageBus } from 'core/modules/MessageBus';
 
 // stores class definition against controller's name
 const controllersMap = {};

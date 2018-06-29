@@ -38,11 +38,11 @@
             "views/*": [
                 "src/js/views/*"
             ],
-            "utils": [
-                "src/js/utils/index.js"
+            "utils/*": [
+                "src/js/utils/*"
             ],
-            "constants": [
-                "src/js/constants/index.js"
+            "constants/*": [
+                "src/js/constants/*"
             ]
         },
         "experimentalDecorators": true

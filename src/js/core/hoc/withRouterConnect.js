@@ -1,5 +1,5 @@
 /**
- * withStore( Component, mapStateToProps, mapDispatchToProps) returns a component
+ * withStore( Component, mapStateToProps, mapDispatchToProps ) returns a component
  * with Route props and redux connect functionality.
  */
 

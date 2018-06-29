@@ -1,4 +1,4 @@
-import { Http } from 'modules/Http';
+import { Http } from 'core/modules/Http';
 
 /*************************************************************/
 

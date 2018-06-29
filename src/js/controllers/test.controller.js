@@ -1,7 +1,7 @@
-import { Controller } from 'modules/Controller';
+import { Controller } from 'core/modules/Controller';
 import { AppContainer } from 'container/App.container';
-import { reactRender, getEmbeddedJSON } from 'utils';
-import { withStore } from 'modules/withStore';
+import { reactRender, getEmbeddedJSON } from 'core/utils';
+import { withStore } from 'core/hoc/withStore';
 import { getStore } from 'store';
 
 // get global redux store
@@ -20,7 +20,7 @@ export class TestController extends Controller {
     
     // on initialize
     onInit() {
-        const hostsJSON = getEmbeddedJSON( 'hosts' );
+        const hostsJSON = getEmbeddedJSON( 'hosts', this.el );
         store.dispatch( saveEmbeddedJsonAction( hostsJSON ) );
     }
 

@@ -1,22 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-//import { getUsers } from 'services/user.service';
-
 class App extends React.Component {
     constructor( props ) {
         super( props );
     }
     
     componentWillMount() {
-
         window.console.log( this.props.hosts );
-        
-        /* getUsers( this.props.hosts.users, {
-            success: ( data ) => {
-                window.console.log( 'App Component', data );
-            }
-        } ); */
     }
 
     render() {
