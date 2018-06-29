@@ -4,7 +4,7 @@ const path = require( 'path' );
 exports.alias = {
     'core': path.resolve( __dirname, 'src/js/core' ),
     'animations': path.resolve( __dirname, 'src/js/animations' ),
-    'container': path.resolve( __dirname, 'src/js/components/container' ),
+    'containers': path.resolve( __dirname, 'src/js/components/containers' ),
     'hoc': path.resolve( __dirname, 'src/js/components/hoc' ),
     'controllers': path.resolve( __dirname, 'src/js/controllers' ),
     'models': path.resolve( __dirname, 'src/js/models' ),
