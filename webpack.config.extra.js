@@ -15,5 +15,8 @@ exports.alias = {
     'views': path.resolve( __dirname, 'src/js/views' ),
     'router': path.resolve( __dirname, 'src/js/router/index.js' ),
     'utils': path.resolve( __dirname, 'src/js/utils' ),
-    'constants': path.resolve( __dirname, 'src/js/constants/' )
+    'constants': path.resolve( __dirname, 'src/js/constants/' ),
+
+    // scss
+    'scss': path.resolve( __dirname, 'src/scss/' )
 };

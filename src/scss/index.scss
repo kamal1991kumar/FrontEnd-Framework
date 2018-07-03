@@ -1,11 +1,14 @@
-// import base files
-@import './base';
+// import github markdown css
+@import '~github-markdown-css/github-markdown';
 
-// import modules files
-@import './modules';
+// import fonts
+@import '~scss/fonts/index';
 
-// import component files
-@import './components';
+// import base css
+@import '~scss/base/index';
 
-// import theme files
-@import './theme';
+// import themes
+@import '~scss/theme/index';
+
+// import components
+@import '~scss/components/index';

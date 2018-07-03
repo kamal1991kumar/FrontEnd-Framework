@@ -1,0 +1,16 @@
+@import '~scss/layout/width';
+
+// children
+@import './indexPageView/homeView';
+@import './indexPageView/bestPracticesView';
+@import './indexPageView/documentationView';
+
+.view-index{
+    border-top: 10px solid #ea484d;
+    min-height: 100vh;
+
+    &__content{
+        max-width: $width-max-content;
+        margin: 1rem auto;
+    }
+}

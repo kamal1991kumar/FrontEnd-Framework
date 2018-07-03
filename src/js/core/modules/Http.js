@@ -111,6 +111,7 @@ const executeRequest = ( method, config, handler ) => {
         } );
 
         promise.cancel = () => {
+            reqConfig.cancelled = true;
             axios.cancel( reqConfig.requestId );
         };
 
@@ -119,16 +120,21 @@ const executeRequest = ( method, config, handler ) => {
 
         // resolve request and call handler callbacks
         axios( reqConfig ).then( ( response ) => {
-            handler.success( responseFormatter.success( response ) );
+            if( ! reqConfig.cancelled ) {
+                handler.success( responseFormatter.success( response ) );
+            }
         } )
         .catch( ( response ) => {
             if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
-                handler.error( responseFormatter.error( response ) );
+                if( ! reqConfig.cancelled ) {
+                    handler.error( responseFormatter.error( response ) );
+                }
             }
         } );
 
         // return cancel function
         return () => {
+            reqConfig.cancelled = true;
             axios.cancel( reqConfig.requestId );
         };
     }

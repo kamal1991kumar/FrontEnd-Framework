@@ -1,14 +1,15 @@
 import { Controller } from 'core/modules/Controller';
 import { reactRender, getEmbeddedJSON } from 'core/utils';
-import { AppContainer } from 'containers/App.container';
+import { IndexPageContainer } from 'containers/IndexPage.container';
+import { withBrowserRouter } from 'core/hoc/withBrowserRouter';
 import { withStore } from 'core/hoc/withStore';
 import { getStore } from 'store';
-import { saveHostsAction } from 'store/actions/hosts.action';
+import { saveHostsAction } from 'store/actions';
 
 // get or create new store
 const store = getStore();
 
-export class AppController extends Controller {
+export class IndexController extends Controller {
     constructor( el, attr ) {
         super( el, attr );
     }
@@ -30,13 +31,26 @@ export class AppController extends Controller {
         this.render();
     }
 
-    // render react component
+    // render React component
     render() {
-        reactRender( withStore( AppContainer, store ) )( this.el );
+
+        // Render give React component in controller DOM element (`this.el`)
+        reactRender(
+
+            // avail Redux Store (<Provider>) using `withStore` HOC and a global `store`
+            withStore(
+
+                // avail <BrowserRouter> ( <BrowserRouter> ) using withBrowserRouter HOC to <IndexPageContainer>
+                withBrowserRouter( IndexPageContainer ),
+
+                // global Redux store
+                store
+            )
+        )( this.el );
     }
 }
 
 /*************************************************************/
 
 // register controller
-AppController.register();
+IndexController.register();

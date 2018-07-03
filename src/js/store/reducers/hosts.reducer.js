@@ -1,5 +1,5 @@
 // import action types
-import { TYPE_SAVE_HOSTS } from 'store/actions/hosts.action';
+import { TYPE_SAVE_HOSTS } from 'store/actions';
 
 /********************************************************/
 

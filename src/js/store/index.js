@@ -1,19 +1,20 @@
 /**
  * This is Redux store module of entire application.
  * This module provides `getStore` function which supplies
- * redux store with inital state value.
+ * redux store with initial state value.
  */
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 // import combined reducers
-import { reducers } from './reducers';
+import { combinedReducer } from 'store/reducers/combinedReducer';
 
 // get global store
 let globalStore = null;
 export const getStore = ( initialState = {} ) => {
     if( ! globalStore ) {
-        globalStore = createStore( reducers, initialState );
+        globalStore = createStore( combinedReducer, initialState, applyMiddleware( thunk ) );
     }
 
     return globalStore;

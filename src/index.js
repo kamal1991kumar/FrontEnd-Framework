@@ -8,6 +8,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
     // start bootstrap
     initialize();
 
-    // displatch bootstrap complete event
+    // dispatch bootstrap complete event
     MessageBus.trigger( constants.EVENT_BOOTSTRAP_COMPLETED );
 } );

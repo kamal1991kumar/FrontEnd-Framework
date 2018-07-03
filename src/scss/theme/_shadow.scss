@@ -1,0 +1,7 @@
+@mixin shadow-top( $height: 3px, $blur: 3px, $extend: 0px, $opacity: 0.3 ) {
+    box-shadow: 0 (-$height) $blur $extend rgba(0, 0, 0, $opacity);
+}
+
+@mixin shadow-bottom( $height: 3px, $blur: 3px, $extend: 0px, $opacity: 0.3 ) {
+    box-shadow: 0 $height $blur $extend rgba(0, 0, 0, $opacity);
+}

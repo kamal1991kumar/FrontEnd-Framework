@@ -146,7 +146,7 @@ const coreConfig = {
         } ),
 
         // to `as-is` copy files/folders
-        // use `copyWebpackPluginMap( dirPath, folderNameInDist )` to create destribution map
+        // use `copyWebpackPluginMap( dirPath, folderNameInDist )` to create distribution map
         new CopyWebpackPlugin( [
             copyWebpackPluginMap( 'src/assets', 'assets' )
         ] ),

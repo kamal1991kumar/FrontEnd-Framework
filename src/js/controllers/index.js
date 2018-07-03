@@ -1,1 +1,1 @@
-export * from 'controllers/App.controller';
+export * from 'controllers/Index.controller';

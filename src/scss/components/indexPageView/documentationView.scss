@@ -1,0 +1,54 @@
+@import '~scss/theme/color';
+
+// children
+@import './documentation/frameworkView';
+
+.view-index-documentation{
+    margin-bottom: 2rem;
+    
+    &__title{
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        line-height: 1;
+    }
+
+    // menu
+    &__menu{
+        padding: 0.5rem 0 0;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+
+        &__item{
+            border-bottom: 1.5px solid transparent;
+            padding: 0 0.2rem;
+            transition: all 0.3s;
+
+            &__link{
+                display: block;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+
+                &--active{
+                    font-weight: bold;
+                    color: $color-primary;
+                }
+
+                &:hover{
+                    opacity: 0.75;
+                }
+            }
+
+            &:not( :last-child ){
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    // content
+    &__content{
+        margin-top: 1rem;
+    }
+}
