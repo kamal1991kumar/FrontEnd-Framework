@@ -8,11 +8,11 @@ Motivation behind creating Avizva's very own UI framework are based on following
 - Works with Avizva UI CLI interface to provide easy entity creation and rapid deployment
 
 ## Index
-1. [Framework Overview](framework~overview)
-2. [Webpack](Framework~webpack)
-3. [File/Folder structure](Framework~file_structure)
-4. [Source files](Framework~source)
-5. [Distribution files](Framework~distribution)
-6. [Core modules](Framework~core)
-7. [Code comments](ESDoc)
-8. [CLI commands](Framework~cli)
+1. [Framework Overview](https://gitlab.com/thatisuday/ui-framework/dev/documentation/framework-overview.md)
+2. [Webpack](https://gitlab.com/thatisuday/ui-framework/dev/documentation/webpack.md)
+3. [File/Folder structure](https://gitlab.com/thatisuday/ui-framework/dev/documentation/framework-file-structure.md)
+4. [Source files](https://gitlab.com/thatisuday/ui-framework/dev/documentation/framework-source.md)
+5. [Distribution files](https://gitlab.com/thatisuday/ui-framework/dev/documentation/framework-distribution.md)
+6. [Core modules](https://gitlab.com/thatisuday/ui-framework/dev/documentation/core-modules.md)
+7. [Code comments](https://gitlab.com/thatisuday/ui-framework/dev/documentation/esdoc.md)
+8. [CLI commands](https://gitlab.com/thatisuday/ui-framework/dev/documentation/cli-commands.md)
