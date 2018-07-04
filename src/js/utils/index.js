@@ -1,1 +1,1 @@
-export * from 'utils/myFn.util';
+export * from 'utils/removeTrailingSlash.util';

@@ -1,8 +1,9 @@
 import React from 'react';
 import showdown from 'showdown';
+import { noop } from 'lodash';
 
+import { Http } from 'core/modules/Http';
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
-import { getDocumentation } from 'services/documentation.service';
 
 import { gitView as GitView } from 'views/indexPage/documentation/git.view';
 
@@ -17,21 +18,22 @@ class _GitContainer extends React.Component {
             docHTML: null
         };
 
-        // get documentation HTML in HTTP service callback
-        this.cancelDocHXR = getDocumentation( props.hosts.git, {
-            success: ( { data } ) => {
+        // `hosts` coming from redux state, using `Promise` version of `Http` service
+        // make sure to store the promise object first to get `cancel` method
+        // below request gets `.json` file from `assets/json`
+        this.request = Http.get( props.hosts.git );
+        this.request.then( ( response ) => {
+
+            // override previous request instance to make cancellation easier,
+            // it will override previous request when it resolves
+            // below request gets `.md` file from `documentation`
+            this.request = Http.get( response.data.payload.data.url );
+            this.request.then( ( _response ) => {
                 this.setState( {
-                    ...this.state,
-                    docHTML: markdown.makeHtml( data.payload.data.cliDoc )
+                    docHTML: markdown.makeHtml( _response.data )
                 } );
-            },
-            error: ( { error } ) => {
-                this.setState( {
-                    ...this.state,
-                    docHTML: error
-                } );
-            }
-        } );
+            } ).catch( noop );
+        } ).catch( noop );
     }
 
     render() {
@@ -41,9 +43,7 @@ class _GitContainer extends React.Component {
     }
 
     componentWillUnmount() {
-
-        // cancel service XHR
-        this.cancelDocHXR();
+        this.request.cancel(); // cancel service XHR
     }
 }
 

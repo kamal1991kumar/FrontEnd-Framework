@@ -1,9 +1,8 @@
 import React from 'react';
-import { NavLink as Link, Route, Switch } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 
-import { FrameworkContainer } from 'containers/indexPage/documentation/Framework.container';
-import { CliContainer } from 'containers/indexPage/documentation/Cli.container';
-import { GitContainer } from 'containers/indexPage/documentation/Git.container';
+import { RouterOutlet } from 'router';
+import { removeTrailingSlash } from 'utils';
 
 export const documentationView = ( props ) => {
     return (
@@ -12,22 +11,22 @@ export const documentationView = ( props ) => {
 
             <ul className='view-index-documentation__menu'>
                 <li className='view-index-documentation__menu__item'>
-                    <Link exact className='view-index-documentation__menu__item__link' to={ props.match.url } activeClassName='view-index-documentation__menu__item__link--active'>Ui Framework</Link>
+                    <Link exact className='view-index-documentation__menu__item__link' to={ removeTrailingSlash( props.match.url ) } activeClassName='view-index-documentation__menu__item__link--active'>Ui Framework</Link>
                 </li>
                 <li className='view-index-documentation__menu__item'>
-                    <Link className='view-index-documentation__menu__item__link' to={ props.match.url + '/cli' }activeClassName='view-index-documentation__menu__item__link--active'>Avizva CLI</Link>
+                    <Link className='view-index-documentation__menu__item__link' to={ removeTrailingSlash( props.match.url ) + '/cli' }activeClassName='view-index-documentation__menu__item__link--active'>Avizva CLI</Link>
                 </li>
                 <li className='view-index-documentation__menu__item'>
-                    <Link className='view-index-documentation__menu__item__link' to={ props.match.url + '/git' } activeClassName='view-index-documentation__menu__item__link--active'>Git VCS</Link>
+                    <Link className='view-index-documentation__menu__item__link' to={ removeTrailingSlash( props.match.url ) + '/git' } activeClassName='view-index-documentation__menu__item__link--active'>Git VCS</Link>
                 </li>
             </ul>
 
             <div className="view-index-documentation__content">
-                <Switch>
-                    <Route exact path="/documentation" component={ FrameworkContainer } />
-                    <Route exact path="/documentation/cli" component={ CliContainer } />
-                    <Route exact path="/documentation/git" component={ GitContainer } />
-                </Switch>
+                {/*
+                    prop.page and prop.path is injected by `router` module.
+                    it should match exactly as written in `router.config.js` file
+                */ }
+                <RouterOutlet page={ props.page } path={ props.path }/>
             </div>
         </div>
     );

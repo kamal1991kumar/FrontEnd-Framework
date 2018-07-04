@@ -10,6 +10,7 @@ const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
 const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
 const ConfigWebpackPlugin = require( 'config-webpack' );
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 // extra webpack configuration
 const { alias } = require( './webpack.config.extra' );
@@ -128,6 +129,9 @@ const coreConfig = {
     // webpack plugins
     // allow only non-empty plugin by using `filter`
     plugins: [
+
+        // do not allow case-insensitivity in import paths
+        new CaseSensitivePathsPlugin(),
         
         // generate HTML pages for preview/build
         // except `test.*.html`, which won't be generated
@@ -148,8 +152,11 @@ const coreConfig = {
         // to `as-is` copy files/folders
         // use `copyWebpackPluginMap( dirPath, folderNameInDist )` to create distribution map
         new CopyWebpackPlugin( [
-            copyWebpackPluginMap( 'src/assets', 'assets' )
-        ] ),
+            copyWebpackPluginMap( 'src/assets', 'assets' ),
+
+            // copy documentation to distribution in `development` mode for sample app
+            ( 'production' !== process.env.NODE_ENV  ) ? null : copyWebpackPluginMap( 'documentation', 'documentation' )
+        ].filter( Boolean ) ),
 
         // extract CSS to a file
         // avoid plugin when `WDS_EXTRACT_CSS` is `true

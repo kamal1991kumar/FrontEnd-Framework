@@ -1,7 +1,7 @@
 /**
  * Http utility module which provides easy abstractions over simple Http verbs.
  * Use Http.Get, Http.Post etc. methods to make AJAX network requests.
- * It's easy to intergrate; other Http libraries like `fetch` or `jQuery`.
+ * It's easy to integrate; other Http libraries like `fetch` or `jQuery`.
  */
 
 // using axios as current Http library
@@ -9,6 +9,9 @@ import axios from 'axios';
 import axiosCancel from 'axios-cancel';
 import shortid from 'shortid';
 import { get, isEmpty } from 'lodash';
+
+import { MessageBus } from 'core/modules/MessageBus';
+import { HTTP_REQUEST_TRANSACTION } from 'core/constants';
 
 // add `cancel` prototype method
 // to abort `XHR` requests and promise
@@ -44,6 +47,11 @@ const responseFormatter = {
             timestamp: Date.now()
         };
     }
+};
+
+// dispatch message-bus event for HTTP transaction
+const dispatchMBTransactionEvent = ( type = 'SENT' ) => {
+    MessageBus.trigger( HTTP_REQUEST_TRANSACTION, type );
 };
 
 // `makeRequestConfig` return a fully-fledged config object for axios
@@ -92,41 +100,62 @@ const makeRequestConfig = ( method, config ) => {
     }
 };
 
-// execute request and take reponse action
+// execute request and take response action
 const executeRequest = ( method, config, handler ) => {
     
     // create request configuration for axios
     const reqConfig =  makeRequestConfig( method, config );
+
+    // send message-bus 'START' event
+    dispatchMBTransactionEvent( 'START' );
 
     // if handler is empty, return promise and cancel function
     // in an `object`, else just return cancel function
     if( isEmpty( handler ) ) {
         const promise =  new Promise( ( resolve, reject ) => {
             axios( reqConfig ).then( ( response ) => {
+                dispatchMBTransactionEvent( 'COMPLETE' ); // send message-bus 'COMPLETE' event
+                reqConfig.completed = true;
+
                 return resolve( responseFormatter.success( response ) );
             } )
             .catch( ( response ) => {
+                dispatchMBTransactionEvent( 'ERROR' ); // send message-bus 'ERROR' event
+                reqConfig.completed = true;
+
                 return reject( responseFormatter.error( response ) );
             } );
         } );
 
+        // add cancel method to promise
         promise.cancel = () => {
-            reqConfig.cancelled = true;
-            axios.cancel( reqConfig.requestId );
+            if( ! reqConfig.completed ) {
+                dispatchMBTransactionEvent( 'ABORT' ); // send message-bus 'ABORT' event
+                axios.cancel( reqConfig.requestId );
+            }
+
+            reqConfig.completed = true;
         };
 
         return promise;
+
     } else {
 
         // resolve request and call handler callbacks
         axios( reqConfig ).then( ( response ) => {
-            if( ! reqConfig.cancelled ) {
+            if( ! reqConfig.completed ) {
+                dispatchMBTransactionEvent( 'COMPLETE' ); // send message-bus 'COMPLETE' event
+                reqConfig.completed = true;
+
                 handler.success( responseFormatter.success( response ) );
             }
         } )
         .catch( ( response ) => {
-            if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
-                if( ! reqConfig.cancelled ) {
+            if( ! reqConfig.completed ) {
+                dispatchMBTransactionEvent( 'ERROR' ); // send message-bus 'ERROR' event
+                reqConfig.completed = true;
+
+                if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
                     handler.error( responseFormatter.error( response ) );
                 }
             }
@@ -134,8 +163,12 @@ const executeRequest = ( method, config, handler ) => {
 
         // return cancel function
         return () => {
-            reqConfig.cancelled = true;
-            axios.cancel( reqConfig.requestId );
+            if( ! reqConfig.completed ) {
+                dispatchMBTransactionEvent( 'ABORT' ); // send message-bus 'ABORT' event
+                axios.cancel( reqConfig.requestId );
+            }
+            
+            reqConfig.completed = true;
         };
     }
 };

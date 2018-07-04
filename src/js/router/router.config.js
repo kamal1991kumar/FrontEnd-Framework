@@ -6,13 +6,15 @@
  * identified by the page name
  */
 
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 
+// HOC to lazy load component
 import { withAsyncComponent } from 'core/hoc/withAsyncComponent';
 
 // About sub components
-import { AboutDigital } from 'views/AboutDigital.view';
-import { AboutPortal } from 'views/AboutPortal.view';
-import { AboutPlatforms } from 'views/AboutPlatforms.view';
+import { HomeContainer } from 'containers/IndexPage/Home.container';
+import { NotFoundContainer } from 'containers/NotFound.container';
 
 
 /*****************************************************/
@@ -22,42 +24,68 @@ import { AboutPlatforms } from 'views/AboutPlatforms.view';
 export const routes = {
 
     // router for `index.html` page
+    // 'INDEX' ==> `page`
     INDEX: {
+
+        // 'HOME' ==> `path`
         HOME: {
             path: '/',
             exact: true,
-
-            // avoid default export and use named export e.g. export { Home }
-            component: withAsyncComponent( () => import( 'views/Home.view' ).then( components => components.Home ) )
+            component: HomeContainer
         },
 
-        ABOUT: {
-            path: '/about',
+        DOCUMENTATION: {
+            path: '/documentation',
             exact: false,
-            component: withAsyncComponent( () => import( 'views/About.view' ).then( components => components.About ) ),
+
+            // [lazy load component]
+            // we need to chain the promise using `then` and return actual component
+            //  because we are not using `default` export
+            component: withAsyncComponent( () => import( 'containers/IndexPage/Documentation.container' ).then( components => components.DocumentationContainer ) ),
+       
+            // child routes
             routes: {
-                ABOUT_DIGITAL: {
-                    path: '/about',
+                DOCUMENTATION_FRAMEWORK: {
+                    path: '/documentation',
                     exact: true,
-                    component: AboutDigital
+                    
+                    // [lazy load component]
+                    component: withAsyncComponent( () => import( 'containers/IndexPage/documentation/Framework.container' ).then( components => components.FrameworkContainer ) )
                 },
-                ABOUT_PORTAL: {
-                    path: '/about/portal',
+
+                DOCUMENTATION_CLI: {
+                    path: '/documentation/cli',
                     exact: true,
-                    component: AboutPortal
+                    
+                    // [lazy load component]
+                    component: withAsyncComponent( () => import( 'containers/IndexPage/documentation/Cli.container' ).then( components => components.CliContainer ) )
                 },
-                ABOUT_PLATFORMS: {
-                    path: '/about/platforms',
+                
+                DOCUMENTATION_GIT: {
+                    path: '/documentation/git',
                     exact: true,
-                    component: AboutPlatforms
+                    
+                    // [lazy load component]
+                    component: withAsyncComponent( () => import( 'containers/IndexPage/documentation/Git.container' ).then( components => components.GitContainer ) )
                 }
             }
         },
 
-        CONTACT: {
-            path: '/contact',
+        // 404 not found page
+        NOT_FOUND: {
+            path: '/not-found',
             exact: false,
-            component: withAsyncComponent( () => import( 'views/Contact.view' ).then( components => components.Contact ) )
+            component: NotFoundContainer
+        },
+
+        // matches all paths but only if none of the above matches
+        // it redirects to `/not-found` route
+        CONTACT: {
+            path: '',
+            exact: false,
+            render() {
+                return <Redirect to='/not-found' />;
+            }
         }
     }
 };

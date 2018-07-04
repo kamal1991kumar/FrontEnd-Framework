@@ -1,63 +1,64 @@
 import React from 'react';
-import showdown from 'showdown';
+import { noop } from 'lodash';
 
-import { debug } from 'core/utils';
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
-import { getDocumentation } from 'services/documentation.service';
+import * as frameworkDocService from 'services/frameworkDoc.service';
 
 import { frameworkView as FrameworkView } from 'views/indexPage/documentation/framework.view';
-
-// markdown converter
-const markdown = new showdown.Converter();
 
 class _FrameworkContainer extends React.Component {
     constructor( props ) {
         super( props );
+
+        // navigation { name/serviceName : title }
+        this.nav = {
+            getOverview: 'Framework Overview',
+            getWebpack: 'Webpack config',
+            getFileStructure: 'File/Folder structure',
+            getSource: 'Source files',
+            getDist: 'Distribution files',
+            getCoreModules: 'Core modules',
+            getESDoc: 'ESDoc'
+        };
         
         this.state = {
-            cliDoc: null,
-            activeTab: 'frameworkOverview'
+            docHTML: null
         };
 
-        // get documentation HTML in HTTP service callback
-        this.cancelDocHXR = getDocumentation( props.hosts.framework, {
-            success: ( { data } ) => {
-                this.setState( {
-                    ...this.state,
-                    cliDoc: data.payload.data.cliDoc
-                } );
-            },
-            error: ( { error } ) => {
-                alert( 'Something went wrong!' );
-                debug.log( error );
-            }
-        } );
+        // get initial markdown
+        this.getMarkdown( 'getOverview' );
 
-        // bind methods to `this`
-        this.bindMethods();
+        // bind methods
+        this.handleChange = this.handleChange.bind( this );
     }
 
-    // bind methods
-    bindMethods() {
-        this.handleTabChange = this.handleTabChange.bind( this );
+    // get markdown from a service
+    getMarkdown( serviceName ) {
+        if( this.cancelDocHXR && 'function' === typeof this.cancelDocHXR ) {
+            this.cancelDocHXR(); // cancel existing request
+        }
+
+        this.cancelDocHXR = frameworkDocService[ serviceName ]( {
+            success: ( html ) => {
+                this.setState( {
+                    ...this.state,
+                    docHTML: html
+                } );
+            },
+            error: noop
+        } );
     }
 
     // handle tab change
-    handleTabChange( event ) {
-        event.preventDefault();
-        const newTab = event.target.getAttribute( 'data-tab' );
-
-        if( this.state.activeTab !== newTab  ) {
-            this.setState( {
-                ...this.state,
-                activeTab: newTab
-            } );
-        }
+    handleChange( event ) {
+        event.stopPropagation();
+        const tabName = event.target.getAttribute( 'data-tab' );
+        this.getMarkdown( tabName );
     }
 
     render() {
         return (
-            <FrameworkView { ...this.props } cliDoc={ this.state.cliDoc } activeTab={ this.state.activeTab } docHTML={ this.state.cliDoc ? markdown.makeHtml( this.state.cliDoc[ this.state.activeTab ].markdown ) : null } handleTabChange={ this.handleTabChange } />
+            <FrameworkView { ...this.props } nav={ this.nav } docHTML={ this.state.docHTML } handleChange={ this.handleChange } />
         );
     }
 

@@ -1,7 +1,9 @@
 {
-    "hosts": {
-        "api": {
-            "main": "http://localhost:8080"
+    "docUrls": {
+        "cli": {
+            "intro": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-intro.md",
+            "framework": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-framework.md",
+            "server": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-server.md"
         }
     }
 }

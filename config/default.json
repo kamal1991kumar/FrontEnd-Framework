@@ -1,7 +1,9 @@
 {
-    "hosts": {
-        "api": {
-            "main": "http://localhost:3000"
+    "docUrls": {
+        "cli": {
+            "intro": "/documentation/cli-intro.md",
+            "framework": "/documentation/cli-framework.md",
+            "server": "/documentation/cli-server.md"
         }
     }
 }

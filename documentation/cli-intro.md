@@ -1,6 +1,15 @@
-This framework can be operated by Avizva CLI tool and we recommend to initialize a project with Avizva CLI. Using Avizva CLI, you can create controllers components, services, actions, reducers and more with standard boilerplate. Using CLI, you can develop and deploy multi-platform projects with ease.
+# Installation
+Avizva's UI Framework depends on `avizva-cli` npm module to work. Framework can run without CLI but CLI makes our life easier, you will see how. Since, its use it limited to Avizva, it's not hosted publicly. Rather, it lives on **local npm registry** hosted on office network. Hence, there are few unusual things we need to take care of first to get started.
 
-[To download and install, click here.](https://gitlab.com/thatisuday/cli-avizva/wikis/home)
+### /etc/hosts file
+```bash
+sudo sh -c "echo '{lan-ip} npm.avizva.com' >> /etc/hosts"
+```
+
+### install CLI tool
+```bash
+npm install --global avizva-cli --registry=npm.avizva.com
+```
 
 ***
 

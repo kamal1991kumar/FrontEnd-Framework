@@ -1,42 +1,61 @@
 import React from 'react';
-import showdown from 'showdown';
+import { noop } from 'lodash';
 
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
-import { getDocumentation } from 'services/documentation.service';
+import * as cliDocService from 'services/cliDoc.service';
 
 import { cliView as CliView } from 'views/indexPage/documentation/cli.view';
-
-// markdown converter
-const markdown = new showdown.Converter();
 
 class _CliContainer extends React.Component {
     constructor( props ) {
         super( props );
+
+        // navigation { name/serviceName : title }
+        this.nav = {
+            getIntro: 'CLI Tool Intro',
+            getFramework: 'Framework CLI commands',
+            getServer: 'Preview server commands'
+        };
         
         this.state = {
             docHTML: null
         };
 
-        // get documentation HTML in HTTP service callback
-        this.cancelDocHXR = getDocumentation( props.hosts.cli, {
-            success: ( { data } ) => {
+        // get initial markdown
+        this.getMarkdown( 'getIntro' );
+
+        // bind methods
+        this.handleChange = this.handleChange.bind( this );
+    }
+
+    // get markdown from a service
+    getMarkdown( serviceName ) {
+        if( this.cancelDocHXR && 'function' === typeof this.cancelDocHXR ) {
+            this.cancelDocHXR(); // cancel existing request
+        }
+
+        this.cancelDocHXR = cliDocService[ serviceName ]( {
+            success: ( html ) => {
                 this.setState( {
                     ...this.state,
-                    docHTML: markdown.makeHtml( data.payload.data.cliDoc )
+                    docHTML: html
                 } );
             },
-            error: ( { error } ) => {
-                this.setState( {
-                    ...this.state,
-                    docHTML: error
-                } );
-            }
+            error: noop
         } );
     }
 
+    // handle tab change
+    handleChange( event ) {
+        event.stopPropagation();
+        const tabName = event.target.getAttribute( 'data-tab' );
+        this.getMarkdown( tabName );
+    }
+    
+
     render() {
         return (
-            <CliView { ...this.props } docHTML={ this.state.docHTML }/>
+            <CliView { ...this.props } nav={ this.nav } docHTML={ this.state.docHTML } handleChange={ this.handleChange } />
         );
     }
 
