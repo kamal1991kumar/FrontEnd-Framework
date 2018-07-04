@@ -52,5 +52,5 @@ export class IndexController extends Controller {
 
 /*************************************************************/
 
-// register controller
-IndexController.register();
+// register controller with a name
+IndexController.setName( 'IndexController' ).register();

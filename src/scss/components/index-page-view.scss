@@ -1,9 +1,9 @@
 @import '~scss/layout/width';
 
 // children
-@import './indexPageView/homeView';
-@import './indexPageView/bestPracticesView';
-@import './indexPageView/documentationView';
+@import './index-page-view/home-view';
+@import './index-page-view/best-practices-view';
+@import './index-page-view/documentation-view';
 
 .view-index{
     border-top: 10px solid #ea484d;

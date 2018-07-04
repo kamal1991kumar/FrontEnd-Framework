@@ -90,10 +90,8 @@ export class Controller {
     constructor( el, attr, controllerName ) {
         const controllerClass = this.constructor; // controller class
 
-        // if controller name is not provided, use class name
-        if( ! controllerName ) {
-            this.controllerName = controllerClass.name;
-        }
+        // save controller name
+        this.controllerName = controllerName;
 
         if ( 'string' === typeof el ) {
             this.el = document.getElementById( el );
@@ -126,13 +124,15 @@ export class Controller {
         }
     }
 
+    // set name for the controller
+    static setName( controllerName ) {
+        this.controllerName = controllerName;
+        return this;
+    }
+
     // [static] register this controller and save to `controllersMap`
-    static register( controllerName ) {
-        
-        // if controller name is not provided, use class name
-        if( ! controllerName ) {
-            controllerName = this.name;
-        }
+    static register() {
+        const controllerName = this.controllerName;
 
         if ( ! isValidControllerName( controllerName ) ) {
             throw new Error( constants.CONTROLLER_NAME_UNKNOWN_ERROR );
