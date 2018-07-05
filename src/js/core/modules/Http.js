@@ -107,20 +107,20 @@ const executeRequest = ( method, config, handler ) => {
     const reqConfig =  makeRequestConfig( method, config );
 
     // send message-bus 'START' event
-    dispatchMBTransactionEvent( 'START' );
+    dispatchMBTransactionEvent( { type: 'SENT', id: reqConfig.requestId } );
 
     // if handler is empty, return promise and cancel function
     // in an `object`, else just return cancel function
     if( isEmpty( handler ) ) {
         const promise =  new Promise( ( resolve, reject ) => {
             axios( reqConfig ).then( ( response ) => {
-                dispatchMBTransactionEvent( 'COMPLETE' ); // send message-bus 'COMPLETE' event
+                dispatchMBTransactionEvent( { type: 'SUCCESS', id: reqConfig.requestId } ); // send message-bus 'COMPLETE' event
                 reqConfig.completed = true;
 
                 return resolve( responseFormatter.success( response ) );
             } )
             .catch( ( response ) => {
-                dispatchMBTransactionEvent( 'ERROR' ); // send message-bus 'ERROR' event
+                dispatchMBTransactionEvent( { type: 'ERROR', id: reqConfig.requestId } ); // send message-bus 'ERROR' event
                 reqConfig.completed = true;
 
                 return reject( responseFormatter.error( response ) );
@@ -130,7 +130,7 @@ const executeRequest = ( method, config, handler ) => {
         // add cancel method to promise
         promise.cancel = () => {
             if( ! reqConfig.completed ) {
-                dispatchMBTransactionEvent( 'ABORT' ); // send message-bus 'ABORT' event
+                dispatchMBTransactionEvent( { type: 'ABORT', id: reqConfig.requestId } ); // send message-bus 'ABORT' event
                 axios.cancel( reqConfig.requestId );
             }
 
@@ -144,7 +144,7 @@ const executeRequest = ( method, config, handler ) => {
         // resolve request and call handler callbacks
         axios( reqConfig ).then( ( response ) => {
             if( ! reqConfig.completed ) {
-                dispatchMBTransactionEvent( 'COMPLETE' ); // send message-bus 'COMPLETE' event
+                dispatchMBTransactionEvent( { type: 'SUCCESS', id: reqConfig.requestId } ); // send message-bus 'COMPLETE' event
                 reqConfig.completed = true;
 
                 handler.success( responseFormatter.success( response ) );
@@ -152,7 +152,7 @@ const executeRequest = ( method, config, handler ) => {
         } )
         .catch( ( response ) => {
             if( ! reqConfig.completed ) {
-                dispatchMBTransactionEvent( 'ERROR' ); // send message-bus 'ERROR' event
+                dispatchMBTransactionEvent( { type: 'ERROR', id: reqConfig.requestId } ); // send message-bus 'ERROR' event
                 reqConfig.completed = true;
 
                 if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
@@ -164,7 +164,7 @@ const executeRequest = ( method, config, handler ) => {
         // return cancel function
         return () => {
             if( ! reqConfig.completed ) {
-                dispatchMBTransactionEvent( 'ABORT' ); // send message-bus 'ABORT' event
+                dispatchMBTransactionEvent( { type: 'ABORT', id: reqConfig.requestId } ); // send message-bus 'ABORT' event
                 axios.cancel( reqConfig.requestId );
             }
             

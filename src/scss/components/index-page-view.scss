@@ -27,7 +27,7 @@
 
     &.loading{
         &:before{
-            background: linear-gradient(to right, #ea484d 0%, #000 40%, #2196F3 60%);
+            background: linear-gradient(45deg, #ea484d 0%, #5e52ca 100%);
             background-size: 400% 100%;
             animation: 1s avz-nanobar-loading alternate-reverse infinite;
         }

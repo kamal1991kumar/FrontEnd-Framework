@@ -1,4 +1,5 @@
 {
+    "enableLog": false,
     "docUrls": {
         "cli": {
             "intro": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-intro.md",

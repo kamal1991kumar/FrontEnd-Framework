@@ -155,7 +155,7 @@ const coreConfig = {
             copyWebpackPluginMap( 'src/assets', 'assets' ),
 
             // copy documentation to distribution in `development` mode for sample app
-            ( 'production' !== process.env.NODE_ENV  ) ? null : copyWebpackPluginMap( 'documentation', 'documentation' )
+            ( 'production' === process.env.NODE_ENV  ) ? null : copyWebpackPluginMap( 'documentation', 'documentation' )
         ].filter( Boolean ) ),
 
         // extract CSS to a file

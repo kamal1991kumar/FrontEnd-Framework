@@ -1,4 +1,5 @@
 {
+    "enableLog": true,
     "docUrls": {
         "cli": {
             "intro": "/documentation/cli-intro.md",

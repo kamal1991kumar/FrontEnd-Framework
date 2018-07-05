@@ -77,6 +77,8 @@ promise.then( handler ).catch( handler );
 promise.cancel();
 ```
 
+Http module triggers a MessageBus event `HTTP_REQUEST_TRANSACTION` (_import from 'core/constants'_) with request status and request id. You can listen to this event using `MessageBus.on( HTTP_REQUEST_TRANSACTION )`.
+
 ***
 
 ### modules/HttpService.js
@@ -181,10 +183,10 @@ export const RouterOutlet = routerOutlet( routes );
 
 ```jsx
 // render routes for `INDEX` page
-<RenderRoutes currentPage="INDEX" />
+<RenderRoutes page='INDEX' />
 
-// render children routes
-<RenderRoutes currentPage={ props.currentPage } currentRoute={ props.currentRoute } />
+// render child routes of current page and path
+<RenderRoutes path={ props.page } path={ props.path } />
 ```
 
 ──────────────────────────────────────────────────
@@ -211,15 +213,16 @@ Above will search `<script name="hosts"></script> elements inside some `DOMEleme
 
 ***
 
-### utils/debug.js
-A utility module to print console logs in browser.
+### utils/log.js
+An utility module to print console logs in browser. This module is also available globally. In `development` mode, it logs messages while it production, it prevents printing any messages. This configuration is mentioned in `config/` files. If you want to override default configuration, set `debug` query string parameter to `true` or `false` in browser URL.
 
 ```js
-import { debug } from 'core/utils';
-debug.log( "log message", ...messages );
-debug.info( "info message", ...messages );
-debug.warn( "warning message", ...messages );
-debug.error( "error message", ...messages );
+//NO NEED ==> import { log } from 'core/utils';
+
+log( "log message", ...messages );
+log.info( "info message", ...messages );
+log.warn( "warning message", ...messages );
+log.error( "error message", ...messages );
 ```
 
 

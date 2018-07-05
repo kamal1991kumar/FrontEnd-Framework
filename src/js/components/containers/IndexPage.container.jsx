@@ -8,6 +8,8 @@ export class IndexPageContainer extends React.Component {
     constructor( props ) {
         super( props );
 
+        this.pendingRequests = new Set();
+
         this.state = {
             httpReqInProgress: false
         };
@@ -18,10 +20,18 @@ export class IndexPageContainer extends React.Component {
     }
 
     // handle http request transaction
-    handleHttpReqTransaction( status ) {
+    handleHttpReqTransaction( request ) {
+        if( 'SENT' === request.type ) {
+            this.pendingRequests.add( request.id );
+        } else {
+            this.pendingRequests.delete( request.id );
+        }
+
+        log( request );
+
         this.setState( {
             ...this.state,
-            httpReqInProgress: 'START' === status
+            httpReqInProgress: 0 < this.pendingRequests.size
         } );
     }
 
