@@ -57,7 +57,7 @@ export const getDist = ( handler ) => {
 };
 
 export const getCoreModules = ( handler ) => {
-    return Http.get( '/documentation/core-modules.md', {
+    return Http.get( '/documentation/framework-core-modules.md', {
         success: ( { data } ) => {
             return handler.success( markdown.makeHtml( data ) );
         },
