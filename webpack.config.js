@@ -154,8 +154,8 @@ const coreConfig = {
         new CopyWebpackPlugin( [
             copyWebpackPluginMap( 'src/assets', 'assets' ),
 
-            // copy documentation to distribution in `development` mode for sample app
-            ( 'production' === process.env.NODE_ENV  ) ? null : copyWebpackPluginMap( 'documentation', 'documentation' )
+            // copy documentation to distribution when `WDS_INJECT_DOC` environment variable is `true`
+            ( false === boolean( _.get( process, 'env.WDS_INJECT_DOC', false ) ) ) ? null : copyWebpackPluginMap( 'documentation', 'documentation' )
         ].filter( Boolean ) ),
 
         // extract CSS to a file

@@ -1,11 +1,16 @@
+/**
+ * Promise type service.
+ * A callback based HTTP service to get markdown documentation of avizva CLI tool.
+ * This service returns HTML by transforming markdown to HTML using `showdown` plugin.
+ */
+
 import { Http } from 'core/modules/Http';
 import showdown from 'showdown';
 
 // markdown converter
 const markdown = new showdown.Converter();
 
-// get markdown file URLs from `CONFIG`
-// check `config/default.config` file
+// get markdown file URLs from `CONFIG` ( check `config/*.config` files )
 const urls = CONFIG.docUrls.cli;
 
 /*************************************************************/

@@ -1,5 +1,5 @@
 /**
- * use => getEmbeddedJSON( context, name );
+ * use => getEmbeddedJSON( name, context );
  * Returns a embedded json in the HTML script element.
  */
 

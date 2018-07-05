@@ -1,9 +1,9 @@
 /* eslint-disable arrow-body-style */
 
 /**
- * Routes tree configuration file
- * This file contains tree structure for entire application
- * identified by the page name
+ * Application router configuration file.
+ * This file contains route tree structure for entire application
+ * identified by the `page` name and route `path` name.
  */
 
 import React from 'react';
@@ -80,7 +80,7 @@ export const routes = {
 
         // matches all paths but only if none of the above matches
         // it redirects to `/not-found` route
-        CONTACT: {
+        REDIRECT: {
             path: '',
             exact: false,
             render() {

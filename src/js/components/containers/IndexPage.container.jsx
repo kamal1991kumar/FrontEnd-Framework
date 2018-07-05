@@ -8,18 +8,21 @@ export class IndexPageContainer extends React.Component {
     constructor( props ) {
         super( props );
 
+        // store all ongoing HTTP request ids
         this.pendingRequests = new Set();
 
+        // component state
         this.state = {
             httpReqInProgress: false
         };
     }
 
+    // on MB `HTTP_REQUEST_TRANSACTION` event, call `handleHttpReqTransaction` method
     componentDidMount() {
         MessageBus.on( HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
     }
 
-    // handle http request transaction
+    // on HTTP request, save/delete request id
     handleHttpReqTransaction( request ) {
         if( 'SENT' === request.type ) {
             this.pendingRequests.add( request.id );
@@ -27,20 +30,20 @@ export class IndexPageContainer extends React.Component {
             this.pendingRequests.delete( request.id );
         }
 
-        log( request );
-
         this.setState( {
             ...this.state,
             httpReqInProgress: 0 < this.pendingRequests.size
         } );
     }
 
+    // render `IndexPageView` view with `loading` prop
     render() {
         return (
             <IndexPageView loading={ this.state.httpReqInProgress } />
         );
     }
 
+    // unsubscribe from message bus event on component unmount
     componentWillUnmount() {
         MessageBus.off( HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
     }

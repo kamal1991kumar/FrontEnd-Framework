@@ -7,9 +7,19 @@ export class HomeContainer extends React.Component {
         super( props );
     }
 
+    componentWillMount() {
+        log( 'HomeContainer componentDidMount()', this.props );
+    }
+
     render() {
+        log.info( 'HomeContainer render()' );
+
         return (
             <HomeView { ...this.props } />
         );
+    }
+
+    componentWillUnmount() {
+        log.warn( 'HomeContainer componentWillUnmount()' );
     }
 }

@@ -6,7 +6,7 @@ import { withStore } from 'core/hoc/withStore';
 import { getStore } from 'store';
 import { saveHostsAction } from 'store/actions';
 
-// get or create new store
+// get a global redux store ( creates empty store if not already created )
 const store = getStore();
 
 export class IndexController extends Controller {
@@ -14,33 +14,36 @@ export class IndexController extends Controller {
         super( el, attr );
     }
     
-    // controller initialized
+    // [lifecycle method] controller is initialized
     onInit() {
 
-        // get embedded json by `name` attr value
+        // get embedded json from controller DOM element
         const hosts = getEmbeddedJSON( 'hosts', this.el );
 
         // save hosts in redux store
         store.dispatch( saveHostsAction( hosts ) );
     }
 
-    // controller ready
+    // [lifecycle method] controller is ready
     onReady() {
 
-        // render a react component
+        // call render method
         this.render();
     }
 
-    // render React component
+    // render a view
     render() {
 
-        // Render give React component in controller DOM element (`this.el`)
+        // Render a React component in controller's context ( HTML/DOM element ) => `this.el`
+        // reactRender( Component, props, children )( DOMContext )
         reactRender(
 
             // avail Redux Store (<Provider>) using `withStore` HOC and a global `store`
+            // withStore( Component, store )
             withStore(
 
                 // avail <BrowserRouter> ( <BrowserRouter> ) using withBrowserRouter HOC to <IndexPageContainer>
+                // withBrowserRouter( Component, props )
                 withBrowserRouter( IndexPageContainer ),
 
                 // global Redux store

@@ -11,6 +11,10 @@ export const documentationView = ( props ) => {
 
             <ul className='view-index-documentation__menu'>
                 <li className='view-index-documentation__menu__item'>
+                    {/*
+                      `removeTrailingSlash` util function remove trailing lash from URL received from router.
+                      This is a bug in React which prevents correct route to load properly.
+                    */}
                     <Link exact className='view-index-documentation__menu__item__link' to={ removeTrailingSlash( props.match.url ) } activeClassName='view-index-documentation__menu__item__link--active'>Ui Framework</Link>
                 </li>
                 <li className='view-index-documentation__menu__item'>

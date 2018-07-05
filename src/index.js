@@ -5,9 +5,9 @@ import { MessageBus } from 'core/modules/MessageBus';
 // bootstrap application when DOM tree is rendered
 document.addEventListener( 'DOMContentLoaded', () => {
     
-    // start bootstrap
+    // start bootstrap process
     initialize();
 
-    // dispatch bootstrap complete event
+    // dispatch [message bus] bootstrap complete event
     MessageBus.trigger( constants.EVENT_BOOTSTRAP_COMPLETED );
 } );

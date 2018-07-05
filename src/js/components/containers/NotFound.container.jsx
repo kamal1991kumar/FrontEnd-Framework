@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { notFoundView as NotFoundView } from 'views/notFound.view';
+
 export class NotFoundContainer extends React.Component {
     constructor( props ) {
         super( props );
@@ -7,7 +9,7 @@ export class NotFoundContainer extends React.Component {
 
     render() {
         return (
-            <h1>404 Not Found</h1>
+            <NotFoundView />
         );
     }
 }

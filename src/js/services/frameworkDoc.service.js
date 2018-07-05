@@ -1,7 +1,7 @@
 /**
- * Framework documentation service
- * This service fetches markdown code and returns HTML.
- * All service URLs are hard-coded here.
+ * Promise type service.
+ * A callback based HTTP service to get markdown documentation of avizva UI framework.
+ * This service returns HTML by transforming markdown to HTML using `showdown` plugin.
  */
 
 import { Http } from 'core/modules/Http';

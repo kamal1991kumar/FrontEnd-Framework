@@ -22,6 +22,12 @@ By default, once project directory is created, CLI installs npm modules. To avoi
 avizva-ui init my-project --no-install
 ```
 
+Use `--inject-doc` to add framework documentation to build output.
+
+```
+avizva-ui init my-project --inject-doc
+```
+
 Out of the box, CLI only has `default` platform. To add multiple platforms including `default`, use `-p` or `--platforms` flag.
 
 ```
