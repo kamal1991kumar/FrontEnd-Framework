@@ -5,7 +5,7 @@
  * log( ...messages ), log.info( ... ), log.warn( ... ), log.error( ... )
  */
 
-import { LOG_TAG } from 'core/constants';
+import { DEFAULT_LOG_TAG } from 'core/constants';
 
 const getQueryStringValue = ( key ) => {
     if( window && 'function' === typeof window.decodeURIComponent ) {
@@ -26,40 +26,54 @@ const getQueryStringValue = ( key ) => {
 const enableLog = ( CONFIG.enableLog || ( 'true' === getQueryStringValue( 'debug' ) ) ) && ( 'false' !== getQueryStringValue( 'debug' ) );
 
 // print with format
-const print = ( { type, messages } ) => {
+const print = ( { tag, type, messages } ) => {
     if( enableLog ) {
         switch( type ) {
             case 'info':
-                console.info( `%c ${ LOG_TAG } `, 'background: blue; color: white; font-weight: bold;', ...messages );
+                console.info( `%c ${ tag } `, 'background: blue; color: white; font-weight: bold;', ...messages );
                 break;
             case 'warn':
-                console.info( `%c ${ LOG_TAG } `, 'background: orange; color: white; font-weight: bold;', ...messages );
+                console.warn( `%c ${ tag } `, 'background: orange; color: white; font-weight: bold;', ...messages );
                 break;
             case 'error':
-                console.info( `%c ${ LOG_TAG } `, 'background: red; color: white; font-weight: bold;', ...messages );
+                console.error( `%c ${ tag } `, 'background: red; color: white; font-weight: bold;', ...messages );
                 break;
-            case 'log':
+            case 'debug':
             default:
-                console.info( `%c ${ LOG_TAG } `, 'background: green; color: white; font-weight: bold;', ...messages );
+                console.log( `%c ${ tag } `, 'background: green; color: white; font-weight: bold;', ...messages );
         }
     }
 };
 
-const log = ( ...messages ) => {
-    print( { type: 'log', messages } );
-};
+export class Log {
+    constructor( LOG_TAG ) {
+        this.LOG_TAG = LOG_TAG;
+    }
 
-log.info = ( ...messages ) => {
-    print( { type: 'info', messages } );
-};
+    // return new instance with custom log tag
+    tag( LOG_TAG ) {
+        return new this.constructor( LOG_TAG );
+    }
 
-log.warn = ( ...messages ) => {
-    print( { type: 'warn', messages } );
-};
+    debug( ...messages ) {
+        print( { tag: this.LOG_TAG, type: 'debug', messages } );
+    }
 
-log.error = ( ...messages ) => {
-    print( { type: 'error', messages } );
-};
+    info( ...messages ) {
+        print( { tag: this.LOG_TAG, type: 'info', messages } );
+    }
+
+    warn( ...messages ) {
+        print( { tag: this.LOG_TAG, type: 'warn', messages } );
+    }
+
+    error( ...messages ) {
+        print( { tag: this.LOG_TAG, type: 'error', messages } );
+    }
+}
+
+// create instance with default log tag
+const log = new Log( DEFAULT_LOG_TAG );
 
 /*******************************************/
 

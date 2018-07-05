@@ -1,1 +1,1 @@
-export const LOG_TAG = 'UI';
+export const DEFAULT_LOG_TAG = 'DEFAULT_TAG';

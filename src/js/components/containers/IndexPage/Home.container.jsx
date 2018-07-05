@@ -8,11 +8,12 @@ export class HomeContainer extends React.Component {
     }
 
     componentWillMount() {
-        log( 'HomeContainer componentDidMount()', this.props );
+        log.debug( 'HomeContainer.componentDidMount()', this.props );
     }
 
     render() {
-        log.info( 'HomeContainer render()' );
+        
+        log.tag( 'CUSTOM_TAG' ).info( 'HomeContainer.render()' );
 
         return (
             <HomeView { ...this.props } />
@@ -20,6 +21,7 @@ export class HomeContainer extends React.Component {
     }
 
     componentWillUnmount() {
-        log.warn( 'HomeContainer componentWillUnmount()' );
+        
+        log.warn( 'HomeContainer.componentWillUnmount()' );
     }
 }

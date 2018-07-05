@@ -13,6 +13,6 @@ Motivation behind creating Avizva's very own UI framework are based on following
 3. [File/Folder structure](https://gitlab.com/thatisuday/ui-framework/tree/dev/documentation/framework-file-structure.md)
 4. [Source files](https://gitlab.com/thatisuday/ui-framework/tree/dev/documentation/framework-source.md)
 5. [Distribution files](https://gitlab.com/thatisuday/ui-framework/tree/dev/documentation/framework-distribution.md)
-6. [Core modules](https://gitlab.com/thatisuday/ui-framework/tree/dev/documentation/core-modules.md)
+6. [Core modules](https://gitlab.com/thatisuday/ui-framework/tree/dev/documentation/framework-core-modules.md)
 7. [Code comments](https://gitlab.com/thatisuday/ui-framework/tree/dev/documentation/esdoc.md)
 8. [CLI commands](https://gitlab.com/thatisuday/ui-framework/tree/dev/documentation/cli-intro.md)

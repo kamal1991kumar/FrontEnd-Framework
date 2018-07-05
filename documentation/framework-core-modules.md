@@ -219,10 +219,14 @@ An utility module to print console logs in browser. This module is also availabl
 ```js
 //NO NEED ==> import { log } from 'core/utils';
 
-log( "log message", ...messages );
+log.debug( "log message", ...messages );
 log.info( "info message", ...messages );
 log.warn( "warning message", ...messages );
 log.error( "error message", ...messages );
+
+// log with a custom tag
+log.tag( 'CUSTOM_TAG' ).debug( "error message", ...messages );
+...
 ```
 
 

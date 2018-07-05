@@ -1,5 +1,5 @@
 # Installation
-Avizva's UI Framework depends on `avizva-cli` npm module to work. Framework can run without CLI but CLI makes our life easier, you will see how. Since, its use it limited to Avizva, it's not hosted publicly. Rather, it lives on **local npm registry** hosted on office network. Hence, there are few unusual things we need to take care of first to get started.
+Avizva UI Framework depends on `avizva-cli` npm module to work. Framework can run without CLI but CLI makes our life easier, you will see how. Since, its use it limited to Avizva, it's not hosted publicly. Rather, it lives on **local npm registry** hosted on office network. Hence, there are few unusual things we need to take care of first to get started.
 
 ### /etc/hosts file
 ```bash
@@ -8,7 +8,7 @@ sudo sh -c "echo '{lan-ip} npm.avizva.com' >> /etc/hosts"
 
 ### install CLI tool
 ```bash
-npm install --global avizva-cli --registry=npm.avizva.com
+npm install --global avizva-cli --registry=http://npm.avizva.com
 ```
 
 ***
