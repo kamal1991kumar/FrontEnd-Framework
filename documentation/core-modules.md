@@ -144,7 +144,7 @@ const ComponentWithRouter = withBrowserRouter( Component, props );
 ***
 
 ### hoc/withRouterConnect.jsx
-When using React Router and React Redux, a component retuned by `connect` higher-order-component doesn't have access to `Route` related props like `history`, `match` and `location` etc. Hence, we need to use `withRouter` higher-order-component again.  `withRouterConnect` higher-order-component does exactly the same.
+When using React Router and React Redux, a component returned by `connect` higher-order-component doesn't have access to `Route` related props like `history`, `match` and `location` etc. Hence, we need to use `withRouter` higher-order-component again.  `withRouterConnect` higher-order-component does exactly the same.
 
 ```js
 import { withRouterConnect }  from 'core/hoc/withRouterConnect';
@@ -155,7 +155,7 @@ const ComponentWithConnect = withRouterConnect( Component, mapStateToProps, mapD
 ***
 
 ### hoc/withAsyncComponent.jsx
-This higher-order-component implements `loadable` function from `react-lodable`. This HOC returns a component which can be lazy loaded. You must pass a function which returns promise that upon resolution returns a React component. You can optionally pass `LoadingView` component which will be shown until the promise is resolved. You can use Webpack's [`import()`](https://webpack.js.org/api/module-methods/#import-) function to resolve a component.
+This higher-order-component implements `loadable` function from `react-loadable`. This HOC returns a component which can be lazy loaded. You must pass a function which returns promise that upon resolution returns a React component. You can optionally pass `LoadingView` component which will be shown until the promise is resolved. You can use Webpack's [`import()`](https://webpack.js.org/api/module-methods/#import-) function to resolve a component.
 
 ```js
 import { withAsyncComponent }  from 'core/hoc/withAsyncComponent';
