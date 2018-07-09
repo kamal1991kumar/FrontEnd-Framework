@@ -1,12 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-useless-escape */
-/**
- * A simple log interface to log messages to browser console.
- * log( ...messages ), log.info( ... ), log.warn( ... ), log.error( ... )
- */
+const { DEFAULT_LOG_TAG } = CONFIG.constants;
 
-import { DEFAULT_LOG_TAG } from 'core/constants';
-
+// extract a query string value from URL
 const getQueryStringValue = ( key ) => {
     if( window && 'function' === typeof window.decodeURIComponent ) {
         return decodeURIComponent(
@@ -25,7 +21,7 @@ const getQueryStringValue = ( key ) => {
 // disable when query string parameter `debug` is 'false'
 const enableLog = ( CONFIG.enableLog || ( 'true' === getQueryStringValue( 'debug' ) ) ) && ( 'false' !== getQueryStringValue( 'debug' ) );
 
-// print with format
+// print console log messages with CSS type style
 const print = ( { tag, type, messages } ) => {
     if( enableLog ) {
         switch( type ) {
@@ -45,7 +41,10 @@ const print = ( { tag, type, messages } ) => {
     }
 };
 
-export class Log {
+/**
+ * @ignore
+ */
+class Log {
     constructor( LOG_TAG ) {
         this.LOG_TAG = LOG_TAG;
     }
@@ -57,18 +56,22 @@ export class Log {
 
     debug( ...messages ) {
         print( { tag: this.LOG_TAG, type: 'debug', messages } );
+        return this;
     }
 
     info( ...messages ) {
         print( { tag: this.LOG_TAG, type: 'info', messages } );
+        return this;
     }
 
     warn( ...messages ) {
         print( { tag: this.LOG_TAG, type: 'warn', messages } );
+        return this;
     }
 
     error( ...messages ) {
         print( { tag: this.LOG_TAG, type: 'error', messages } );
+        return this;
     }
 }
 
@@ -80,4 +83,20 @@ const log = new Log( DEFAULT_LOG_TAG );
 // set as global variable
 global.log = log;
 
+/**
+ * @type {object}
+ * @desc An utility module to print console log messages with a **LOG_TAG**.
+ * This module supports different log levels and is available globally (does not need a import statement).
+ * @property {function(messages: ...string)} debug - log **debug** level messages
+ * @property {function(messages: ...string)} info - log **info** level messages
+ * @property {function(messages: ...string)} warn - log **warn** level messages
+ * @property {function(messages: ...string)} error - log **error** level messages
+ * @property {function(messages: ...string)} tag - returns log module with custom LOG_TAG value
+ * @example
+ * log.debug( 'my-message' );
+ * log.info( 'my-message' );
+ * log.warn( 'my-message' );
+ * log.error( 'my-message' );
+ * log.tag( 'MY_TAG' ).debug( 'my-message' );
+ */
 export { log };

@@ -1,3 +1,19 @@
+/**
+ * @typedef {object} bootstrap
+ * @desc Module that performs application bootstrapping by registering and initializing **controllers**.
+ * @property {function(context: HTMLElement)} initialize - Start application bootstrap process. It bootstraps application controllers within given `HTMLElement`. If `HTMLElement` is not provided, it bootstrap entire application controllers within `document.body`.
+ * @property {function(payload: { context: HTMLElement })} run - `initialize` function internally calls `run` which works in similar fashion. It accepts a payload object which contains a context `HTMLElement`.
+ * @property {function(payload: { context: HTMLElement })} pause - Pauses bootstrap process.
+ * @property {function(payload: { context: HTMLElement })} resume - Resumes bootstrap process.
+ * @example
+ * import { initialize } from 'core/bootstrap';
+ *
+ * // initialize bootstrap process
+ * document.addEventListener( 'DOMContentLoaded', () => {
+ *  initialize();
+ * } );
+ */
+
 import $ from 'jquery';
 
 import { createInstance } from 'core/modules/Controller';
@@ -69,6 +85,7 @@ const runWithPayloadQueue = () => {
 };
 
 /**
+ * @ignore
  * This will call bootstrap and will pass the context
  * in the bootstrap as an argument if context is defined.
  */
@@ -95,16 +112,25 @@ export const run = ( payload ) => {
 /**********************************************/
 
 
+/**
+ * @ignore
+ */
 // initialize bootstrap process
 export const initialize = ( context ) => {
     run( context );
 };
 
+/**
+ * @ignore
+ */
 // pause controllers creation
 export const pause = () => {
     isPaused = true;
 };
 
+/**
+ * @ignore
+ */
 // resume controllers creation
 export const resume = () => {
     isPaused = false;

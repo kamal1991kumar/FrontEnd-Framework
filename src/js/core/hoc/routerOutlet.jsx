@@ -1,12 +1,21 @@
-/**
- * Router Outlet Component to auto render sub-routes based
- * on `path` prop on `RouterOutlet` component
- */
-
 import React from 'react';
 import _ from 'lodash';
 import { Route, Switch } from 'react-router-dom';
 
+/**
+ * @type {function}
+ * @desc Router Outlet Component to auto render sub-routes based on `path` prop on `RouterOutlet` component.
+ * @param {object} routes - A router configuration object
+ * @example
+ * import { routerOutlet } from 'core/hoc/routerOutlet';
+ * import { config } from './router.config';
+ *
+ * const RouterOutlet = routerOutlet( config );
+ *
+ * // render
+ * <RouterOutlet page="INDEX"/>
+ * <RouterOutlet page={ props.page } path={ props.path }/>
+ */
 export const routerOutlet = ( routes ) => {
     return class RouterOutlet extends React.Component {
         constructor( props ) {

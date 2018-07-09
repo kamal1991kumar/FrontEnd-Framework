@@ -28,7 +28,10 @@ const addInstance = ( objectID, instance ) => {
 /*************************************************************/
 
 
-// get instance of a controller
+/**
+ * @ignore
+ * @desc get instance of a controller
+ */
 export const createInstance = ( controllerName, el, attr ) => {
     let $el,
         instance = null;
@@ -62,7 +65,10 @@ export const createInstance = ( controllerName, el, attr ) => {
     return instance;
 };
 
-// remove an instance from `instanceMap`
+/**
+ * @ignore
+ * @desc remove an instance from `instanceMap`
+ */
 export const removeInstance = ( objectID ) => {
     const _instance = instanceMap[ objectID ];
     if ( 'function' === typeof _instance.unbind ) {
@@ -83,10 +89,16 @@ export const removeInstance = ( objectID ) => {
 
 
 /**
- * Controller class that will be used by
- * other controllers for inheritance.
+ * @type {class}
+ * @desc Controller super class provides a mechanism to render a React component on demand.
  */
 export class Controller {
+    
+    /**
+     * @param {HTMLElement} el - HTML element to render component in
+     * @param {*} attr - attributes of HTML element
+     * @param {*} controllerName - Name of the controller class
+     */
     constructor( el, attr, controllerName ) {
         const controllerClass = this.constructor; // controller class
 
@@ -124,13 +136,19 @@ export class Controller {
         }
     }
 
-    // set name for the controller
+    /**
+     * @desc set name for the controller
+     * @param {string} controllerName - controller name
+     * @returns {this} - Instance of the class
+     */
     static setName( controllerName ) {
         this.controllerName = controllerName;
         return this;
     }
 
-    // [static] register this controller and save to `controllersMap`
+    /**
+     * @desc Register a controller
+     */
     static register() {
         const controllerName = this.controllerName;
 
@@ -143,12 +161,16 @@ export class Controller {
         }
     }
 
-    // remove this instance
+    /**
+     * @desc Remove controller instance
+     */
     close() {
         removeInstance( this.objectID );
     }
 
-    // remove dom node of this instance
+    /**
+     * @desc Remove DOM element
+     */
     remove() {
         this.$el.remove();
     }

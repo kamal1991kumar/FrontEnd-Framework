@@ -1,8 +1,16 @@
 /**
- * use => getEmbeddedJSON( name, context );
- * Returns a embedded json in the HTML script element.
+ * @type {function}
+ * @desc Returns embedded JSON value inside a HTML element.
+ * @param {string} name - A **name** HTML attribute value of `script` element
+ * @param {HTMLElement} [context] - A parent `HTMLElement` to find `script` tag in, default `document.body`
+ * @return {object} An embedded object (_parsed JSON_)
+ * @example
+ * import { getEmbeddedJSON } from 'core/utils/getEmbeddedJSON';
+ *
+ * // extract embedded JSON
+ * const context = document.getElementById( 'container' );
+ * const data = getEmbeddedJSON( 'API_ENDPOINTS', context );
  */
-
 export const getEmbeddedJSON = ( name, context ) => {
 
     // set `body` as context if `context` is not provided

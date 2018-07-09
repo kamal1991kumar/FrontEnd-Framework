@@ -1,5 +1,8 @@
 {
     "enableLog": false,
+    "constants": {
+        "DEFAULT_LOG_TAG": "PROD"
+    },
     "docUrls": {
         "cli": {
             "intro": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-intro.md",

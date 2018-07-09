@@ -83,8 +83,8 @@ export const routes = {
         REDIRECT: {
             path: '',
             exact: false,
-            render() {
-                return <Redirect to='/not-found' />;
+            render( props ) {
+                return <Redirect to={ { pathname: '/not-found', state: { previousURL: props.location.pathname } } } />;
             }
         }
     }

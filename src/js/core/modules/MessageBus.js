@@ -1,9 +1,23 @@
 /**
- * Custom MessageBus or EventBus implementation.
- * Publisher Subscriber Implementation.
- * Used to exchange data between different components of the application.
+ * @typedef {object} MessageBus
+ * @desc A custom pub-sub application for general use case based on events.
+ * @property {function(eventName: string), payload: object} trigger - Trigger an event with payload
+ * @property {function(eventName: string), methodToCall, thisBinding} on - Subscribe to an event
+ * @property {function(eventName: string), methodToCall, thisBinding} on - Unsubscribe from an event
+ * @example
+ * import { MessageBus } from 'core/modules/MessageBus';
+ *
+ * MessageBus.on( 'SOME_EVENT', this.logMessages, this );
+ * MessageBus.trigger( 'SOME_EVENT', 'SOME_MESSAGE' );
+ *
+ * // unsubscribe
+ * MessageBus.off( 'SOME_EVENT', this.logMessages, this );
  */
 
+
+/**
+ * @ignore
+ */
 export const MessageBus = (
     () => {
         

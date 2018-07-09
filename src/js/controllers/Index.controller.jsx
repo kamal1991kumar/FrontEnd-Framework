@@ -9,6 +9,9 @@ import { saveHostsAction } from 'store/actions';
 // get a global redux store ( creates empty store if not already created )
 const store = getStore();
 
+/**
+ * @ignore
+ */
 export class IndexController extends Controller {
     constructor( el, attr ) {
         super( el, attr );

@@ -45,6 +45,8 @@
                 "src/js/constants/*"
             ]
         },
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react"
     }
 }

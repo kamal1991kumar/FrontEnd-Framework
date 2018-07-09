@@ -1,9 +1,3 @@
-/**
- * Http utility module which provides easy abstractions over simple Http verbs.
- * Use Http.Get, Http.Post etc. methods to make AJAX network requests.
- * It's easy to integrate; other Http libraries like `fetch` or `jQuery`.
- */
-
 // using axios as current Http library
 import axios from 'axios';
 import axiosCancel from 'axios-cancel';
@@ -17,7 +11,29 @@ import { HTTP_REQUEST_TRANSACTION } from 'core/constants';
 // to abort `XHR` requests and promise
 axiosCancel( axios );
 
-// Http module
+/**
+ * @type {object}
+ * @desc Http utility module which provides easy abstractions over simple Http verbs.
+ * Use Http.Get, Http.Post etc. methods to make AJAX network requests. Currently, this module
+ * uses Axios library to make HTTP calls, hence [config](https://github.com/axios/axios) object configuration is here.
+ * @property {function|promise} get - Send HTTP GET request
+ * @property {function|promise} post - Send HTTP POST request
+ * @property {function|promise} put - Send HTTP PUT request
+ * @property {function|promise} delete - Send HTTP DELETE request
+ * @example
+ * import Http from 'core/modules/Http';
+ * // example 1 : callback approach
+ * const cancelXHR = Http.get( config, {
+ *   success: ( response ) => {},
+ *   error: ( error ) => {}
+ * } );
+ * cancelXHR();
+ *
+ * // example 2 : promise approach
+ * const promise = Http.get( config );
+ * promise.then( response => {} ).catch( error => {} );
+ * promise.cancel(); // cancel XHR
+ */
 export const Http = {};
 
 /*************************************************************/

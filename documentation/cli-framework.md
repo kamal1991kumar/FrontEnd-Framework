@@ -95,6 +95,8 @@ We can nest a entity inside a sub-folder by providing full path of the entity. B
 avizva-ui create <entity-type> <sub/path/entity-name>
 ```
 
+> You can also use `avizva-ui info <entity-type>` command to see entity related information.
+
 
 #### container
 ```
