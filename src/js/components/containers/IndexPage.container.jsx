@@ -49,5 +49,6 @@ export class IndexPageContainer extends React.Component {
     // unsubscribe from message bus event on component unmount
     componentWillUnmount() {
         MessageBus.off( HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
+        MessageBus.off( 'MY_HTTP_EVENT', this.handleHttpReqTransaction, this );
     }
 }
