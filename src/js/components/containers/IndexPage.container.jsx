@@ -20,10 +20,13 @@ export class IndexPageContainer extends React.Component {
     // on MB `HTTP_REQUEST_TRANSACTION` event, call `handleHttpReqTransaction` method
     componentDidMount() {
         MessageBus.on( HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
+        MessageBus.on( 'MY_HTTP_EVENT', this.handleHttpReqTransaction, this );
     }
 
     // on HTTP request, save/delete request id
     handleHttpReqTransaction( request ) {
+        log.debug( request );
+
         if( 'SENT' === request.type ) {
             this.pendingRequests.add( request.id );
         } else {

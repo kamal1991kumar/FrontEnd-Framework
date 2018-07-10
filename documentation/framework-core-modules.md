@@ -79,6 +79,8 @@ promise.cancel();
 
 Http module triggers a MessageBus event `HTTP_REQUEST_TRANSACTION` (_import from 'core/constants'_) with request status and request id. You can listen to this event using `MessageBus.on( HTTP_REQUEST_TRANSACTION )`.
 
+> You can use `{emitEvent: true}` setting in request config _(`axiosConfig`)_ to auto dispatch message-bus events during life-cycle of a network request. By default, name of this message-bus event is `HTTP_REQUEST_TRANSACTION` constant and should be accessed as `import { HTTP_REQUEST_TRANSACTION } from 'core/constants';`. You can give any name you want to these message-bus events in `{eventName: 'MY_HTTP_EVENT'}` setting in request config.
+
 ***
 
 ### modules/HttpService.js

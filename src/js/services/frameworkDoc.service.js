@@ -13,7 +13,11 @@ const markdown = new showdown.Converter();
 /*************************************************************/
 
 export const getOverview = ( handler ) => {
-    return Http.get( '/documentation/framework-overview.md', {
+    return Http.get( {
+        url: '/documentation/framework-overview.md',
+        emitEvent: true,
+        eventName: 'MY_HTTP_EVENT'
+    }, {
         success: ( { data } ) => {
             return handler.success( markdown.makeHtml( data ) );
         },
@@ -22,7 +26,10 @@ export const getOverview = ( handler ) => {
 };
 
 export const getWebpack = ( handler ) => {
-    return Http.get( '/documentation/webpack.md', {
+    return Http.get( {
+        url: '/documentation/webpack.md',
+        emitEvent: true
+    }, {
         success: ( { data } ) => {
             return handler.success( markdown.makeHtml( data ) );
         }
