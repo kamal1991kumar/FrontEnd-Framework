@@ -96,10 +96,12 @@ export class Controller {
      * @param {*} controllerName - Name of the controller class
      */
     constructor( el, attr ) {
-        const controllerClass = this.constructor; // controller class
+
+        // get controller class
+        const controllerClass = this.constructor;
 
         // save controller name
-        this.controllerName = this.constructor.controllerName;
+        this.controllerName = controllerClass.controllerName;
 
         // create object id
         controllerClass.instanceCount = 'undefined' === typeof controllerClass.instanceCount ? 1 : controllerClass.instanceCount + 1;
