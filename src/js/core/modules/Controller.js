@@ -51,7 +51,7 @@ export const createInstance = ( controllerName, el, attr ) => {
             el.setAttribute( 'data-instance', instance.objectID );
         }
     }
-    log.info( instanceMap );
+    
     return instance;
 };
 
