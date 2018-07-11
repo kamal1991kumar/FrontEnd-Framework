@@ -60,8 +60,11 @@ const coreConfig = {
     // entry file(s)
     entry: [
         './src/index.js',
-        './src/scss/index.scss'
-    ],
+        './src/scss/index.scss',
+
+        // inject service worker initializer script
+        ( false === boolean( _.get( process, 'env.WDS_SW', false ) ) ) ? null : './src/js/sw/init.js'
+    ].filter( Boolean ),
     
     // output file(s) and chunks
     output: {
@@ -154,6 +157,9 @@ const coreConfig = {
         new CopyWebpackPlugin( [
             copyWebpackPluginMap( 'src/assets', 'assets' ),
 
+            // copy service worker file
+            ( false === boolean( _.get( process, 'env.WDS_SW', false ) ) ) ? null : copyWebpackPluginMap( 'src/js/sw/sw.js', 'sw.js' ),
+
             // copy documentation to distribution when `WDS_INJECT_DOC` environment variable is `true`
             ( false === boolean( _.get( process, 'env.WDS_INJECT_DOC', false ) ) ) ? null : copyWebpackPluginMap( 'documentation', 'documentation' )
         ].filter( Boolean ) ),
@@ -197,7 +203,7 @@ const coreConfig = {
                 
                 vendor: {
                     
-                    // both : sync + async imports
+                    // both : consider sync + async chunks for evaluation
                     chunks: 'all',
                     
                     // [name] of chunk file being generated
@@ -215,7 +221,7 @@ const coreConfig = {
                     minChunks: 2,
                     enforce: true,
 
-                    // only sync imports
+                    // consider sync chunks for evaluation
                     chunks: 'initial',
 
                     // re-use chunks instead of creating new, use `vendor` chunks

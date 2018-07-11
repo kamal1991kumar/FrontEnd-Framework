@@ -1,5 +1,4 @@
 import { clone, isEmpty, has } from 'lodash';
-import $ from 'jquery';
 
 import * as constants from 'core/constants';
 import { MessageBus } from 'core/modules/MessageBus';
@@ -33,8 +32,7 @@ const addInstance = ( objectID, instance ) => {
  * @desc get instance of a controller
  */
 export const createInstance = ( controllerName, el, attr ) => {
-    let $el,
-        instance = null;
+    let instance = null;
 
     if ( ! isValidControllerName( controllerName ) ) {
         throw new Error( constants.CONTROLLER_NAME_UNKNOWN_ERROR );
@@ -43,22 +41,14 @@ export const createInstance = ( controllerName, el, attr ) => {
     } else if ( ! controllerName || ! el ) {
         throw new Error( constants.TOO_FEW_PARAMETERS );
     } else {
-        if ( 'string' === typeof el ) {
-            $el = $( '#'  + el );
-        } else if ( 'undefined' !== typeof el.jquery ) {
-            $el = el;
-        } else {
-            $el = $( el );
-        }
-
-        instance = $el.data( 'instance' );
+        instance = el.getAttribute( 'data-instance' );
 
         if ( instance && instance.length && ( instance in instanceMap ) ) {
             instance = instanceMap[ instance ];
         } else {
             instance = new controllersMap[ controllerName ]( el, attr );
             instanceMap[ instance.objectID ] = instance;
-            $el.data( 'instance', instance.objectID );
+            el.getAttribute( 'data-instance', instance.objectID );
         }
     }
 
@@ -71,12 +61,18 @@ export const createInstance = ( controllerName, el, attr ) => {
  */
 export const removeInstance = ( objectID ) => {
     const _instance = instanceMap[ objectID ];
+
+    // call unbind method
     if ( 'function' === typeof _instance.unbind ) {
         _instance.unbind();
     }
+
+    // call remove method
     if ( 'function' === typeof _instance.remove ) {
         _instance.remove();
     }
+
+    // call onClose method
     if ( 'function' === typeof _instance.onClose ) {
         _instance.onClose();
     }
@@ -99,24 +95,17 @@ export class Controller {
      * @param {*} attr - attributes of HTML element
      * @param {*} controllerName - Name of the controller class
      */
-    constructor( el, attr, controllerName ) {
+    constructor( el, attr ) {
         const controllerClass = this.constructor; // controller class
 
         // save controller name
-        this.controllerName = controllerName;
+        this.controllerName = this.constructor.controllerName;
 
-        if ( 'string' === typeof el ) {
-            this.el = document.getElementById( el );
-        } else if ( 'undefined' !== typeof el.jquery ) {
-            this.el = el.get( 0 );
-        } else {
-            this.el = el;
-        }
-
+        // create object id
         controllerClass.instanceCount = 'undefined' === typeof controllerClass.instanceCount ? 1 : controllerClass.instanceCount + 1;
         this.objectID = this.controllerName + '__' + controllerClass.instanceCount;
 
-        this.$el = $( this.el );
+        this.el = el;
         this.attr = clone( attr );
         this.cache = {};
         this.data = {};
@@ -172,6 +161,6 @@ export class Controller {
      * @desc Remove DOM element
      */
     remove() {
-        this.$el.remove();
+        this.el.remove();
     }
 }

@@ -14,8 +14,6 @@
  * } );
  */
 
-import $ from 'jquery';
-
 import { createInstance } from 'core/modules/Controller';
 import { CONTROLLER_ELEM_ATTR } from 'core/constants';
 
@@ -48,7 +46,7 @@ const payloadQueue = [];
  * and store inside `controllerDirectives` array.
  */
 const findControllerDirectives = ( context ) => {
-    controllerDirectives = context.find( `[${ CONTROLLER_ELEM_ATTR }]` );
+    controllerDirectives = context.querySelectorAll( `[${ CONTROLLER_ELEM_ATTR }]` );
 };
 
 /**
@@ -57,16 +55,13 @@ const findControllerDirectives = ( context ) => {
  */
 const initControllers = () => {
     for ( instCount = 0; instCount < controllerDirectives.length && ! isPaused ; instCount = instCount + 1 ) {
-        const controllerName = controllerDirectives.eq( instCount ).attr( CONTROLLER_ELEM_ATTR );
-        createInstance( controllerName, controllerDirectives.eq( instCount ) );
+        const controllerName = controllerDirectives[ instCount ].getAttribute( CONTROLLER_ELEM_ATTR );
+        createInstance( controllerName, controllerDirectives[ instCount ] );
     }
 };
 
 // start bootstrap process
-const bootstrap = ( context = 'body' ) => {
-    if ( 'string' === typeof context || 'undefined' === typeof context.jquery ) {
-        context = $( context );
-    }
+const bootstrap = ( context = document.body ) => {
     
     // search controllers in give element context and save
     findControllerDirectives( context );
@@ -136,7 +131,7 @@ export const resume = () => {
     isPaused = false;
 
     for ( ; instCount < controllerDirectives.length && ! isPaused ; instCount = instCount + 1 ) {
-        const controllerName = controllerDirectives.eq( instCount ).attr( CONTROLLER_ELEM_ATTR );
-        createInstance( controllerName, controllerDirectives.eq( instCount ) );
+        const controllerName = controllerDirectives[ instCount ].getAttribute( CONTROLLER_ELEM_ATTR );
+        createInstance( controllerName, controllerDirectives[ instCount ] );
     }
 };
