@@ -56,7 +56,7 @@ const findControllerDirectives = ( context ) => {
 const initControllers = () => {
     for ( instCount = 0; instCount < controllerDirectives.length && ! isPaused ; instCount = instCount + 1 ) {
         const controllerName = controllerDirectives[ instCount ].getAttribute( CONTROLLER_ELEM_ATTR );
-        createInstance( controllerName, controllerDirectives[ instCount ] );
+        createInstance( controllerName, controllerDirectives[ instCount ], { /* no HTML attributes passed */ } );
     }
 };
 
@@ -132,6 +132,6 @@ export const resume = () => {
 
     for ( ; instCount < controllerDirectives.length && ! isPaused ; instCount = instCount + 1 ) {
         const controllerName = controllerDirectives[ instCount ].getAttribute( CONTROLLER_ELEM_ATTR );
-        createInstance( controllerName, controllerDirectives[ instCount ] );
+        createInstance( controllerName, controllerDirectives[ instCount ], { /* no HTML attributes passed */ } );
     }
 };

@@ -48,10 +48,10 @@ export const createInstance = ( controllerName, el, attr ) => {
         } else {
             instance = new controllersMap[ controllerName ]( el, attr );
             instanceMap[ instance.objectID ] = instance;
-            el.getAttribute( 'data-instance', instance.objectID );
+            el.setAttribute( 'data-instance', instance.objectID );
         }
     }
-
+    log.info( instanceMap );
     return instance;
 };
 
