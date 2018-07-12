@@ -2,6 +2,9 @@ import * as constants from 'constants';
 import { initialize } from 'core/bootstrap';
 import { MessageBus } from 'core/modules/MessageBus';
 
+// import pollyfills
+import 'promise-polyfill';
+
 // bootstrap application when DOM tree is rendered
 document.addEventListener( 'DOMContentLoaded', () => {
 

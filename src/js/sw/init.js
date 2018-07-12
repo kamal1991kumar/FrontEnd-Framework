@@ -1,4 +1,7 @@
-// service worker initialization script
+/**
+ * @desc Service worker initialization script.
+ * This is another entry point of webpack.
+ */
 
 // service worker logger
 const logger = log.tag( 'SW' );
