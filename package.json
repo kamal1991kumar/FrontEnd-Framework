@@ -53,7 +53,6 @@
     "esdoc-jsx-plugin": "^1.0.0",
     "esdoc-standard-plugin": "^1.0.0",
     "github-markdown-css": "^2.10.0",
-    "jquery": "^3.3.1",
     "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",

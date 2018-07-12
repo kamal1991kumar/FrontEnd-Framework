@@ -195,6 +195,12 @@ To run development server other than `default` platform, use below command. Belo
 
 ```
 avizva-ui serve cordova
+```
+
+This framework provides service worker support using `--sw` flag.
+
+```
+avizva-ui serve --sw
 ``` 
 
 ──────────────────────────────────────────────────
@@ -216,4 +222,10 @@ To create build other than `default` platform, use below command. Below command 
 
 ```
 avizva-ui build cordova
+```
+
+This framework provides service worker support using `--sw` flag.
+
+```
+avizva-ui serve --sw
 ``` 
