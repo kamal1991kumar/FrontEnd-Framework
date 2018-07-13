@@ -5,10 +5,10 @@
  * This will be merged with core webpack configuration.
  */
 module.exports = {
+    entry: [
+        './src/index.js'
+    ],
     resolve: {
-        extensions: [
-            '.js',
-            '.jsx'
-        ]
+        extensions: ['.js', '.jsx']
     }
-}
+};

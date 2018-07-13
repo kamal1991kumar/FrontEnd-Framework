@@ -59,7 +59,8 @@ const coreConfig = {
     
     // entry file(s)
     entry: [
-        './src/index.js',
+
+        // stylesheet
         './src/scss/index.scss',
 
         // inject service worker initializer script
