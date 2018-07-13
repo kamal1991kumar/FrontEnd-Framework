@@ -54,6 +54,7 @@
     "esdoc-standard-plugin": "^1.0.0",
     "github-markdown-css": "^2.10.0",
     "lodash": "^4.17.10",
+    "promise-polyfill": "^8.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-loadable": "^5.4.0",
