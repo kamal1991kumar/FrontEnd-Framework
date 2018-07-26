@@ -1,8 +1,13 @@
+// import globals
+@import './globals';
+
+/*********************************/
+
 // import github markdown css
 @import '~github-markdown-css/github-markdown';
 
 // import ionicons
-@import url("https://unpkg.com/ionicons@4.2.5/dist/css/ionicons.min.css");
+@import url('https://unpkg.com/ionicons@4.2.5/dist/css/ionicons.min.css');
 
 // import fonts
 @import './fonts';
@@ -10,11 +15,11 @@
 // import base css
 @import './base';
 
-// import utilities
-@import './utilities';
-
 // import themes
 @import './theme';
+
+// import layout
+@import './layout';
 
 // import modules
 @import './modules';

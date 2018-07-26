@@ -5,6 +5,7 @@
 |  |  ├── css/
 |  |  ├── js/
 |  |  ├── json/
+|  |  ├── sw.js
 |  |  ├── index.html
 |  |  └── about.html
 |  └── default/
@@ -12,6 +13,7 @@
 |     ├── css/
 |     ├── js/
 |     ├── json/
+|     ├── sw.js
 |     ├── index.html
 |     └── about.html
 ```

@@ -2,6 +2,7 @@
 ├── .platforms/
 ├── src/
 |  ├── index.js
+|  ├── index.cordova.js
 |  ├── assets/
 |  |  ├── files/
 |  |  ├── fonts/
@@ -24,6 +25,7 @@
 |  |  ├── router/
 |  |  ├── services/
 |  |  ├── store/
+|  |  ├── sw/
 |  |  ├── utils/
 |  |  ├── vendors/
 |  |  └── views/
@@ -31,13 +33,13 @@
 |  |  ├── index.html
 |  |  └── about.html
 |  └── scss/
+|     ├── globals/
 |     ├── base/
-|     ├── components/
-|     ├── modules/
 |     ├── fonts/
-|     ├── layout/
 |     ├── theme/
-|     ├── utilities/
+|     ├── layout/
+|     ├── modules/
+|     ├── components/
 |     └── index.scss
 ├── dist/
 |  ├── cordova/

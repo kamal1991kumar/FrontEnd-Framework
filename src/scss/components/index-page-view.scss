@@ -1,5 +1,3 @@
-@import '../layout/width';
-
 // children
 @import './index-page-view/home-view';
 @import './index-page-view/documentation-view';
@@ -17,10 +15,10 @@
 
 .view-index{
     margin-top: 6rem;
-    min-height: 100vh;
 
     &__content{
         max-width: $width-max-content;
+        min-height: $height-min-content;
         margin: 2.5rem auto;
     }
 }

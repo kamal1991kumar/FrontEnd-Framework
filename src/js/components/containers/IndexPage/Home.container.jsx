@@ -2,7 +2,7 @@ import React from 'react';
 import Typed from 'typed.js';
 
 const typedOptions = {
-    strings: [ 'Multi Platform Support', 'Single/Multi Page App', 'Command Line Tool', 'Build Optimizations', 'Faster Development Time', 'Well Documented' ],
+    strings: [ 'Multi Platform Support', 'Single/Multi Page App', 'Service Worker Support', 'Command Line Tool', 'Build Optimizations', 'Faster Development Time', 'Well Documented' ],
     typeSpeed: 30,
     backDelay: 2000,
     loop: true,

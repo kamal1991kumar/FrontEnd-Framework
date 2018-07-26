@@ -23,6 +23,7 @@
 |  |  ├── router/
 |  |  ├── services/
 |  |  ├── store/
+|  |  ├── sw/
 |  |  ├── utils/
 |  |  ├── vendors/
 |  |  └── views/
@@ -30,13 +31,13 @@
 |  |  ├── index.html
 |  |  └── about.html
 |  └── scss/
+|     ├── globals/
 |     ├── base/
-|     ├── components/
-|     ├── modules/
 |     ├── fonts/
-|     ├── layout/
 |     ├── theme/
-|     ├── utilities/
+|     ├── layout/
+|     ├── modules/
+|     ├── components/
 |     └── index.scss
 ```
 
@@ -78,26 +79,26 @@
 # 📁 CSS Styles
 ```
 |  └── scss/
+|     ├── globals/
 |     ├── base/
-|     ├── components/
-|     ├── modules/
 |     ├── fonts/
-|     ├── layout/
 |     ├── theme/
-|     ├── utilities/
+|     ├── layout/
+|     ├── modules/
+|     ├── components/
 |     └── index.scss
 ```
 
 `scss` folder contains project `.scss` (CSS) files. We recommend structuring your CSS with [**SMACSS**](https://smacss.com/) architecture and write CSS classnames with [**BEM**](http://getbem.com/) methodology. You must follow these two approaches while writing CSS in this framework.
 
 As per **SMACSS**, `.scss` files are divided into below categories.
+- **globals/** : This folder contains sass partials exporting **variables**, **functions** and **mixins** globally. All of these files are imported in outermost `index.scss`, hence these exported members will be available globally from anywhere.
 - **base/** : This folder contains `.scss` files which represent core styles of the entire project. Filename should end with suffix `.base.scss`.
-- **component/** : This folder contains React.js container (component) related `.scss` files. Filename should end with suffix `.component.scss`. This folder also contains styles for native JavaScript web-components.
-- **modules/** : This folder contains React.js view (component) related `.scss` files. Filename should end with suffix `.module.scss`. This folder also contains styles for native JavaScript or CSS modules.
 - **fonts/** : This folder contains font-family related `.scss` files. Font files of a font-family is located in `assets/fonts` and absolute path like `/assets/fonts/../file.otf` should be used inside `.font.scss` files.
-- **layout/** : This folder contains CSS layout related `.scss` files. Filename should end with suffix `.layout.scss`.
 - **theme/** : This folder contains theme related `.scss` files. Filename should end with suffix `.theme.scss`.
-- **utilities/** : This folder contains utilities related `.scss` files. Filename should end with suffix `.utility.scss`.
+- **layout/** : This folder contains CSS layout related `.scss` files. Filename should end with suffix `.layout.scss`.
+- **modules/** : This folder contains React.js view (component) related `.scss` files. Filename should end with suffix `.module.scss`. This folder also contains styles for native JavaScript or CSS modules.
+- **component/** : This folder contains React.js container (component) related `.scss` files. Filename should end with suffix `.component.scss`. This folder also contains styles for native JavaScript web-components.
 
 All above folders should contain an `index.scss` file which `scss/index.scss` imports. `scss/index.scss` is entry point of Webpack as well. Hence, you don't need to import `scss/index.scss` file anywhere in your JavaScript.
 
@@ -121,6 +122,7 @@ All above folders should contain an `index.scss` file which `scss/index.scss` im
 |  |  ├── router/
 |  |  ├── services/
 |  |  ├── store/
+|  |  ├── sw/
 |  |  ├── utils/
 |  |  ├── vendors/
 |  |  └── views/
@@ -289,6 +291,17 @@ avizva-ui create reducer user
 import { addUserAction } from 'store/actions'
 import { getStore } from 'store'
 ```
+
+<br/>
+
+## ↳ js/sw
+```
+|  |  ├── sw/
+|  |  |  ├── init.js
+|  |  |  └── sw.js
+```
+
+`sw` folder contains initialization script `init.js` for **service worker** registration while `sw.js` file contains service worker implementation. These files should only be imported by Webpack and their implementation depends on CLI command.
 
 <br/>
 

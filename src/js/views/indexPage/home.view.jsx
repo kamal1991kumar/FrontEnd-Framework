@@ -16,10 +16,10 @@ export const homeView = React.forwardRef( ( props, ref ) => {
             </div>
 
             <div velocity="links" className='view-index-home__links'>
-                <a className="avz-button avz-button--secondary avz-button--size-medium avz-button--fill avz-button--icon view-index-home__links__item" target="_blank" href="https://gitlab.com/thatisuday/ui-framework">
+                <a className="avz-button avz-button--secondary avz-button--size-medium avz-button--fill avz-button--icon view-index-home__links__item" target="_blank" href="https://gitlab.com/avizva/ui-framework">
                     <i className="icon ion-md-git-network"></i> Gitlab
                 </a>
-                <a className="avz-button avz-button--secondary avz-button--size-medium avz-button--icon view-index-home__links__item"  target="_blank" href="https://gitlab.com/thatisuday/cli-avizva">
+                <a className="avz-button avz-button--secondary avz-button--size-medium avz-button--icon view-index-home__links__item"  target="_blank" href="https://gitlab.com/avizva/cli-avizva">
                     <i className="icon ion-md-code"></i> Command Line Tool
                 </a>
             </div>
