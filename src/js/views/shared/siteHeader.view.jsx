@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 
-export const siteHeaderView = () => {
+export const siteHeaderView = ( props ) => {
     return (
-        <div className='site-header'>
+        <div className={ 'site-header' + ( props.stuck ? ' site-header--stuck' : '' ) }>
             <div className='site-header__content'>
                 <div className='site-header__content__left'>
                     <Link exact to='/'>
@@ -12,17 +12,26 @@ export const siteHeaderView = () => {
                 </div>
 
                 <div className='site-header__content__right'>
-                    <ul className='site-header__menu'>
-                        <li className='site-header__menu__item'>
-                            <Link exact className='site-header__menu__item__link' to='/' activeClassName='site-header__menu__item__link--active'>Home</Link>
-                        </li>
-                        <li className='site-header__menu__item'>
-                            <Link className='site-header__menu__item__link' to='/documentation' activeClassName='site-header__menu__item__link--active'>Documentation</Link>
-                        </li>
-                        <li className='site-header__menu__item'>
-                            <Link className='site-header__menu__item__link' to='/best-practices' activeClassName='site-header__menu__item__link--active'>Best Practices</Link>
-                        </li>
-                    </ul>
+                    <Link exact className='site-header__content__right__item avz-button avz-button--size-small avz-button--icon' to='/' activeClassName='avz-button--fill'>
+                        <i className='icon ion-md-information-circle-outline'></i> About Framework
+                    </Link>
+
+                    <div className="avz-dropdown site-header__content__right__item">
+                        <div className="avz-dropdown__trigger">
+                            <Link className='avz-button avz-button--size-small avz-button--icon' to='/documentation' activeClassName='avz-button--fill'>
+                                <i className="icon ion-md-paper"></i> Documentation
+                            </Link>
+                        </div>
+                        <div className="avz-dropdown__menu">
+                            <Link exact to="/documentation" className="avz-dropdown__menu__item">UI framework</Link>
+                            <Link to="/documentation/cli" className="avz-dropdown__menu__item">CLI commands</Link>
+                            <Link to="/documentation/git" className="avz-dropdown__menu__item">How to use Git?</Link>
+                        </div>
+                    </div>
+
+                    <Link className='site-header__content__right__item avz-button avz-button--size-small avz-button--icon' to='/best-practices' activeClassName='avz-button--fill'>
+                        <i className="icon ion-md-checkmark-circle-outline"></i> Best Practices
+                    </Link>
                 </div>
             </div>
         </div>

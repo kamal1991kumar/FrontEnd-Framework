@@ -9,7 +9,7 @@ export class NotFoundContainer extends React.Component {
 
     render() {
         return (
-            <NotFoundView />
+            <NotFoundView { ...this.props }/>
         );
     }
 }

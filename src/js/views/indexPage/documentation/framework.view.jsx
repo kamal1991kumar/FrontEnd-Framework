@@ -7,7 +7,7 @@ export const frameworkView = ( props ) => {
                 {
                     Object.entries( props.nav ).map( ( [ name, title ] ) => {
                         return (
-                            <button className='view-index-documentation-framework__nav__item' key={ name } data-tab={ name } onClick={ props.handleChange }>{ title }</button>
+                            <button className={ 'view-index-documentation-framework__nav__item avz-button avz-button--size-mini avz-button--secondary' + ( name === props.activeTab ? ' avz-button--fill' : '' ) } key={ name } data-tab={ name } onClick={ props.handleChange }>{ title }</button>
                         );
                     } )
                 }

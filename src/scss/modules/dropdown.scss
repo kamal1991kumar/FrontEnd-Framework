@@ -1,0 +1,64 @@
+@import "../theme/color";
+
+.avz-dropdown{
+    position: relative;
+
+    &__trigger{
+        position: relative;
+        z-index: 20;
+    }
+
+    &__menu{
+        display: none;
+        position: absolute;
+        z-index: 10;
+        left: 50%;
+        top: auto;
+        transform: translateX(-50%);
+        min-width: 100%;
+        padding: 1.2rem;
+        border-radius: 1.2rem;
+
+        &:after{
+            content: "";
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            left: -1.2rem;
+            right: -1.2rem;
+            bottom: -1.2rem;
+            background-color: #fff;
+            filter: blur(5px);
+        }
+
+        &__item{
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #666;
+            padding: 0.6rem 1.5rem;
+            white-space: nowrap;
+            border-radius: 1.2rem;
+            background-color: #fff;
+            box-shadow: 0 1px 3px 2px rgba( 0, 0, 0, 0.1 );
+            text-align: center;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+
+            &:hover,
+            &.active{
+                color: $color-primary;
+            }
+
+            &:not(:last-child){
+                margin-bottom: 1.2rem;
+            }
+        }
+    }
+
+    &:hover &__menu{
+        display: block;
+    }
+}

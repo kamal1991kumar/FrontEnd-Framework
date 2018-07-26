@@ -1,13 +1,20 @@
-@import '~scss/theme/color';
-@import '~scss/theme/shadow';
-@import '~scss/layout/width';
+@import '../../theme/color';
+@import '../../theme/shadow';
+@import '../../layout/width';
 
 .site-header{
     // background color
-    background-color: $color-tertiary;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    background-color: #fff;
+    z-index: 3000;
 
-    // shadow
-    @include shadow-bottom( $opacity: 0.15, $height: 1px, $blur: 5px );
+    &--stuck{
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
 
     // inner content
     &__content{
@@ -15,14 +22,15 @@
         justify-content: space-between;
         align-items: center;
         max-width: $width-max-content;
-        min-height: 3rem;
+        min-height: 7rem;
         margin: 0 auto;
         
         &__left{
             flex: 0;
 
             &__logo{
-                max-height: 1rem;
+                max-height: 2.4rem;
+                filter: grayscale( 0 );
                 transition: all 0.3s ease-in-out;
 
                 &:hover{
@@ -32,43 +40,14 @@
         }
     
         &__right{
-            flex: 1;
-        }
-    }
+            flex: 0;
+            display: flex;
+            align-items: center;
 
-    // menu
-    &__menu{
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        list-style-type: none;
-
-        &__item{
-            border-bottom: 1.5px solid transparent;
-            padding: 0 0.2rem;
-            transition: all 0.3s;
-
-            &__link{
-                display: block;
-                font-size: 0.56rem;
-                text-transform: uppercase;
-                margin-top: 5px;
-                padding: 0 0.3rem 0.5rem;
-
-                &--active{
-                    font-weight: bold;
-                    box-shadow: 0 4px 0 -2px $color-secondary;
+            &__item{
+                &:not(:last-child){
+                    margin-right: 1.5rem;
                 }
-
-                &:hover{
-                    box-shadow: 0 4px 0 -2px $color-primary;
-                }
-            }
-
-            &:not( :last-child ){
-                margin-right: 1rem;
             }
         }
     }

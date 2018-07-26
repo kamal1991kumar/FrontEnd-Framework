@@ -22,11 +22,12 @@ class _FrameworkContainer extends React.Component {
         };
         
         this.state = {
-            docHTML: null
+            docHTML: null,
+            activeTab: 'getOverview'
         };
 
         // get initial markdown
-        this.getMarkdown( 'getOverview' );
+        this.getMarkdown( this.state.activeTab );
 
         // bind methods
         this.handleChange = this.handleChange.bind( this );
@@ -42,7 +43,8 @@ class _FrameworkContainer extends React.Component {
             success: ( html ) => {
                 this.setState( {
                     ...this.state,
-                    docHTML: html
+                    docHTML: html,
+                    activeTab: serviceName
                 } );
             },
             error: noop
@@ -58,7 +60,7 @@ class _FrameworkContainer extends React.Component {
 
     render() {
         return (
-            <FrameworkView { ...this.props } nav={ this.nav } docHTML={ this.state.docHTML } handleChange={ this.handleChange } />
+            <FrameworkView { ...this.props } nav={ this.nav } activeTab={ this.state.activeTab } docHTML={ this.state.docHTML } handleChange={ this.handleChange } />
         );
     }
 

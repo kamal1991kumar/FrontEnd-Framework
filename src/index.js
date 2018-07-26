@@ -5,6 +5,9 @@ import { MessageBus } from 'core/modules/MessageBus';
 // import pollyfills
 import 'promise-polyfill';
 
+// velocity.js (DOM prototypes)
+import 'velocity-animate';
+
 // bootstrap application when DOM tree is rendered
 document.addEventListener( 'DOMContentLoaded', () => {
 

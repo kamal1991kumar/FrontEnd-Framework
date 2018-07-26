@@ -18,11 +18,12 @@ class _CliContainer extends React.Component {
         };
         
         this.state = {
-            docHTML: null
+            docHTML: null,
+            activeTab: 'getIntro'
         };
 
         // get initial markdown
-        this.getMarkdown( 'getIntro' );
+        this.getMarkdown( this.state.activeTab );
 
         // bind methods
         this.handleChange = this.handleChange.bind( this );
@@ -38,7 +39,8 @@ class _CliContainer extends React.Component {
             success: ( html ) => {
                 this.setState( {
                     ...this.state,
-                    docHTML: html
+                    docHTML: html,
+                    activeTab: serviceName
                 } );
             },
             error: noop
@@ -55,7 +57,7 @@ class _CliContainer extends React.Component {
 
     render() {
         return (
-            <CliView { ...this.props } nav={ this.nav } docHTML={ this.state.docHTML } handleChange={ this.handleChange } />
+            <CliView { ...this.props } nav={ this.nav } activeTab={ this.state.activeTab } docHTML={ this.state.docHTML } handleChange={ this.handleChange } />
         );
     }
 

@@ -1,12 +1,13 @@
-@import '~scss/theme/color';
+@import '../theme/color';
+@import '../theme/font';
 
 html, body{
-    font-size: 24px;
-    color: $color-font;
-    background-color: $color-background;
+    font-size: 10px;
+    color: #111;
+    background-color: #fff;
     padding: 0;
     margin: 0;
-    font-family: 'DINPro', sans-serif;
+    font-family: $font-primary;
 }
 
 // border box
@@ -16,11 +17,27 @@ div, p, h1, h2, h3, h4, a, b, span, code, abbr {
 
 // anchor <a> links
 a{
-    color: $color-font;
+    color: #111;
     text-decoration: none;
 }
 
 // override
-.markdown-body hr{
-    background-color: #999;
+.markdown-body{
+    font-family: $font-primary !important;
+    font-size: 1.5rem !important;
+    font-weight: 400 !important;
+    color: #34495e !important;
+
+    hr{
+        background-color: #ccc !important;
+        height: 0.1rem;
+    }
+
+    code {
+        font-family: $font-code !important;
+    }
+
+    table{
+        display: table;
+    }
 }
