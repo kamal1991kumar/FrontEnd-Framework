@@ -1,12 +1,10 @@
-// export action types
-export const TYPE_SAVE_HOSTS = 'SAVE_HOSTS';
-
-/********************************************************/
+// import action types
+import { REDUX_EVENT_SAVE_HOST_URLS } from 'constants';
 
 // save hosts action
 export const saveHostsAction = ( payload ) => {
     return {
-        type: TYPE_SAVE_HOSTS,
+        type: REDUX_EVENT_SAVE_HOST_URLS,
         payload: payload
     };
 };

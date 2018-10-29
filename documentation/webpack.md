@@ -1,7 +1,7 @@
 Webpack needs a dedicated wiki page because it's the load lifter of the entire framework. We have configured and optimized webpack for faster development time, optimized build and support for multi-platform deployment.
 
 ## Merge webpack config
-This framework uses different webpack configuration and dynamically generate a final configuration object using [`webpack-merge`](https://github.com/survivejs/webpack-merge) npm module. With `webpack-merge`, we can also provide functional values to webpack configuration.
+This framework uses different webpack configurations and dynamically generate a final configuration object using [`webpack-merge`](https://github.com/survivejs/webpack-merge) npm module. With `webpack-merge`, we can also provide functional values to webpack configuration.
 
 ## Optimization
 Instead of using same configuration for development and production, we have `webpack.config.js` configured in a way that it uses minimal plugins in development to give better development experience. Based on `NODE_ENV` and other environment variables, most of the plugins take `null` value but since, `null` is not a valid Webpack plugin, we use `filer` on `plugins` array and filter out `null` plugins.
@@ -9,7 +9,7 @@ Instead of using same configuration for development and production, we have `web
 ## Configurations
 
 ### 📁 webpack.config.extra.js
-This file contains variable webpack configuration such as **import aliases** which might need to modified on regular basis. Any dynamic and project related webpack configuration should go in here.
+This file contains variable webpack configuration such as **import aliases** which might need to be modified on regular basis. Any dynamic and project related webpack configuration should go in here.
 
 ### 📁 .platforms/
 `{platform}.webpack.config.js` are the files which webpack will import to load platform dependent configuration. `.platform` folder is created by the CLI and it is advised, not to modify files or content of the files in this folder.

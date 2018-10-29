@@ -223,6 +223,25 @@ import { MyModel } from 'models/MyModel.model'
 
 <br/>
 
+## ↳ js/modules
+```
+|  |  |  ├── modules/
+|  |  |  |  ├── form
+|  |  |  |  |  ├── index.js
+|  |  |  |  |  ├── Form.js
+|  |  |  |  |  ├── Field.js
+|  |  |  |  |  └── styles.scss
+```
+
+This folder contains modules that are portable. For example, **dropdown**, **form**, **carousel** etc. A module contains all resouces inside single folder like `.js`, `.scss` and static files. Modules should provide easy to use API.
+
+#### ↣ Import statement(s)
+```js
+import { Form, Field } from 'modules/form'
+```
+
+<br/>
+
 ## ↳ js/router
 ```
 |  |  ├── router/

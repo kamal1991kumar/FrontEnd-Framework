@@ -51,7 +51,13 @@ class Log {
 
     // return new instance with custom log tag
     tag( LOG_TAG ) {
-        return new this.constructor( LOG_TAG );
+
+        // if instance with name { LOG_TAG } does not exists, create one and save
+        if( ! Log.__instances.hasOwnProperty( LOG_TAG ) ) {
+            Log.__instances[ LOG_TAG ] = new this.constructor( LOG_TAG );
+        }
+
+        return Log.__instances[ LOG_TAG ];
     }
 
     debug( ...messages ) {
@@ -74,6 +80,9 @@ class Log {
         return this;
     }
 }
+
+// store to re-usable instances
+Log.__instances = {};
 
 // create instance with default log tag
 const log = new Log( DEFAULT_LOG_TAG );

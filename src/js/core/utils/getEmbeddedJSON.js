@@ -1,3 +1,5 @@
+import { forEach } from 'lodash';
+
 /**
  * @type {function}
  * @desc Returns embedded JSON value inside a HTML element.
@@ -21,7 +23,7 @@ export const getEmbeddedJSON = ( name, context ) => {
     const elements = context.querySelectorAll( `script[name="${ name }"]` );
     const json = {};
 
-    elements.forEach( element => {
+    forEach( elements, element => {
         try {
             const _json = JSON.parse( element.textContent ) || {};
             Object.assign( json, _json );

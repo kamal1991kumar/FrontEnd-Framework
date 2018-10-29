@@ -57,7 +57,7 @@ const coreConfig = {
     // webpack optimization mode
     mode: ( process.env.NODE_ENV ? process.env.NODE_ENV : 'development' ),
     
-    // entry file(s)
+    // entry file(s) : entry .js file is provided by platform specific webpack config file
     entry: [
 
         // stylesheet

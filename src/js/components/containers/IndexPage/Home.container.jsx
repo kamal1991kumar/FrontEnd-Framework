@@ -1,6 +1,8 @@
 import React from 'react';
 import Typed from 'typed.js';
 
+import { homeView as HomeView } from 'views/indexPage/home.view';
+
 const typedOptions = {
     strings: [ 'Multi Platform Support', 'Single/Multi Page App', 'Service Worker Support', 'Command Line Tool', 'Build Optimizations', 'Faster Development Time', 'Well Documented' ],
     typeSpeed: 30,
@@ -8,8 +10,6 @@ const typedOptions = {
     loop: true,
     showCursor: false
 };
-
-import { homeView as HomeView } from 'views/indexPage/home.view';
 
 export class HomeContainer extends React.Component {
     constructor( props ) {

@@ -1,13 +1,13 @@
 {
-    "enableLog": false,
+    "enableLog": true,
     "constants": {
         "DEFAULT_LOG_TAG": "PROD"
     },
     "docUrls": {
         "cli": {
-            "intro": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-intro.md",
-            "framework": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-framework.md",
-            "server": "https://gitlab.com/avizva/ui-framework/tree/master/documentation/cli-server.md"
+            "intro": "/documentation/cli-intro.md",
+            "framework": "/documentation/cli-framework.md",
+            "server": "/documentation/cli-server.md"
         }
     }
 }

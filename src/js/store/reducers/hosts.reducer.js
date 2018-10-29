@@ -1,5 +1,5 @@
 // import action types
-import { TYPE_SAVE_HOSTS } from 'store/actions';
+import { REDUX_EVENT_SAVE_HOST_URLS } from 'constants';
 
 /********************************************************/
 
@@ -8,7 +8,7 @@ export const hostsReducer = ( state = {}, action ) => {
     const { type, payload } = action;
 
     switch( type ) {
-        case TYPE_SAVE_HOSTS: {
+        case REDUX_EVENT_SAVE_HOST_URLS: {
             return { ...state, ...payload };
         }
         default: {
