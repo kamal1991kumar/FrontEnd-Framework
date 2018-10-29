@@ -43,7 +43,7 @@
 
 `src` folder contains source code of entire project. Whatever lies outside this folder is strictly related to the framework. Hence you will spend most of your time working with this folder only.
 
-`src` folder contains `index.js` which is entry point of the Webpack. Out of the box, this file contains application bootstrap logic and imports which should be present in the distribution file. `src` is majorly consist of `assets`, `js` and `scss` files.
+`src` folder contains `index.js` which is entry point of the Webpack. Out of the box, this file contains application bootstrap logic and imports which should be present in the distribution file. `src` is majorly consist of `assets`, `js` and `scss` files. If you have more than one platforms, then there will be platform specific entry file with name `index.{platform}.js`. `index.js` is used for **default** platform.
 
 ──────────────────────────────────────────────────
 

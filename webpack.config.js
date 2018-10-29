@@ -20,6 +20,11 @@ const { alias } = require( './webpack.config.extra' );
  */
 const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
 
+/**
+ * Set valid node environment variable
+ */
+process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
+
 
 /**
  * Initialize process environment variables from `env.js` file
@@ -55,7 +60,7 @@ const platformConfig = require( `./.platforms/${ PLATFORM }.webpack.config.js` )
 const coreConfig = {
     
     // webpack optimization mode
-    mode: ( process.env.NODE_ENV ? process.env.NODE_ENV : 'development' ),
+    mode: ( 'development' === process.env.NODE_ENV ? 'development' : 'production' ),
     
     // entry file(s) : entry .js file is provided by platform specific webpack config file
     entry: [
