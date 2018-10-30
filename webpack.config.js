@@ -23,7 +23,7 @@ const PLATFORM = process.env.PLATFORM ? process.env.PLATFORM : 'default';
 /**
  * Set valid node environment variable
  */
-process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
+process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
 
 
 /**
