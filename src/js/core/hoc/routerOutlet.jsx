@@ -53,12 +53,12 @@ export const routerOutlet = ( routes ) => {
                         { Object.entries( _.get( routes, `${ this.props.page }.${ this.props.path }.routes`, [] ) ).map( ( [ routeName, route ] ) => {
                             if( route.render && 'function' === typeof route.render ) {
                                 return (
-                                    <Route key={ routeName } exact={ route.exact } path={ route.path } render={ route.render } />
+                                    <Route key={ routeName } exact={ route.exact } path={ this.props.path + '.routes.' + routeName } render={ route.render } />
                                 );
                             } else {
                                 return (
                                     <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                        return <route.component { ...props } page={ this.props.page } path={ routeName } />;
+                                        return <route.component { ...props } page={ this.props.page } path={ this.props.path + '.routes.' + routeName } />;
                                     } } />
                                 );
                             }
