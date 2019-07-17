@@ -32,12 +32,14 @@ export const routerOutlet = ( routes ) => {
                         { Object.entries( _.get( routes, this.props.page, [] ) ).map( ( [ routeName, route ] ) => {
                             if( route.render && 'function' === typeof route.render ) {
                                 return (
-                                    <Route key={ routeName } exact={ route.exact } path={ route.path } render={ route.render } />
+                                    <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
+                                        return route.render( { ...this.props, ...props, page: this.props.page, path: routeName, routeData: route.data } );
+                                    } } />
                                 );
                             } else {
                                 return (
                                     <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                        return <route.component { ...props } page={ this.props.page } path={ routeName } />;
+                                        return <route.component { ...this.props } { ...props } page={ this.props.page } path={ routeName } routeData={ route.data } />;
                                     } } />
                                 );
                             }
@@ -51,14 +53,18 @@ export const routerOutlet = ( routes ) => {
                 return (
                     <Switch>
                         { Object.entries( _.get( routes, `${ this.props.page }.${ this.props.path }.routes`, [] ) ).map( ( [ routeName, route ] ) => {
+                            const routePath = this.props.path + '.routes.' + routeName;
+
                             if( route.render && 'function' === typeof route.render ) {
                                 return (
-                                    <Route key={ routeName } exact={ route.exact } path={ this.props.path + '.routes.' + routeName } render={ route.render } />
+                                    <Route key={ routePath } exact={ route.exact } path={ route.path } render={ ( props ) => {
+                                        return route.render( { ...this.props, ...props, page: this.props.page, path: routePath, routeData: route.data } );
+                                    } } />
                                 );
                             } else {
                                 return (
-                                    <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                        return <route.component { ...props } page={ this.props.page } path={ this.props.path + '.routes.' + routeName } />;
+                                    <Route key={ routePath } exact={ route.exact } path={ route.path } render={ ( props ) => {
+                                        return <route.component { ...this.props } { ...props } page={ this.props.page } path={ routePath } routeData={ route.data } />;
                                     } } />
                                 );
                             }

@@ -27,10 +27,10 @@ class _GitContainer extends React.Component {
             // override previous request instance to make cancellation easier,
             // it will override previous request when it resolves
             // below request gets `.md` file from `documentation`
-            this.request = Http.get( response.data.payload.data.url );
+            this.request = Http.get( response.body.payload.data.url );
             this.request.then( ( _response ) => {
                 this.setState( {
-                    docHTML: markdown.makeHtml( _response.data )
+                    docHTML: markdown.makeHtml( _response.body )
                 } );
             } ).catch( noop );
         } ).catch( noop );

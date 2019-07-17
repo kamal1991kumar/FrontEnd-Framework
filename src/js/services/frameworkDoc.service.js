@@ -18,8 +18,8 @@ export const getOverview = ( handler ) => {
         emitEvent: true,
         eventName: 'MY_HTTP_EVENT'
     }, {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );
@@ -30,16 +30,16 @@ export const getWebpack = ( handler ) => {
         url: '/documentation/webpack.md',
         emitEvent: true
     }, {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         }
     } );
 };
 
 export const getFileStructure = ( handler ) => {
     return Http.get( '/documentation/framework-file-structure.md', {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );
@@ -47,8 +47,8 @@ export const getFileStructure = ( handler ) => {
 
 export const getSource = ( handler ) => {
     return Http.get( '/documentation/framework-source.md', {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );
@@ -56,8 +56,8 @@ export const getSource = ( handler ) => {
 
 export const getDist = ( handler ) => {
     return Http.get( '/documentation/framework-distribution.md', {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );
@@ -65,8 +65,8 @@ export const getDist = ( handler ) => {
 
 export const getCoreModules = ( handler ) => {
     return Http.get( '/documentation/framework-core-modules.md', {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );
@@ -74,8 +74,8 @@ export const getCoreModules = ( handler ) => {
 
 export const getESDoc = ( handler ) => {
     return Http.get( '/documentation/esdoc.md', {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );

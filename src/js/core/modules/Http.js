@@ -2,10 +2,15 @@
 import axios from 'axios';
 import axiosCancel from 'axios-cancel';
 import shortid from 'shortid';
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, merge, includes } from 'lodash';
 
 import { MessageBus } from 'core/modules/MessageBus';
-import { HTTP_REQUEST_TRANSACTION } from 'core/constants';
+import { EVENT_HTTP_REQUEST_TRANSACTION, EVENT_HTTP_AUTH_ERROR } from 'core/constants';
+import { genericSuccessResponse } from 'models/genericSuccessResponse.config';
+
+//@desc Globally setting AJAX requests to carry application/json header.
+//axios.defaults.headers.common[ 'Accept' ] = 'application/json';
+axios.defaults.headers.post[ 'Content-Type' ] = 'application/json';
 
 // add `cancel` prototype method
 // to abort `XHR` requests and promise
@@ -38,28 +43,29 @@ export const Http = {};
 
 /*************************************************************/
 
+
 // HTTP Response formatter
 // return Standard Response Format regardless
 // of any AJAX library is used
 const responseFormatter = {
-    
+
     // when http request resolves successfully
     success: ( httpResponse ) => {
         return {
-            data: httpResponse.data,
+            body: httpResponse.data,
             status: httpResponse.status,
             headers: httpResponse.headers,
             timestamp: Date.now()
         };
     },
-    
+
     // when http request returns error
     error: ( httpError ) => {
         return {
-            type: get( httpError, 'response.status' ) ? 'HTTP_ERROR' : 'NETWORK_ERROR',
-            error: get( httpError, 'response.data', httpError.message ),
-            status: get( httpError, 'response.status', 0 ),
-            headers: get( httpError, 'response.headers', {} ),
+            type: get( httpError, 'status' ) ? 'HTTP_ERROR' : 'NETWORK_ERROR',
+            error: get( httpError, 'data', httpError.message ),
+            status: get( httpError, 'status', 0 ),
+            headers: get( httpError, 'headers', {} ),
             timestamp: Date.now()
         };
     }
@@ -68,27 +74,61 @@ const responseFormatter = {
 // dispatch message-bus event for HTTP transaction
 const dispatchMBTransactionEvent = ( requestConfig, payload ) => {
     if( true === requestConfig.emitEvent ) {
-        const eventName = get( requestConfig, 'eventName', HTTP_REQUEST_TRANSACTION );
+        const eventName = get( requestConfig, 'eventName', EVENT_HTTP_REQUEST_TRANSACTION );
         MessageBus.trigger( eventName, { ...payload, eventName: eventName } );
     }
 };
 
+// dispatch message-bus event when unauthenticated error (401)
+const dispatchAuthErrorEvent = ( response ) => {
+
+    if( includes( [ 401, 403 ], response.status ) ) {
+        dispatchMBTransactionEvent( {
+            emitEvent: true,
+            eventName: EVENT_HTTP_AUTH_ERROR
+        }, {
+            statusCode: response.status
+        } );
+    }
+};
+
+// dispatch message-bus event when not connect to the network
+/*const dispatchNetworkErrorEvent = () => {
+
+    dispatchMBTransactionEvent( {
+        emitEvent: true,
+        eventName: EVENT_HTTP_NETWORK_ERROR
+    }, {} );
+}; */
+
 // `makeRequestConfig` return a fully-fledged config object for axios
 // with some default config values
 const makeRequestConfig = ( method, config ) => {
-    
+
     // default request configuration
     const requestConfig = {
         requestId: shortid.generate(),
         host: 'http://localhost',
         path: '/',
-        timeout: 60 * 1000 // 1 min
+        timeout: 5 * 60 * 1000, // 5 min
+        withCredentials: true === CONFIG.enableAjaxWithCredentials,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',   // need to check why,
+            'Accept': 'application/json'
+        }
     };
+
+    if ( config.headers ) {
+        requestConfig.headers = {
+            ...requestConfig.headers,
+            ...config.headers
+        };
+    }
 
     // add upload progress listener to config
     if( config.onUploadProgress && ( 'function' === typeof config.onUploadProgress ) ) {
         const currentCallback = config.onUploadProgress;
-        
+
         config.onUploadProgress = ( event ) => {
             currentCallback( {
                 sent: event.loaded,
@@ -101,7 +141,7 @@ const makeRequestConfig = ( method, config ) => {
     // add download progress listener to config
     if( config.onDownloadProgress && ( 'function' === typeof config.onDownloadProgress ) ) {
         const currentCallback = config.onDownloadProgress;
-        
+
         config.onDownloadProgress = ( event ) => {
             currentCallback( {
                 received: event.loaded,
@@ -112,21 +152,21 @@ const makeRequestConfig = ( method, config ) => {
     }
 
     if( 'string' === typeof config ) {
-        return Object.assign( {}, requestConfig, { method: method, url: config } );
+        return merge( {}, requestConfig, { method: method, url: config } );
     } else {
-        const _config = Object.assign( {}, requestConfig, config );
+        const _config = merge( {}, requestConfig, config );
 
         if( ! isEmpty( _config.url ) ) {
-            return Object.assign( {}, _config, { method: method } );
+            return merge( {}, _config, { method: method } );
         } else {
-            return Object.assign( {}, _config, { method: method, url: _config.host + _config.path } );
+            return merge( {}, _config, { method: method, url: _config.host + _config.path } );
         }
     }
 };
 
 // execute request and take response action
 const executeRequest = ( method, config, handler ) => {
-    
+
     // create request configuration for axios
     const reqConfig =  makeRequestConfig( method, config );
 
@@ -138,23 +178,37 @@ const executeRequest = ( method, config, handler ) => {
     if( isEmpty( handler ) ) {
         const promise =  new Promise( ( resolve, reject ) => {
             axios( reqConfig ).then( ( response ) => {
-                dispatchMBTransactionEvent( config, { type: 'SUCCESS', id: reqConfig.requestId } ); // send message-bus 'COMPLETE' event
-                reqConfig.completed = true;
 
+                // dispatch message bus event
+                dispatchMBTransactionEvent( config, { type: 'SUCCESS', id: reqConfig.requestId } ); // send message-bus 'COMPLETE' event
+				reqConfig.completed = true;
+
+                // resolve response with basic structure
                 return resolve( responseFormatter.success( response ) );
             } )
-            .catch( ( response ) => {
+            .catch( ( error ) => {
+
+                const { response } = error;
+
+                // dispatch message bus event
                 dispatchMBTransactionEvent( config, { type: 'ERROR', id: reqConfig.requestId } ); // send message-bus 'ERROR' event
                 reqConfig.completed = true;
 
-                return reject( responseFormatter.error( response ) );
+                // dispatch event for 401 status
+                const _response = responseFormatter.error( response );
+                dispatchAuthErrorEvent( _response );
+
+                return reject( _response );
             } );
         } );
 
         // add cancel method to promise
         promise.cancel = () => {
             if( ! reqConfig.completed ) {
+
+                // dispatch message bus event
                 dispatchMBTransactionEvent( config, { type: 'ABORT', id: reqConfig.requestId } ); // send message-bus 'ABORT' event
+
                 axios.cancel( reqConfig.requestId );
             }
 
@@ -168,19 +222,64 @@ const executeRequest = ( method, config, handler ) => {
         // resolve request and call handler callbacks
         axios( reqConfig ).then( ( response ) => {
             if( ! reqConfig.completed ) {
-                dispatchMBTransactionEvent( config, { type: 'SUCCESS', id: reqConfig.requestId } ); // send message-bus 'COMPLETE' event
-                reqConfig.completed = true;
 
+                // dispatch message bus event
+                dispatchMBTransactionEvent( config, { type: 'SUCCESS', id: reqConfig.requestId } ); // send message-bus 'COMPLETE' event
+				reqConfig.completed = true;
+
+                // call `success` callback
                 handler.success( responseFormatter.success( response ) );
+
+                // call `done` callback
+                if ( handler.hasOwnProperty( 'done' ) && 'function' === typeof handler.done ) {
+                    handler.done( 'SUCCESS', response );
+                }
             }
         } )
-        .catch( ( response ) => {
-            if( ! reqConfig.completed ) {
-                dispatchMBTransactionEvent( config, { type: 'ERROR', id: reqConfig.requestId } ); // send message-bus 'ERROR' event
-                reqConfig.completed = true;
+        .catch( ( error ) => {
 
-                if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
-                    handler.error( responseFormatter.error( response ) );
+            // extract response from error
+            const { response } = error;
+
+            // execute only if network request is not completed
+            if( ! reqConfig.completed ) {
+
+                // check status exists in network response
+                if( get( response, 'status', null ) ) {
+
+                    // dispatch message bus event
+                    dispatchMBTransactionEvent( config, { type: 'ERROR', id: reqConfig.requestId } ); // send message-bus 'ERROR' event
+                    reqConfig.completed = true;
+
+                    // create formatted error response
+                    const _response = responseFormatter.error( response );
+
+                    // dispatch event for 401 status
+                    dispatchAuthErrorEvent( _response );
+                    
+                    // handle error and send generic response
+                    if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
+                        handler.error( _response );
+                    }
+
+                } else {
+
+                    // service returned without any response status
+                    reqConfig.completed = true;
+
+                    // create generic error response
+                    const _response = responseFormatter.error( {} );
+
+                    // handle error and send generic response
+                    if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
+                        handler.error( _response );
+                    }
+
+                }
+
+                // call done callback
+                if ( handler.hasOwnProperty( 'done' ) && 'function' === typeof handler.done ) {
+                    handler.done( 'ERROR' );
                 }
             }
         } );
@@ -188,10 +287,13 @@ const executeRequest = ( method, config, handler ) => {
         // return cancel function
         return () => {
             if( ! reqConfig.completed ) {
+
+                // dispatch message bus event
                 dispatchMBTransactionEvent( config, { type: 'ABORT', id: reqConfig.requestId } ); // send message-bus 'ABORT' event
+
                 axios.cancel( reqConfig.requestId );
             }
-            
+
             reqConfig.completed = true;
         };
     }

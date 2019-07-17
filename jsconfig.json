@@ -43,6 +43,9 @@
             ],
             "constants/*": [
                 "src/js/constants/*"
+            ],
+            "jsons/*": [
+                "src/assets/jsons/*"
             ]
         },
         "experimentalDecorators": true,

@@ -67,6 +67,8 @@ export const MessageBus = (
          * @private
          */
         const _trigger = function( event, payload ) {
+            log.tag( 'MESSAGE_BUS' ).debug( `trigger:${ event }` );
+
             let eventCount,
                 currentEvent,
                 ctr;

@@ -17,8 +17,8 @@ const urls = CONFIG.docUrls.cli;
 
 export const getIntro = ( handler ) => {
     return Http.get( urls.intro, {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );
@@ -26,8 +26,8 @@ export const getIntro = ( handler ) => {
 
 export const getFramework = ( handler ) => {
     return Http.get( urls.framework, {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );
@@ -35,8 +35,8 @@ export const getFramework = ( handler ) => {
 
 export const getServer = ( handler ) => {
     return Http.get( urls.server, {
-        success: ( { data } ) => {
-            return handler.success( markdown.makeHtml( data ) );
+        success: ( { body } ) => {
+            return handler.success( markdown.makeHtml( body ) );
         },
         error: handler.error
     } );

@@ -119,7 +119,7 @@ module.exports = {
                 "ignoreComments": false
             }
         ],
-        "no-unneeded-ternary": "error",
+        //"no-unneeded-ternary": "error",
         "operator-assignment": [
             "error",
             "never"
@@ -164,7 +164,7 @@ module.exports = {
         "max-depth": [0, 3],
         "max-params": 0,
         "max-statements": 0,
-        "no-bitwise": 1,
+        "no-bitwise": 0,
         "no-plusplus": 1,
 
         /* ECMAScript 6 */

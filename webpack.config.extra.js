@@ -13,7 +13,8 @@ exports.alias = {
     'store': path.resolve( __dirname, 'src/js/store' ),
     'vendors': path.resolve( __dirname, 'src/js/vendors' ),
     'views': path.resolve( __dirname, 'src/js/views' ),
-    'router': path.resolve( __dirname, 'src/js/router/index.js' ),
+    'router': path.resolve( __dirname, 'src/js/router' ),
     'utils': path.resolve( __dirname, 'src/js/utils' ),
-    'constants': path.resolve( __dirname, 'src/js/constants/' )
+    'constants': path.resolve( __dirname, 'src/js/constants/' ),
+    'jsons': path.resolve( __dirname, 'src/assets/jsons/' )
 };

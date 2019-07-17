@@ -1,3 +1,5 @@
+import { isArray } from 'lodash';
+
 /* eslint-disable no-console */
 /* eslint-disable no-useless-escape */
 const { DEFAULT_LOG_TAG } = CONFIG.constants;
@@ -38,6 +40,11 @@ const print = ( { tag, type, messages } ) => {
             default:
                 console.log( `%c ${ tag } `, 'background: green; color: white; font-weight: bold;', ...messages );
         }
+
+        // output warning for more than 2 messages
+        if( isArray( messages ) && 1 < messages.length ) {
+            console.warn( 'You are logging more than 1 messages using log utility function ==> ', messages );
+        }
     }
 };
 
@@ -47,6 +54,13 @@ const print = ( { tag, type, messages } ) => {
 class Log {
     constructor( LOG_TAG ) {
         this.LOG_TAG = LOG_TAG;
+
+        // bind methods to instance
+        this.tag = this.tag.bind( this );
+        this.debug = this.debug.bind( this );
+        this.info = this.info.bind( this );
+        this.warn = this.warn.bind( this );
+        this.error = this.error.bind( this );
     }
 
     // return new instance with custom log tag
