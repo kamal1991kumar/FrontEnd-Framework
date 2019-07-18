@@ -175,6 +175,11 @@ module.exports = {
         "object-shorthand": 0,
         "prefer-const": 1,
 
+        "no-async-promise-executor": 0,
+        "no-misleading-character-class": 0,
+        "no-useless-catch": 0,
+        "require-atomic-updates": 0,
+
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
         "react/display-name": 1,

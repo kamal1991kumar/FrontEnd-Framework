@@ -1,0 +1,53 @@
+// import globals
+@import '~scss-globals';
+
+.site-header{
+    // background color
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    background-color: #fff;
+    z-index: 3000;
+
+    &--stuck{
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+
+    // inner content
+    &__content{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: $width-max-content;
+        min-height: 7rem;
+        margin: 0 auto;
+        
+        &__left{
+            flex: 0;
+
+            &__logo{
+                max-height: 2.4rem;
+                filter: grayscale( 0 );
+                transition: all 0.3s ease-in-out;
+
+                &:hover{
+                    filter: grayscale( 100 );
+                }
+            }
+        }
+    
+        &__right{
+            flex: 0;
+            display: flex;
+            align-items: center;
+
+            &__item{
+                &:not(:last-child){
+                    margin-right: 1.5rem;
+                }
+            }
+        }
+    }
+}

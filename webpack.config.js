@@ -1,6 +1,5 @@
 const path = require( 'path' );
 const shortid = require( 'shortid' );
-const glob = require( 'glob' );
 const webpack = require( 'webpack' );
 const merge = require( 'webpack-merge' );
 const _ = require( 'lodash' );
@@ -66,7 +65,7 @@ const coreConfig = {
     entry: [
 
         // stylesheet
-        './src/scss/index.scss',
+        './src/scss/app.style.scss',
 
         // inject service worker initializer script
         ( false === boolean( _.get( process, 'env.WDS_SW', false ) ) ) ? null : './src/js/sw/init.js'
@@ -104,12 +103,11 @@ const coreConfig = {
                 use: [ 'babel-loader' ]
             },
 
-            // extract CSS to file(s) using `MiniCSSExtractPlugin`,
-            // avoid plugin when `WDS_EXTRACT_CSS` is `true`
+            
             {
                 test: /\.scss$/,
                 use: [
-                    ( false === boolean( _.get( process, 'env.WDS_EXTRACT_CSS', false ) )  ? 'style-loader' : MiniCSSExtractPlugin.loader ),
+                    MiniCSSExtractPlugin.loader, // extract CSS to file
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
@@ -142,20 +140,10 @@ const coreConfig = {
         // do not allow case-insensitivity in import paths
         new CaseSensitivePathsPlugin(),
         
-        // generate HTML pages for preview/build
-        // except `test.*.html`, which won't be generated
-        // return array of `HTMLWebpackPlugin` instances and spread it
-        ...glob.sync( path.resolve( __dirname, 'src/pages/!(test.)*.html' ), { absolute: true } )
-        .map( filePath => {
-            
-            // name of the HTML file
-            const basename = path.basename( filePath );
-
-            // return `HTMLWebpackPlugin` instance
-            return new HTMLWebpackPlugin( {
-                filename: basename,
-                template: path.resolve( __dirname, 'src/pages/', basename )
-            } );
+        // use `index.html` to bootstrap application
+        new HTMLWebpackPlugin( {
+            filename: 'index.html',
+            template: path.resolve( __dirname, 'src/index.html' )
         } ),
 
         // to `as-is` copy files/folders
@@ -171,8 +159,7 @@ const coreConfig = {
         ].filter( Boolean ) ),
 
         // extract CSS to a file
-        // avoid plugin when `WDS_EXTRACT_CSS` is `true
-        ( false === boolean( _.get( process, 'env.WDS_EXTRACT_CSS', false ) ) ) ? null : new MiniCSSExtractPlugin( {
+        new MiniCSSExtractPlugin( {
             filename: 'css/style.css'
         } ),
 

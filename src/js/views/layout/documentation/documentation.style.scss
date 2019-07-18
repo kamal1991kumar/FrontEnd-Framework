@@ -1,0 +1,29 @@
+// import globals
+@import '~scss-globals';
+
+.view-index-documentation{
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+    
+    &__title{
+        font-size: 4rem;
+        font-weight: 300;
+        line-height: 1;
+        margin-bottom: 1rem;
+    }
+
+    // menu
+    &__menu{
+        padding: 1rem 0 0;
+        margin: 0;
+
+        &__item{
+            margin-right: 1.2rem;
+        }
+    }
+
+    // content
+    &__content{
+        margin-top: 1rem;
+    }
+}

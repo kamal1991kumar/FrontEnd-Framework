@@ -9,13 +9,10 @@
                 "src/js/animations/*"
             ],
             "containers/*": [
-                "src/js/components/containers/*"
+                "src/js/containers/*"
             ],
             "hoc/*": [
-                "src/js/components/hoc/*"
-            ],
-            "controllers/*": [
-                "src/js/controllers/*"
+                "src/js/hoc/*"
             ],
             "models/*": [
                 "src/js/models/*"
