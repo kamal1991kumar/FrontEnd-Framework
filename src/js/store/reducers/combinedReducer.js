@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 /********************************************************/
 
 // import reducers
-import { hostsReducer } from 'store/reducers';
+import { hostsReducer } from './hosts';
 
 /********************************************************/
 

@@ -9,6 +9,7 @@ exports.alias = {
     'models': path.resolve( __dirname, 'src/js/models' ),
     'modules': path.resolve( __dirname, 'src/js/modules' ),
     'services': path.resolve( __dirname, 'src/js/services' ),
+    'nonHttpServices': path.resolve( __dirname, 'src/js/nonHttpServices' ),
     'store': path.resolve( __dirname, 'src/js/store' ),
     'vendors': path.resolve( __dirname, 'src/js/vendors' ),
     'views': path.resolve( __dirname, 'src/js/views' ),
