@@ -13,8 +13,8 @@ import { Redirect } from 'react-router-dom';
 import { withAsyncComponent } from 'core/hoc/withAsyncComponent';
 
 // About sub components
-import { HomeContainer } from 'containers/Home/Home.container';
-import { NotFoundContainer } from 'containers/NotFound/NotFound.container';
+import { HomeContainer } from 'containers/Home';
+import { NotFoundContainer } from 'containers/NotFound';
 
 
 /*****************************************************/
@@ -41,7 +41,7 @@ export const routes = {
             // [lazy load component]
             // we need to chain the promise using `then` and return actual component
             //  because we are not using `default` export
-            component: withAsyncComponent( () => import( 'containers/Documentation/Documentation.container' ).then( components => components.DocumentationContainer ) ),
+            component: withAsyncComponent( () => import( 'containers/Documentation' ).then( components => components.DocumentationContainer ) ),
        
             // child routes
             routes: {
@@ -50,7 +50,7 @@ export const routes = {
                     exact: true,
                     
                     // [lazy load component]
-                    component: withAsyncComponent( () => import( 'containers/Framework/Framework.container' ).then( components => components.FrameworkContainer ) )
+                    component: withAsyncComponent( () => import( 'containers/Framework' ).then( components => components.FrameworkContainer ) )
                 },
 
                 DOCUMENTATION_CLI: {
@@ -58,7 +58,7 @@ export const routes = {
                     exact: true,
                     
                     // [lazy load component]
-                    component: withAsyncComponent( () => import( 'containers/Cli/Cli.container' ).then( components => components.CliContainer ) )
+                    component: withAsyncComponent( () => import( 'containers/Cli' ).then( components => components.CliContainer ) )
                 },
                 
                 DOCUMENTATION_GIT: {
@@ -66,7 +66,7 @@ export const routes = {
                     exact: true,
                     
                     // [lazy load component]
-                    component: withAsyncComponent( () => import( 'containers/Git/Git.container' ).then( components => components.GitContainer ) )
+                    component: withAsyncComponent( () => import( 'containers/Git' ).then( components => components.GitContainer ) )
                 }
             }
         },

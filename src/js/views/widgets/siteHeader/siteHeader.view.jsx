@@ -40,3 +40,9 @@ export const siteHeaderView = ( props ) => {
         </div>
     );
 };
+
+// set display name
+siteHeaderView.displayName = 'siteHeaderView';
+
+// set default props
+siteHeaderView.defaultProps = {};

@@ -12,3 +12,9 @@ export const gitView = ( props ) => {
         </div>
     );
 };
+
+// set display name
+gitView.displayName = 'gitView';
+
+// set default props
+gitView.defaultProps = {};

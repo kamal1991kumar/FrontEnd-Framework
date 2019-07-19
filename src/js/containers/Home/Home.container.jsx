@@ -1,7 +1,7 @@
 import React from 'react';
 import Typed from 'typed.js';
 
-import { homeView as HomeView } from 'views/layout/home/home.view';
+import { homeView as HomeView } from 'views/layout/home';
 
 const typedOptions = {
     strings: [ 'Multi Platform Support', 'Single/Multi Page App', 'Service Worker Support', 'Command Line Tool', 'Build Optimizations', 'Faster Development Time', 'Well Documented' ],
@@ -72,3 +72,9 @@ export class HomeContainer extends React.Component {
         }
     }
 }
+
+// set display name
+HomeContainer.displayName = 'HomeContainer';
+
+// set default props
+HomeContainer.defaultProps = {};

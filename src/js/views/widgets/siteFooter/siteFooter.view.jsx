@@ -34,3 +34,11 @@ export const siteFooterView = () => {
         </div>
     );
 };
+
+// set display name
+siteFooterView.displayName = 'siteFooterView';
+
+// set default props
+siteFooterView.defaultProps = {};
+
+

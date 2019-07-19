@@ -20,3 +20,10 @@ export const App = withStore(
     // global Redux store
     store
 );
+
+// set display name
+App.displayName = 'App';
+
+// set default props
+App.defaultProps = {};
+

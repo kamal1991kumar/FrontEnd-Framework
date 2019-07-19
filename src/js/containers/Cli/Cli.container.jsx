@@ -2,9 +2,9 @@ import React from 'react';
 import { noop } from 'lodash';
 
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
-import * as cliDocService from 'services/cliDoc.service';
+import * as cliDocService from 'services/cliDoc';
 
-import { cliView as CliView } from 'views/layout/cli/cli.view';
+import { cliView as CliView } from 'views/layout/cli';
 
 class _CliContainer extends React.Component {
     constructor( props ) {
@@ -77,3 +77,9 @@ const mapStateToProps = ( state ) => {
 // `withRouterConnect` HOC will use `withRouter` HOC from `react-router` to pass
 // props from `BrowserRouter` to <_CliContainer> and use `connect` function of React Redux
 export const CliContainer = withRouterConnect( _CliContainer, mapStateToProps );
+
+// set display name
+CliContainer.displayName = 'CliContainer';
+
+// set default props
+CliContainer.defaultProps = {};

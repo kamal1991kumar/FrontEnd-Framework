@@ -1,8 +1,8 @@
 import React from 'react';
-import { indexPageView as IndexPageView } from 'views/layout/indexPage/indexPage.view';
+import { indexPageView as IndexPageView } from 'views/layout/indexPage';
 
 import { MessageBus } from 'core/modules/MessageBus';
-import { HTTP_REQUEST_TRANSACTION } from 'core/constants';
+import { EVENT_HTTP_REQUEST_TRANSACTION } from 'core/constants';
 
 export class IndexPageContainer extends React.Component {
     constructor( props ) {
@@ -19,7 +19,7 @@ export class IndexPageContainer extends React.Component {
 
     // on MB `HTTP_REQUEST_TRANSACTION` event, call `handleHttpReqTransaction` method
     componentDidMount() {
-        MessageBus.on( HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
+        MessageBus.on( EVENT_HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
         MessageBus.on( 'MY_HTTP_EVENT', this.handleHttpReqTransaction, this );
     }
 
@@ -48,7 +48,13 @@ export class IndexPageContainer extends React.Component {
 
     // unsubscribe from message bus event on component unmount
     componentWillUnmount() {
-        MessageBus.off( HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
+        MessageBus.off( EVENT_HTTP_REQUEST_TRANSACTION, this.handleHttpReqTransaction, this );
         MessageBus.off( 'MY_HTTP_EVENT', this.handleHttpReqTransaction, this );
     }
 }
+
+// set display name
+IndexPageContainer.displayName = 'IndexPageContainer';
+
+// set default props
+IndexPageContainer.defaultProps = {};

@@ -3,7 +3,7 @@ import { bootstrap } from 'core/bootstrap';
 import { MessageBus } from 'core/modules/MessageBus';
 
 // App container is entry point of application
-import { App } from 'containers/App/App.container';
+import { App } from 'containers/__App__';
 
 // import pollyfills
 import 'promise-polyfill';

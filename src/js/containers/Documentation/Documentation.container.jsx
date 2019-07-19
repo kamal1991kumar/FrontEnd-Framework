@@ -1,5 +1,5 @@
 import React from 'react';
-import { documentationView as DocumentationView } from 'views/layout/documentation/documentation.view';
+import { documentationView as DocumentationView } from 'views/layout/documentation';
 
 export class DocumentationContainer extends React.Component {
     constructor( props ) {
@@ -12,3 +12,9 @@ export class DocumentationContainer extends React.Component {
         );
     }
 }
+
+// set display name
+DocumentationContainer.displayName = 'DocumentationContainer';
+
+// set default props
+DocumentationContainer.defaultProps = {};

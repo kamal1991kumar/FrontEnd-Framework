@@ -26,3 +26,10 @@ export const notFoundView = ( props ) => {
         </div>
     );
 };
+
+// set display name
+notFoundView.displayName = 'notFoundView';
+
+// set default props
+notFoundView.defaultProps = {};
+

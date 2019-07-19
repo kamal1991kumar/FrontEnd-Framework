@@ -13,3 +13,9 @@ export class NotFoundContainer extends React.Component {
         );
     }
 }
+
+// set display name
+NotFoundContainer.displayName = 'NotFoundContainer';
+
+// set default props
+NotFoundContainer.defaultProps = {};

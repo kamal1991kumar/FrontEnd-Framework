@@ -43,7 +43,8 @@
             ],
             "jsons/*": [
                 "src/assets/jsons/*"
-            ]
+            ],
+            "log": "src/js/__core__/utils/log.js"
         },
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,

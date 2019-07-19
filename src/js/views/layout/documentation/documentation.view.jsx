@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 
 import { RouterOutlet } from 'router';
-import { removeTrailingSlash } from 'utils';
+import { removeTrailingSlash } from 'utils/removeTrailingSlash';
 
 // import styles
 import './documentation.style.scss';
@@ -38,3 +38,9 @@ export const documentationView = ( props ) => {
         </div>
     );
 };
+
+// set display name
+documentationView.displayName = 'CliView';
+
+// set default props
+documentationView.defaultProps = {};

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Button } from 'modules/button';
+
 // import styles
 import './cli.style.scss';
 
@@ -10,7 +12,15 @@ export const cliView = ( props ) => {
                 {
                     Object.entries( props.nav ).map( ( [ name, title ] ) => {
                         return (
-                            <button className={ 'view-index-documentation-cli__nav__item avz-button avz-button--size-mini avz-button--secondary' + ( name === props.activeTab ? ' avz-button--fill' : '' )  } key={ name } data-tab={ name } onClick={ props.handleChange }>{ title }</button>
+                            <Button
+                                className='view-index-documentation-cli__nav__item'
+                                size='mini'
+                                fill={ name === props.activeTab }
+                                secondary={ true }
+                                key={ name }
+                                name={ name }
+                                onClick={ props.handleChange }
+                            >{ title }</Button>
                         );
                     } )
                 }
@@ -25,3 +35,9 @@ export const cliView = ( props ) => {
         </div>
     );
 };
+
+// set display name
+cliView.displayName = 'CliView';
+
+// set default props
+cliView.defaultProps = {};

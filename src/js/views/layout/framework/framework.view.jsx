@@ -25,3 +25,9 @@ export const frameworkView = ( props ) => {
         </div>
     );
 };
+
+// set display name
+frameworkView.displayName = 'frameworkView';
+
+// set default props
+frameworkView.defaultProps = {};

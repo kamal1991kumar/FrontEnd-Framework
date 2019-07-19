@@ -1,13 +1,13 @@
 import React from 'react';
 
 // React view component to render
-import { siteHeaderView as SiteHeaderView } from 'views/widgets/siteHeader/siteHeader.view';
+import { siteHeaderView as SiteHeaderView } from 'views/widgets/siteHeader';
 
 /**
  * @type {class}
  * @desc Header container component for global site header.
  * @example
- * import { SiteHeaderContainer } from 'containers/shared/SiteHeader.container';
+ * import { SiteHeaderContainer } from 'containers/SiteHeader';
  *
  * // render
  * <SiteHeaderContainer stuck={ true }/>
@@ -44,3 +44,9 @@ export class SiteHeaderContainer extends React.Component {
         window.removeEventListener( 'scroll', this.makeHeaderSticky.bind( this ) );
     }
 }
+
+// set display name
+SiteHeaderContainer.displayName = 'SiteHeaderContainer';
+
+// set default props
+SiteHeaderContainer.defaultProps = {};

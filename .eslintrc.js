@@ -19,7 +19,7 @@ module.exports = {
     ],
     "rules": {
         // comma at object/array end
-        "comma-dangle": [ "error", "never" ],
+        "comma-dangle": 0,
 
         // fat arrow
         "arrow-body-style": ["error", "always"],

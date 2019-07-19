@@ -55,3 +55,10 @@ export const homeView = React.forwardRef( ( props, ref ) => {
         </div>
     );
 } );
+
+// set display name
+homeView.displayName = 'homeView';
+
+// set default props
+homeView.defaultProps = {};
+

@@ -2,9 +2,9 @@ import React from 'react';
 import { noop } from 'lodash';
 
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
-import * as frameworkDocService from 'services/frameworkDoc.service';
+import * as frameworkDocService from 'services/frameworkDoc';
 
-import { frameworkView as FrameworkView } from 'views/layout/framework/framework.view';
+import { frameworkView as FrameworkView } from 'views/layout/framework';
 
 class _FrameworkContainer extends React.Component {
     constructor( props ) {
@@ -80,3 +80,9 @@ const mapStateToProps = ( state ) => {
 // `withRouterConnect` HOC will use `withRouter` HOC from `react-router` to pass
 // props from `BrowserRouter` to <_FrameworkContainer> and use `connect` function of React Redux
 export const FrameworkContainer = withRouterConnect( _FrameworkContainer, mapStateToProps );
+
+// set display name
+FrameworkContainer.displayName = 'FrameworkContainer';
+
+// set default props
+FrameworkContainer.defaultProps = {};

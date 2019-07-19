@@ -1,8 +1,8 @@
 import React from 'react';
 import { RouterOutlet } from 'router';
 
-import { SiteHeaderContainer } from 'containers/SiteHeader/SiteHeader.container';
-import { siteFooterView as SiteFooterView } from 'views/widgets/siteFooter/siteFooter.view';
+import { SiteHeaderContainer } from 'containers/SiteHeader';
+import { siteFooterView as SiteFooterView } from 'views/widgets/siteFooter';
 
 // import styles
 import './indexPage.style.scss';
@@ -21,3 +21,9 @@ export const indexPageView = ( props ) => {
         </div>
     );
 };
+
+// set display name
+indexPageView.displayName = 'indexPageView';
+
+// set default props
+indexPageView.defaultProps = {};

@@ -2,9 +2,9 @@ import React from 'react';
 import { noop } from 'lodash';
 
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
-import { getGitDocumentation } from 'services/gitDoc.service';
+import { getGitDocumentation } from 'services/gitDoc';
 
-import { gitView as GitView } from 'views/layout/git/git.view';
+import { gitView as GitView } from 'views/layout/git';
 
 class _GitContainer extends React.Component {
     constructor( props ) {
@@ -43,3 +43,9 @@ const mapStateToProps = ( state ) => {
 // `withRouterConnect` HOC will use `withRouter` HOC from `react-router` to pass
 // props from `BrowserRouter` to <_GitContainer> and use `connect` function of React Redux
 export const GitContainer = withRouterConnect( _GitContainer, mapStateToProps );
+
+// set display name
+GitContainer.displayName = 'GitContainer';
+
+// set default props
+GitContainer.defaultProps = {};
