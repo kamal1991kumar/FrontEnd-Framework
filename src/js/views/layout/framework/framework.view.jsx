@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Button } from 'modules/button';
+
 // import styles
 import './framework.style.scss';
 
@@ -10,7 +12,15 @@ export const frameworkView = ( props ) => {
                 {
                     Object.entries( props.nav ).map( ( [ name, title ] ) => {
                         return (
-                            <button className={ 'view-index-documentation-framework__nav__item avz-button avz-button--size-mini avz-button--secondary' + ( name === props.activeTab ? ' avz-button--fill' : '' ) } key={ name } data-tab={ name } onClick={ props.handleChange }>{ title }</button>
+                            <Button
+                                className={ 'view-index-documentation-framework__nav__item' }
+                                size='mini'
+                                secondary={ true }
+                                fill={ name === props.activeTab }
+                                key={ name }
+                                data-tab={ name }
+                                onClick={ props.handleChange }
+                            >{ title }</Button>
                         );
                     } )
                 }

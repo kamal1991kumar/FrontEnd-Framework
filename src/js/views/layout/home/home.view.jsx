@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Button } from 'modules/button';
+
 // import styles
 import './home.style.scss';
 
@@ -19,12 +21,30 @@ export const homeView = React.forwardRef( ( props, ref ) => {
             </div>
 
             <div velocity="links" className='view-index-home__links'>
-                <a className="avz-button avz-button--secondary avz-button--size-medium avz-button--fill avz-button--icon view-index-home__links__item" target="_blank" href="https://gitlab.com/avizva/ui-framework">
+                <Button
+                    className="view-index-home__links__item"
+                    anchor={ true }
+                    target="_blank"
+                    href="https://gitlab.com/avizva/ui-framework"
+                    secondary={ true }
+                    hasIcon={ true }
+                    size='medium'
+                    fill={ true }
+                >
                     <i className="icon ion-md-git-network"></i> Gitlab
-                </a>
-                <a className="avz-button avz-button--secondary avz-button--size-medium avz-button--icon view-index-home__links__item"  target="_blank" href="https://gitlab.com/avizva/cli-avizva">
+                </Button>
+
+                <Button
+                    className="view-index-home__links__item"
+                    anchor={ true }
+                    target="_blank"
+                    href="https://gitlab.com/avizva/cli-avizva"
+                    secondary={ true }
+                    hasIcon={ true }
+                    size='medium'
+                >
                     <i className="icon ion-md-code"></i> Command Line Tool
-                </a>
+                </Button>
             </div>
 
             <div className='view-index-home__specs'>

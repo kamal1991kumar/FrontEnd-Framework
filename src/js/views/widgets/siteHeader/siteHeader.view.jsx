@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink as Link } from 'react-router-dom';
 
+import { Button } from 'modules/button';
+
 // import styles
 import './siteHeader.style.scss';
 
@@ -15,15 +17,27 @@ export const siteHeaderView = ( props ) => {
                 </div>
 
                 <div className='site-header__content__right'>
-                    <Link exact className='site-header__content__right__item avz-button avz-button--size-small avz-button--icon' to='/' activeClassName='avz-button--fill'>
+                    <Button
+                        link={ true }
+                        exact={ true }
+                        className='site-header__content__right__item'
+                        size='small'
+                        hasIcon={ true }
+                        to='/'
+                        activeClassName='avz-button--fill'>
                         <i className='icon ion-md-information-circle-outline'></i> About Framework
-                    </Link>
+                    </Button>
 
                     <div className="avz-dropdown site-header__content__right__item">
                         <div className="avz-dropdown__trigger">
-                            <Link className='avz-button avz-button--size-small avz-button--icon' to='/documentation' activeClassName='avz-button--fill'>
+                            <Button
+                                link={ true }
+                                size='small'
+                                hasIcon={ true }
+                                to='/documentation'
+                                activeClassName='avz-button--fill'>
                                 <i className="icon ion-md-paper"></i> Documentation
-                            </Link>
+                            </Button>
                         </div>
                         <div className="avz-dropdown__menu">
                             <Link exact to="/documentation" className="avz-dropdown__menu__item">UI framework</Link>
@@ -32,9 +46,16 @@ export const siteHeaderView = ( props ) => {
                         </div>
                     </div>
 
-                    <Link className='site-header__content__right__item avz-button avz-button--size-small avz-button--icon' to='/best-practices' activeClassName='avz-button--fill'>
+                    <Button
+                        link={ true }
+                        to='/best-practices'
+                        activeClassName='avz-button--fill'
+                        size='small'
+                        hasIcon={ true }
+                        className='site-header__content__right__item'
+                    >
                         <i className="icon ion-md-checkmark-circle-outline"></i> Best Practices
-                    </Link>
+                    </Button>
                 </div>
             </div>
         </div>

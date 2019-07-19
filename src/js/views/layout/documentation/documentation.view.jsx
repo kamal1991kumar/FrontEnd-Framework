@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavLink as Link } from 'react-router-dom';
 
 import { RouterOutlet } from 'router';
 import { removeTrailingSlash } from 'utils/removeTrailingSlash';
+
+import { Button } from 'modules/button';
 
 // import styles
 import './documentation.style.scss';
@@ -17,15 +18,39 @@ export const documentationView = ( props ) => {
                     `removeTrailingSlash` util function remove trailing lash from URL received from router.
                     This is a bug in React which prevents correct route to load properly.
                 */}
-                <Link exact className='view-index-documentation__menu__item avz-button avz-button--size-small avz-button--icon' to={ removeTrailingSlash( props.match.url ) } activeClassName=' avz-button--fill'>
+                <Button
+                    link={ true }
+                    exact={ true }
+                    className='view-index-documentation__menu__item'
+                    to={ removeTrailingSlash( props.match.url ) }
+                    activeClassName='avz-button--fill'
+                    hasIcon={ true }
+                    size='small'
+                >
                     <i className='icon ion-md-images'></i>  Ui Framework
-                </Link>
-                <Link className='view-index-documentation__menu__item avz-button avz-button--size-small avz-button--icon' to={ removeTrailingSlash( props.match.url ) + '/cli' } activeClassName='avz-button--fill'>
+                </Button>
+
+                <Button
+                    link={ true }
+                    className='view-index-documentation__menu__item avz-button'
+                    to={ removeTrailingSlash( props.match.url ) + '/cli' }
+                    activeClassName='avz-button--fill'
+                    hasIcon={ true }
+                    size='small'
+                >
                     <i className='icon ion-md-code-working'></i> Avizva CLI
-                </Link>
-                <Link className='view-index-documentation__menu__item avz-button avz-button--size-small avz-button--icon' to={ removeTrailingSlash( props.match.url ) + '/git' } activeClassName='avz-button--fill'>
+                </Button>
+
+                <Button
+                    link={ true }
+                    className='view-index-documentation__menu__item'
+                    to={ removeTrailingSlash( props.match.url ) + '/git' }
+                    activeClassName='avz-button--fill'
+                    hasIcon={ true }
+                    size='small'
+                >
                     <i className='icon ion-md-git-merge'></i>  Git Basics
-                </Link>
+                </Button>
             </div>
 
             <div className="view-index-documentation__content">
