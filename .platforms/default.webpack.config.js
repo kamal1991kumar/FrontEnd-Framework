@@ -9,6 +9,6 @@ module.exports = {
         './src/index.js'
     ],
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: [ '.js', '.jsx', '.scss' ]
     }
 };
