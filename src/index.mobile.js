@@ -1,6 +1,4 @@
-import * as constants from 'core/constants';
 import { bootstrap } from 'core/bootstrap';
-import { MessageBus } from 'core/modules/MessageBus';
 
 // App container is entry point of application
 import { App } from 'containers/__App__';
@@ -25,6 +23,5 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
     // dispatch [message bus] bootstrap complete event
     log.info( '[index.js] Bootstrap process completed.' );
-    MessageBus.trigger( constants.EVENT_BOOTSTRAP_COMPLETED );
 
 } );

@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 /**
  * @typedef {object} MessageBus
  * @desc A custom pub-sub application for general use case based on events.
@@ -31,7 +33,7 @@ export const MessageBus = (
          * @private
          */
         const _on = function ( event, callback, callbackObj ) {
-            if ( false === _events.hasOwnProperty( event ) ) {
+            if ( false === get( _events, event, false ) ) {
                 _events[ event ] = [];
             }
             _events[ event ].push( { callback: callback, callbackObj: callbackObj } );
@@ -48,7 +50,7 @@ export const MessageBus = (
             let eventCount,
                 currentEvent,
                 ctr;
-            if ( true === _events.hasOwnProperty( event ) ) {
+            if ( true === get( _events, event, false ) ) {
                 currentEvent = _events[ event ];
                 eventCount = currentEvent.length;
                 for ( ctr = 0; ctr < eventCount; ctr = ctr + 1 ) {
@@ -72,7 +74,7 @@ export const MessageBus = (
             let eventCount,
                 currentEvent,
                 ctr;
-            if ( true === _events.hasOwnProperty( event ) ) {
+            if ( true === get( _events, event, false ) ) {
                 currentEvent = _events[ event ];
                 eventCount = currentEvent.length;
                 for ( ctr = 0; ctr < eventCount; ctr = ctr + 1 ) {

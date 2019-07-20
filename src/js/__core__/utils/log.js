@@ -1,4 +1,4 @@
-import { isArray } from 'lodash';
+import { get, isArray } from 'lodash';
 
 /* eslint-disable no-console */
 /* eslint-disable no-useless-escape */
@@ -67,7 +67,7 @@ class Log {
     tag( LOG_TAG ) {
 
         // if instance with name { LOG_TAG } does not exists, create one and save
-        if( ! Log.__instances.hasOwnProperty( LOG_TAG ) ) {
+        if( ! get( Log.__instances, LOG_TAG ) ) {
             Log.__instances[ LOG_TAG ] = new this.constructor( LOG_TAG );
         }
 

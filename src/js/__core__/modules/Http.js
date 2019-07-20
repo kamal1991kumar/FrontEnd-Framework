@@ -230,7 +230,7 @@ const executeRequest = ( method, config, handler ) => {
                 handler.success( responseFormatter.success( response ) );
 
                 // call `done` callback
-                if ( handler.hasOwnProperty( 'done' ) && 'function' === typeof handler.done ) {
+                if ( get( handler, 'done' ) && 'function' === typeof handler.done ) {
                     handler.done( 'SUCCESS', response );
                 }
             }
@@ -257,7 +257,7 @@ const executeRequest = ( method, config, handler ) => {
                     dispatchAuthErrorEvent( _response );
                     
                     // handle error and send generic response
-                    if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
+                    if( get( handler, 'error' ) && 'function' === typeof handler.error ) {
                         handler.error( _response );
                     }
 
@@ -270,14 +270,14 @@ const executeRequest = ( method, config, handler ) => {
                     const _response = responseFormatter.error( {} );
 
                     // handle error and send generic response
-                    if( handler.hasOwnProperty( 'error' ) && 'function' === typeof handler.error ) {
+                    if( get( handler, 'error' ) && 'function' === typeof handler.error ) {
                         handler.error( _response );
                     }
 
                 }
 
                 // call done callback
-                if ( handler.hasOwnProperty( 'done' ) && 'function' === typeof handler.done ) {
+                if ( get( handler, 'done' ) && 'function' === typeof handler.done ) {
                     handler.done( 'ERROR' );
                 }
             }

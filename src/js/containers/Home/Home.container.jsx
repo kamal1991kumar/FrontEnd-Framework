@@ -18,15 +18,11 @@ export class HomeContainer extends React.Component {
         this.viewRef =  React.createRef();
     }
 
-    componentWillMount() {
-        log.tag( 'HomeContainer' ).debug( 'componentDidMount() ==> props: ', this.props );
-    }
-
     componentDidMount() {
         this.animate();
         this.initTyped( this.viewRef.current.querySelector( '#typed' ) );
 
-        log.tag( 'HomeContainer' ).debug( 'componentDidMount() ==> props: ' );
+        log.tag( 'HomeContainer' ).debug( 'componentDidMount()' );
     }
 
     render() {

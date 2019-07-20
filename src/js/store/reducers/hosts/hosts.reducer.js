@@ -1,5 +1,5 @@
 // import action types
-import { REDUX_EVENT_SAVE_HOST_URLS } from 'constants';
+import { REDUX_EVENT_SAVE_HOST_URLS } from 'constants/redux-events';
 
 /********************************************************/
 
