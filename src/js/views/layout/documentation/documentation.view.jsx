@@ -5,9 +5,6 @@ import { removeTrailingSlash } from 'utils/removeTrailingSlash';
 
 import { Button } from 'modules/button';
 
-// import styles
-import './documentation.style.scss';
-
 export const documentationView = ( props ) => {
     return (
         <div className='view-index-documentation'>

@@ -2,9 +2,6 @@ import React from 'react';
 
 import { Button } from 'modules/button';
 
-// import styles
-import './notFound.style.scss';
-
 export const notFoundView = ( props ) => {
     return (
         <div className='view-not-found'>

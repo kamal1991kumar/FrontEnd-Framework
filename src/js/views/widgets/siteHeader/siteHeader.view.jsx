@@ -3,9 +3,6 @@ import { NavLink as Link } from 'react-router-dom';
 
 import { Button } from 'modules/button';
 
-// import styles
-import './siteHeader.style.scss';
-
 export const siteHeaderView = ( props ) => {
     return (
         <div className={ 'site-header' + ( props.stuck ? ' site-header--stuck' : '' ) }>

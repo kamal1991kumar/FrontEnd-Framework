@@ -2,9 +2,6 @@ import React from 'react';
 
 import { Button } from 'modules/button';
 
-// import styles
-import './cli.style.scss';
-
 export const cliView = ( props ) => {
     return (
         <div className='view-index-documentation-cli'>

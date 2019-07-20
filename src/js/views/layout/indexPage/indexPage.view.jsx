@@ -4,9 +4,6 @@ import { RouterOutlet } from 'router';
 import { SiteHeaderContainer } from 'containers/SiteHeader';
 import { siteFooterView as SiteFooterView } from 'views/widgets/siteFooter';
 
-// import styles
-import './indexPage.style.scss';
-
 export const indexPageView = ( props ) => {
     return (
         <div className={ `view-index${ true === props.loading ? ' loading' : '' }` }>

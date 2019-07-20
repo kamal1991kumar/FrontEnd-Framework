@@ -1,8 +1,5 @@
 import React from 'react';
 
-// import styles
-import './siteFooter.style.scss';
-
 export const siteFooterView = () => {
     return (
         <div className='site-footer'>

@@ -3,9 +3,6 @@ import { NavLink as Link } from 'react-router-dom';
 import { noop } from 'lodash';
 import classNames from 'classnames';
 
-// import styles
-import './button.style.scss';
-
 /**
  * @desc common button view
  */

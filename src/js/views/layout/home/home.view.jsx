@@ -2,9 +2,6 @@ import React from 'react';
 
 import { Button } from 'modules/button';
 
-// import styles
-import './home.style.scss';
-
 // using React forwardRef API
 export const homeView = React.forwardRef( ( props, ref ) => {
     return (

@@ -2,9 +2,6 @@ import React from 'react';
 
 import { Button } from 'modules/button';
 
-// import styles
-import './framework.style.scss';
-
 export const frameworkView = ( props ) => {
     return (
         <div className='view-index-documentation-framework'>

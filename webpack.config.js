@@ -7,7 +7,7 @@ const boolean = require( 'boolean' );
 const HTMLWebpackPlugin = require( 'html-webpack-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
 const MiniCSSExtractPlugin = require( 'mini-css-extract-plugin' );
-const CleanWebpackPlugin = require( 'clean-webpack-plugin' );
+const { CleanWebpackPlugin } = require( 'clean-webpack-plugin' );
 const ConfigWebpackPlugin = require( 'config-webpack' );
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
@@ -172,10 +172,13 @@ const coreConfig = {
 
         // remove chunk files from distribution before new build
         // use only in `production` for faster development
-        ( 'production' !== process.env.NODE_ENV  ) ? null : new CleanWebpackPlugin( [
-            path.resolve( __dirname, 'dist', PLATFORM, 'js/chunks/**/*' ),
-            path.resolve( __dirname, 'dist', PLATFORM, 'css/chunks/**/*' )
-        ] ),
+        ( 'production' !== process.env.NODE_ENV  ) ? null : new CleanWebpackPlugin( {
+            protectWebpackAssets: false,
+            cleanOnceBeforeBuildPatterns: [
+                path.resolve( __dirname, 'dist', PLATFORM, 'js/chunks/**/*' ),
+                path.resolve( __dirname, 'dist', PLATFORM, 'css/chunks/**/*' )
+            ]
+        } ),
 
         // ConfigWebpackPlugin is used here to use `node-config`
         // use `CONFIG` global variable to get environment
