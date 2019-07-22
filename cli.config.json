@@ -1,7 +1,6 @@
 {
   "cssClassNamePrefix": "ui-",
   "platforms": [
-    "default",
-    "mobile"
+    "default"
   ]
 }
