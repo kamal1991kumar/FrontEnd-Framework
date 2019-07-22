@@ -9,9 +9,6 @@ import 'promise-polyfill';
 // velocity.js (DOM prototypes)
 import 'velocity-animate';
 
-// use smooth scroll
-import 'smoothscroll-for-websites';
-
 // bootstrap application when DOM tree is rendered
 document.addEventListener( 'DOMContentLoaded', () => {
 

@@ -11,8 +11,14 @@ import thunk from 'redux-thunk';
 // import combined reducers
 import { combinedReducer } from 'store/reducers/combinedReducer';
 
-// get global store
+// save global store
 let globalStore = null;
+
+/**
+ * @desc Get global store
+ * @example
+ * import { getStore } from 'store';
+ */
 export const getStore = ( initialState = {} ) => {
     if( ! globalStore ) {
 

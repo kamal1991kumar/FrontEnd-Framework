@@ -3,10 +3,11 @@
 
 .view-index-documentation-framework{
     &__nav{
-        margin-bottom: 2.4rem;
+        margin-bottom: rem(24);
         
         &__item{
-            margin-right: 0.6rem;
+            margin-right: rem(6);
+            margin-bottom: rem(6);
         }
     }
 }

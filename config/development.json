@@ -1,5 +1,6 @@
 {
     "enableLog": true,
+    "enableReduxDebug": true,
     "constants": {
         "DEFAULT_LOG_TAG": "DEV"
     },

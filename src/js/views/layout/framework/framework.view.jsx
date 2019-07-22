@@ -15,7 +15,7 @@ export const frameworkView = ( props ) => {
                                 secondary={ true }
                                 fill={ name === props.activeTab }
                                 key={ name }
-                                data-tab={ name }
+                                name={ name }
                                 onClick={ props.handleChange }
                             >{ title }</Button>
                         );

@@ -2,8 +2,9 @@
 @import "reset";
 
 html, body {
-    font-size: 10px;
+    font-size: $base-font-size-px;
     font-family: $font-primary;
+    scroll-behavior: smooth;
 }
 
 // border box

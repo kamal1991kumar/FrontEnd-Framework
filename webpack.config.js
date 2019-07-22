@@ -124,8 +124,6 @@ const coreConfig = {
          * be received & merged from `platformConfig`.
          */
         extensions: [
-            '.scss',
-            '.css',
             '.json'
         ],
 
