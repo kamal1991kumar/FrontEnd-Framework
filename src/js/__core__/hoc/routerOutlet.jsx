@@ -13,8 +13,8 @@ import { Route, Switch } from 'react-router-dom';
  * const RouterOutlet = routerOutlet( config );
  *
  * // render
- * <RouterOutlet page="INDEX"/>
- * <RouterOutlet page={ props.page } path={ props.path }/>
+ * <RouterOutlet />
+ * <RouterOutlet path={ props.path }/>
  */
 export const routerOutlet = ( routes ) => {
     return class RouterOutlet extends React.Component {
@@ -25,21 +25,20 @@ export const routerOutlet = ( routes ) => {
         render() {
             if( ! this.props.path ) {
                 
-                // current route is not provided,
-                // must be page level routes
+                // current route is not provided, must be top-most (starting) level routes
                 return (
                     <Switch>
-                        { Object.entries( _.get( routes, this.props.page, [] ) ).map( ( [ routeName, route ] ) => {
+                        { Object.entries( routes ).map( ( [ routeName, route ] ) => {
                             if( route.render && 'function' === typeof route.render ) {
                                 return (
                                     <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                        return route.render( { ...this.props, ...props, page: this.props.page, path: routeName, routeData: route.data } );
+                                        return route.render( { ...this.props, ...props, path: routeName, routeData: route.data } );
                                     } } />
                                 );
                             } else {
                                 return (
                                     <Route key={ routeName } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                        return <route.component { ...this.props } { ...props } page={ this.props.page } path={ routeName } routeData={ route.data } />;
+                                        return <route.component { ...this.props } { ...props } path={ routeName } routeData={ route.data } />;
                                     } } />
                                 );
                             }
@@ -48,23 +47,22 @@ export const routerOutlet = ( routes ) => {
                 );
             } else {
                 
-                // route (`key` in router.config.js) is provided,
-                // loop on nested `routes` inside `page + route` config object
+                // loop on nested `routes` when `path` prop is present
                 return (
                     <Switch>
-                        { Object.entries( _.get( routes, `${ this.props.page }.${ this.props.path }.routes`, [] ) ).map( ( [ routeName, route ] ) => {
+                        { Object.entries( _.get( routes, `${ this.props.path }.routes`, [] ) ).map( ( [ routeName, route ] ) => {
                             const routePath = this.props.path + '.routes.' + routeName;
 
                             if( route.render && 'function' === typeof route.render ) {
                                 return (
                                     <Route key={ routePath } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                        return route.render( { ...this.props, ...props, page: this.props.page, path: routePath, routeData: route.data } );
+                                        return route.render( { ...this.props, ...props, path: routePath, routeData: route.data } );
                                     } } />
                                 );
                             } else {
                                 return (
                                     <Route key={ routePath } exact={ route.exact } path={ route.path } render={ ( props ) => {
-                                        return <route.component { ...this.props } { ...props } page={ this.props.page } path={ routePath } routeData={ route.data } />;
+                                        return <route.component { ...this.props } { ...props } path={ routePath } routeData={ route.data } />;
                                     } } />
                                 );
                             }
