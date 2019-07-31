@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
 import { Button } from 'modules/button';
 
 export const notFoundView = React.forwardRef( ( props, forwardedRef ) => {
@@ -65,3 +66,8 @@ notFoundView.displayName = 'notFoundView';
 
 // set default props
 notFoundView.defaultProps = {};
+
+// prop types
+notFoundView.propTypes = {
+    chats: PropTypes.arrayOf( PropTypes.string ).isRequired
+};
