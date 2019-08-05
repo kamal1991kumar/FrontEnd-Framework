@@ -1,6 +1,6 @@
 {
   "cssClassNamePrefix": "ui-",
-  "boilerplateType": "react",
+  "boilerplate": "react-v4",
   "platforms": [
     "default"
   ]
