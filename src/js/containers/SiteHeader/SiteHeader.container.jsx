@@ -1,7 +1,7 @@
 import React from 'react';
 
 // React view component to render
-import { siteHeaderView as SiteHeaderView } from 'views/widgets/siteHeader';
+import { siteHeaderView as SiteHeaderView } from 'views/page-widgets/siteHeader';
 
 /**
  * @type {class}

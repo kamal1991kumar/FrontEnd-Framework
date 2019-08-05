@@ -4,7 +4,7 @@ import { noop } from 'lodash';
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
 import { getGitDocumentation } from 'services/gitDoc';
 
-import { gitView as GitView } from 'views/layout/git';
+import { gitView as GitView } from 'views/page-layouts/git';
 
 class _GitContainer extends React.Component {
     constructor( props ) {

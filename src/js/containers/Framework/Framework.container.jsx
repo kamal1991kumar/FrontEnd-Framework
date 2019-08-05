@@ -4,7 +4,7 @@ import { noop } from 'lodash';
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
 import * as frameworkDocService from 'services/frameworkDoc';
 
-import { frameworkView as FrameworkView } from 'views/layout/framework';
+import { frameworkView as FrameworkView } from 'views/page-layouts/framework';
 
 class _FrameworkContainer extends React.Component {
     constructor( props ) {

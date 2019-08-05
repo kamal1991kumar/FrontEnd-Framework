@@ -1,7 +1,7 @@
 import React from 'react';
 import Typed from 'typed.js';
 
-import { homeView as HomeView } from 'views/layout/home';
+import { homeView as HomeView } from 'views/page-layouts/home';
 
 const typedOptions = {
     strings: [ 'Multi Platform Support', 'Single/Multi Page App', 'Service Worker Support', 'Command Line Tool', 'Build Optimizations', 'Faster Development Time', 'Well Documented' ],

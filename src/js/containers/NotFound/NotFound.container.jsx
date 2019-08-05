@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { isEmpty } from 'lodash';
 
-import { notFoundView as NotFoundView } from 'views/layout/notFound';
+import { notFoundView as NotFoundView } from 'views/page-layouts/notFound';
 import { saveChat as saveChatAction } from 'store/actions/chats';
 
 class _NotFoundContainer extends React.Component {

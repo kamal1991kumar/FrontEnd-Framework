@@ -1,5 +1,5 @@
 import React from 'react';
-import { documentationView as DocumentationView } from 'views/layout/documentation';
+import { documentationView as DocumentationView } from 'views/page-layouts/documentation';
 
 export class DocumentationContainer extends React.Component {
     constructor( props ) {

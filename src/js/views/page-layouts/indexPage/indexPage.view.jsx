@@ -2,7 +2,7 @@ import React from 'react';
 import { RouterOutlet } from 'router';
 
 import { SiteHeaderContainer } from 'containers/SiteHeader';
-import { siteFooterView as SiteFooterView } from 'views/widgets/siteFooter';
+import { siteFooterView as SiteFooterView } from 'views/page-widgets/siteFooter';
 
 export const indexPageView = ( props ) => {
     return (

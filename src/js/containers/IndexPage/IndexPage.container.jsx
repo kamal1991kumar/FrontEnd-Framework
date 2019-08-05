@@ -1,5 +1,5 @@
 import React from 'react';
-import { indexPageView as IndexPageView } from 'views/layout/indexPage';
+import { indexPageView as IndexPageView } from 'views/page-layouts/indexPage';
 
 import { MessageBus } from 'core/modules/MessageBus';
 import { EVENT_HTTP_REQUEST_TRANSACTION } from 'core/constants';

@@ -4,7 +4,7 @@ import { noop } from 'lodash';
 import { withRouterConnect } from 'core/hoc/withRouterConnect';
 import * as cliDocService from 'services/cliDoc';
 
-import { cliView as CliView } from 'views/layout/cli';
+import { cliView as CliView } from 'views/page-layouts/cli';
 
 class _CliContainer extends React.Component {
     constructor( props ) {
