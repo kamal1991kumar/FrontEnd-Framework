@@ -1,8 +1,8 @@
 ## Command Line Interface
 ```
-avizva-ui-server --help
+Demo-ui-server --help
 
-Usage: avizva-ui-server serve <directory>  [options]
+Usage: Demo-ui-server serve <directory>  [options]
 
 Options:
 
@@ -18,14 +18,14 @@ Options:
 
 
 ## Usage
-- `avizva-ui-server serve dist` : Serve `./dist` folder and use `./upload` folder for upload files access/upload.
-- `avizva-ui-server serve dist --no-open` : Do not open browser when server starts.
-- `avizva-ui-server serve dist -p 3000`: Use port `3000` for server instead of default **random available port**.
-- `avizva-ui-server serve dist -h 192.168.0.9` : Use host `192.168.0.9` instead of default `localhost`.
-- `avizva-ui-server serve dist -s` : Use `https://` protocol instead of default `http://` for server.
-- `avizva-ui-server serve dist -f image` : Use `image` as **file input name** in request body instead of default `file`.
-- `avizva-ui-server serve dist -d ./build` : Use `./build` folder as **distribution folder** instead of default `./dist`. This can be absolute path on the system as well, like `/usr/share/build`.
-- `avizva-ui-server serve dist -u ./files` : Use `./files` folder to serve/upload files instead of default `./upload`. This can be absolute path on the system as well, like `/usr/share/files`.
+- `Demo-ui-server serve dist` : Serve `./dist` folder and use `./upload` folder for upload files access/upload.
+- `Demo-ui-server serve dist --no-open` : Do not open browser when server starts.
+- `Demo-ui-server serve dist -p 3000`: Use port `3000` for server instead of default **random available port**.
+- `Demo-ui-server serve dist -h 192.168.0.9` : Use host `192.168.0.9` instead of default `localhost`.
+- `Demo-ui-server serve dist -s` : Use `https://` protocol instead of default `http://` for server.
+- `Demo-ui-server serve dist -f image` : Use `image` as **file input name** in request body instead of default `file`.
+- `Demo-ui-server serve dist -d ./build` : Use `./build` folder as **distribution folder** instead of default `./dist`. This can be absolute path on the system as well, like `/usr/share/build`.
+- `Demo-ui-server serve dist -u ./files` : Use `./files` folder to serve/upload files instead of default `./upload`. This can be absolute path on the system as well, like `/usr/share/files`.
 
 
 ## API Access

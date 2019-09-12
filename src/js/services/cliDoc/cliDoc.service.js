@@ -1,6 +1,6 @@
 /**
  * Promise type service.
- * A callback based HTTP service to get markdown documentation of avizva CLI tool.
+ * A callback based HTTP service to get markdown documentation of Demo CLI tool.
  * This service returns HTML by transforming markdown to HTML using `showdown` plugin.
  */
 

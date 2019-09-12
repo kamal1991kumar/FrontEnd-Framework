@@ -1,6 +1,6 @@
 /**
  * Promise type service.
- * A callback based HTTP service to get markdown documentation of avizva UI framework.
+ * A callback based HTTP service to get markdown documentation of Demo UI framework.
  * This service returns HTML by transforming markdown to HTML using `showdown` plugin.
  */
 

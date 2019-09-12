@@ -83,12 +83,12 @@ This folder contains `{NODE_ENV}.json` files. Based on current `NODE_ENV` variab
 ***
 
 ### Git > .gitignore
-This is a standard file which ignores files and folders from being added to Git commits. Folders like `node_modules` and `build` is not necessary to be added to code repository as they can be easily duplicated on any system. This framework gives, out of the box `.gitignore` file with some common ignored paths. Please consult **Avizva UI** team before making any changes to this file. [**Read more about .gitignore**](https://www.atlassian.com/git/tutorials/saving-changes/gitignore).
+This is a standard file which ignores files and folders from being added to Git commits. Folders like `node_modules` and `build` is not necessary to be added to code repository as they can be easily duplicated on any system. This framework gives, out of the box `.gitignore` file with some common ignored paths. Please consult **Demo UI** team before making any changes to this file. [**Read more about .gitignore**](https://www.atlassian.com/git/tutorials/saving-changes/gitignore).
 
 ***
 
 ### JS Linting tool > .eslintrc.js
-This file contains rule-set of [**ESLint**](https://eslint.org/). ESLint is a toolkit to maintain consistent code writing pattern. Webpack's `eslint-loader` uses this file to throw compilation error if a JavaScript syntax doesn't comply with rule-set of this file. We can ignore files or folder being tested by `ESLint` by adding them to `.eslintignore`. Format of `.eslintignore` is same as `.gitignore`. You are not allowed to modify this file as it contains standard rules used by **Avizva UI** team.  
+This file contains rule-set of [**ESLint**](https://eslint.org/). ESLint is a toolkit to maintain consistent code writing pattern. Webpack's `eslint-loader` uses this file to throw compilation error if a JavaScript syntax doesn't comply with rule-set of this file. We can ignore files or folder being tested by `ESLint` by adding them to `.eslintignore`. Format of `.eslintignore` is same as `.gitignore`. You are not allowed to modify this file as it contains standard rules used by **Demo UI** team.  
 
 ***
 
@@ -108,7 +108,7 @@ This file contains configuration for [**PostCSS**](https://postcss.org/). PostCS
 ***
 
 ### CLI configuration > cli.config.json
-This file is created by `avizva-cli` and it contains **CLI configuration** for the project. It is advised not to tamper this file but one can change configuration (_with consultation of UI team_) to modify CLI behavior toward a project.
+This file is created by `Demo-cli` and it contains **CLI configuration** for the project. It is advised not to tamper this file but one can change configuration (_with consultation of UI team_) to modify CLI behavior toward a project.
 
 ***
 
@@ -118,7 +118,7 @@ This file is used by code editors like **VSCode** to provide path intellisense. 
 ***
 
 ### Environment variables > env.js
-This file contains environment variable which will be automatically available inside project. Make sure, not to override `NODE_ENV` and `CSS_MODE` environment variables as they are provided by `avizva-cli`.
+This file contains environment variable which will be automatically available inside project. Make sure, not to override `NODE_ENV` and `CSS_MODE` environment variables as they are provided by `Demo-cli`.
 
 ***
 

@@ -14,7 +14,7 @@ export const homeView = React.forwardRef( ( props, ref ) => {
             </div>
 
             <div className='view-index-home__description'>
-                At Avizva, we follow a very unique philosophy of designing and developing frontend applications. At times, due to personal mistakes or time constraints, a developer might not adhere to standard practices which creates a domino effect of mistakes which leads to inconsistent code base. This framework not only forces developer to follow standard practices, but helps him/her to write consistent code faster with the help of Avizva's CLI tool. Combining with Avizva's CLI Tool for initializing project and generating different elements, this framework will help UI team to create, build and deploy project faster.
+                At Demo, we follow a very unique philosophy of designing and developing frontend applications. At times, due to personal mistakes or time constraints, a developer might not adhere to standard practices which creates a domino effect of mistakes which leads to inconsistent code base. This framework not only forces developer to follow standard practices, but helps him/her to write consistent code faster with the help of Demo's CLI tool. Combining with Demo's CLI Tool for initializing project and generating different elements, this framework will help UI team to create, build and deploy project faster.
             </div>
 
             <div velocity="links" className='view-index-home__links'>
@@ -22,7 +22,7 @@ export const homeView = React.forwardRef( ( props, ref ) => {
                     className="view-index-home__links__item"
                     anchor={ true }
                     target="_blank"
-                    href="https://gitlab.com/avizva/ui-framework"
+                    href="https://gitlab.com/Demo/ui-framework"
                     secondary={ true }
                     hasIcon={ true }
                     size='medium'
@@ -35,7 +35,7 @@ export const homeView = React.forwardRef( ( props, ref ) => {
                     className="view-index-home__links__item"
                     anchor={ true }
                     target="_blank"
-                    href="https://gitlab.com/avizva/cli-avizva"
+                    href="https://gitlab.com/Demo/cli-Demo"
                     secondary={ true }
                     hasIcon={ true }
                     size='medium'

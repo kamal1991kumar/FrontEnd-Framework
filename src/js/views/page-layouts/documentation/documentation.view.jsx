@@ -35,7 +35,7 @@ export const documentationView = ( props ) => {
                     hasIcon={ true }
                     size='small'
                 >
-                    <i className='icon ion-md-code-working'></i> Avizva CLI
+                    <i className='icon ion-md-code-working'></i> Demo CLI
                 </Button>
 
                 <Button

@@ -1,8 +1,8 @@
 Framework Overview
-AVIZVA UI Framework is JavaScript frontend framework designed to create small to large scale single page applications with ease.
+Demo UI Framework is JavaScript frontend framework designed to create small to large scale single page applications with ease.
 It ships with a default ReactJS application which provides an interactive documentation of this framework.
 
-Below are few advantages of using AVIZVA UI Framework over others.
+Below are few advantages of using Demo UI Framework over others.
 Entity based architecture: This framework comes with built-in entity based architecture. Entities are individual pieces of an applications, like components, views, modules, services etc.
 Autonomous entities: Each entity in this framework is completely autonomous, which means it contains logic, view, styles and test cases sandwiched in a directory.
 Agnostic nature: This framework is not tied to a fixed UI library/framework like React or Angular. The structure of the framework gives us opportunity to easily switch between any UI library/framework.
@@ -15,7 +15,7 @@ Code comments and documentation: The boilerplate provided by this framework cont
 Folder Structure
 
 ui-framework/
-This is the basic structure of an application created using AVIZVA UI Framework.
+This is the basic structure of an application created using Demo UI Framework.
 
 ├── babel.config.js 			// babel configuration to transpile JavaScript
 ├── cli.config.json 			// configuration for platforms

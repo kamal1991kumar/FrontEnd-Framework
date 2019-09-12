@@ -61,7 +61,7 @@
 
 `assets` folder is deployed in the parent directory of `{platform}` distribution. Hence it is recommended to use `/assets/../../file.ext` like absolute paths while referencing an asset file in SCSS or HTML.
 
-`json` folder contains `.json` files which can be used by `good-server` to create read-only JSON API. To preview a `{platform}` distribution with `good-server`, run command `good-server -d dist/{platform}` or `avizva-ui preview {platform}` which will open browser window automatically at a random port. [**Good server**](https://gitlab.com/thatisuday/cli-good-server) is CLI tool built by **Avizva UI team** to launch a static HTTP server with read-only JSON API and web-socket server.
+`json` folder contains `.json` files which can be used by `good-server` to create read-only JSON API. To preview a `{platform}` distribution with `good-server`, run command `good-server -d dist/{platform}` or `Demo-ui preview {platform}` which will open browser window automatically at a random port. **Good server** is CLI tool built by **Demo UI team** to launch a static HTTP server with read-only JSON API and web-socket server.
 
 ──────────────────────────────────────────────────
 
@@ -158,9 +158,9 @@ A `container` file should have **TitleCase** filename and exported class name wh
 
 ##### Init boilerplate
 ```bash
-avizva-ui create container MyContainer
-avizva-ui create container MyContainer --platform=cordova
-avizva-ui create hoc myHoc
+Demo-ui create container MyContainer
+Demo-ui create container MyContainer --platform=cordova
+Demo-ui create hoc myHoc
 ```
 
 ##### Import statement(s)
@@ -198,9 +198,9 @@ This folder contains controller files. A controller is used to auto-bootstrap a 
 
 ##### Init boilerplate
 ```bash
-avizva-ui create controller MyController
-avizva-ui create controller MyController --export
-avizva-ui create controller MyController --platform=cordova
+Demo-ui create controller MyController
+Demo-ui create controller MyController --export
+Demo-ui create controller MyController --platform=cordova
 ```
 
 ##### Import statement(s)
@@ -265,13 +265,13 @@ import { RenderRoutes } from 'router'
 |  |  |  └── user.service.codova.js
 ```
 
-Services are `HTTP` request function bundles. A service filename should be as simple as possible and should end with `.service.js` suffix. Service boilerplate is created using `avizva-cli` and supports both `Promise` or `Observable` based response.
+Services are `HTTP` request function bundles. A service filename should be as simple as possible and should end with `.service.js` suffix. Service boilerplate is created using `Demo-cli` and supports both `Promise` or `Observable` based response.
 
 ##### Init boilerplate
 ```bash
-avizva-ui create service user --type=promise
-avizva-ui create service user --type=observable
-avizva-ui create service user --platform=cordova (default: promise)
+Demo-ui create service user --type=promise
+Demo-ui create service user --type=observable
+Demo-ui create service user --platform=cordova (default: promise)
 ```
 
 ##### Import statement(s)
@@ -301,8 +301,8 @@ import { getUsers } from 'services/users.service'
 
 ##### Init boilerplate
 ```bash
-avizva-ui create action user
-avizva-ui create reducer user
+Demo-ui create action user
+Demo-ui create reducer user
 ```
 
 ##### Import statement(s)
@@ -366,8 +366,8 @@ This folder contains React views. Filename of the view should be in **camelCase*
 
 ##### Init boilerplate
 ```bash
-avizva-ui create view MyView
-avizva-ui create view MyView --platform=cordova
+Demo-ui create view MyView
+Demo-ui create view MyView --platform=cordova
 ```
 
 ##### Import statement(s)

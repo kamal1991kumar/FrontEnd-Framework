@@ -6,7 +6,7 @@
 *******************************************************/
 
 // cache tag name
-const cacheName = 'AVIZVA_UI_CACHE_V1';
+const cacheName = 'Demo_UI_CACHE_V1';
 
 // file to cache
 const filesToCache = [
