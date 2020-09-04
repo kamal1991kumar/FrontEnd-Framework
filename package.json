@@ -74,7 +74,7 @@
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.5.2",
     "shortid": "^2.2.14",
-    "showdown": "^1.9.0",
+    "showdown": "^1.9.1",
     "typed.js": "^2.0.10",
     "velocity-animate": "^2.0.5"
   }
